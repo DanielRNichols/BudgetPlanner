@@ -74,6 +74,7 @@ namespace BudgetPlanner
             services.AddScoped<IBudgetItemGroupRepository, BudgetItemGroupRepository>();
             services.AddScoped<IBudgetItemRepository, BudgetItemRepository>();
             services.AddScoped<IMemorizedTransactionRepository, MemorizedTransactionRepository>();
+            services.AddScoped<IRegistryRepository, RegistryRepository>();
 
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);

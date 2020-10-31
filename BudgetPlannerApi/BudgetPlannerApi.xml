@@ -144,6 +144,41 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:BudgetPlannerApi.Controllers.RegistriesController.GetItems">
+            <summary>
+            Get all Registries
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BudgetPlannerApi.Controllers.RegistriesController.GetItem(System.Int32)">
+            <summary>
+            Get Registry by Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BudgetPlannerApi.Controllers.RegistriesController.Create(BudgetPlannerApi.DataTransfer.RegistryCreateDTO)">
+            <summary>
+            Create a new Registry
+            </summary>
+            <param name="bugetItemTypeDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BudgetPlannerApi.Controllers.RegistriesController.Update(System.Int32,BudgetPlannerApi.DataTransfer.RegistryCreateDTO)">
+            <summary>
+            Update a Registry
+            </summary>
+            <param name="id"></param>
+            <param name="bugetItemTypeDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BudgetPlannerApi.Controllers.RegistriesController.Delete(System.Int32)">
+            <summary>
+            Delete a Registry
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:BudgetPlanner.Controllers.HomeController.Get">
             <summary>
             Get values
