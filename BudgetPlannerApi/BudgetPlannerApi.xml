@@ -4,17 +4,45 @@
         <name>BudgetPlannerApi</name>
     </assembly>
     <members>
+        <member name="M:BudgetPlannerApi.Controllers.BudgetItemTypesController.GetItemTypes">
+            <summary>
+            Get all Budget Item Types
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BudgetPlannerApi.Controllers.BudgetItemTypesController.GetItemType(System.Int32)">
+            <summary>
+            Get Budget Item Type by Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BudgetPlannerApi.Controllers.BudgetItemTypesController.Create(BudgetPlannerApi.DataTransfer.BudgetItemTypeCreateDTO)">
+            <summary>
+            Create a new Budget Item Type
+            </summary>
+            <param name="bugetItemTypeDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BudgetPlannerApi.Controllers.BudgetItemTypesController.Update(System.Int32,BudgetPlannerApi.DataTransfer.BudgetItemTypeCreateDTO)">
+            <summary>
+            Update a Budget Item Type
+            </summary>
+            <param name="id"></param>
+            <param name="bugetItemTypeDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BudgetPlannerApi.Controllers.BudgetItemTypesController.Delete(System.Int32)">
+            <summary>
+            Delete a Budget Item Type
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:BudgetPlanner.Controllers.HomeController.Get">
             <summary>
             Get values
             </summary>
-            <returns></returns>
-        </member>
-        <member name="M:BudgetPlanner.Controllers.HomeController.Get(System.Int32)">
-            <summary>
-            Get value by id
-            </summary>
-            <param name="id"></param>
             <returns></returns>
         </member>
     </members>

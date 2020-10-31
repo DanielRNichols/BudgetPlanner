@@ -17,11 +17,17 @@ using System.Reflection;
 using System.IO;
 using BudgetPlanner.Interfaces;
 using BudgetPlanner.Services;
+using BudgetPlannerApi.DataTransfer;
+using AutoMapper;
+using BudgetPlannerApi.Interfaces;
+using BudgetPlannerApi.Services;
 
 namespace BudgetPlanner
 {
     public class Startup
     {
+        private readonly string CorsPolicyName = "CorsPolicy";
+        
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -37,6 +43,16 @@ namespace BudgetPlanner
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>() // (options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            // AutoMapper
+            services.AddAutoMapper(typeof(DataMaps));
+
+            // Cors Policy
+            services.AddCors(options =>
+            {
+                options.AddPolicy(CorsPolicyName,
+                    policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            });
 
             // SwaggerGen Swashbuckle
             services.AddSwaggerGen(cfg =>
@@ -54,6 +70,7 @@ namespace BudgetPlanner
             });
 
             services.AddSingleton<ILoggerService, LoggerService>();
+            services.AddScoped<IBudgetItemTypeRepository, BudgetItemTypeRepository>();
 
             services.AddControllers();
         }
@@ -72,6 +89,9 @@ namespace BudgetPlanner
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+ 
+            // Cors Policy
+            app.UseCors(CorsPolicyName);
 
             // Swagger
             app.UseSwagger();
