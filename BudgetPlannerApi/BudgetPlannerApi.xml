@@ -109,6 +109,41 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:BudgetPlannerApi.Controllers.MemorizedTransactionsController.GetItems">
+            <summary>
+            Get all Memorized Transactions
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BudgetPlannerApi.Controllers.MemorizedTransactionsController.GetItem(System.Int32)">
+            <summary>
+            Get  Memorized Transaction by Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BudgetPlannerApi.Controllers.MemorizedTransactionsController.Create(BudgetPlannerApi.DataTransfer.MemorizedTransactionCreateDTO)">
+            <summary>
+            Create a new Memorized Transaction
+            </summary>
+            <param name="bugetItemTypeDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BudgetPlannerApi.Controllers.MemorizedTransactionsController.Update(System.Int32,BudgetPlannerApi.DataTransfer.MemorizedTransactionCreateDTO)">
+            <summary>
+            Update a Memorized Transaction
+            </summary>
+            <param name="id"></param>
+            <param name="bugetItemTypeDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BudgetPlannerApi.Controllers.MemorizedTransactionsController.Delete(System.Int32)">
+            <summary>
+            Delete a Memorized Transaction
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:BudgetPlanner.Controllers.HomeController.Get">
             <summary>
             Get values

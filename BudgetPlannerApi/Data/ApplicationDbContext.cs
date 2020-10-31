@@ -12,6 +12,8 @@ namespace BudgetPlanner.Data
         public DbSet<BudgetItemType> BudgetItemTypes { get; set; }
         public DbSet<BudgetItemGroup> BudgetItemGroups { get; set; }
         public DbSet<BudgetItem> BudgetItems { get; set; }
+
+        public DbSet<MemorizedTransaction> MemorizedTransactions { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
