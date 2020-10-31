@@ -10,6 +10,7 @@ namespace BudgetPlanner.Data
     public class ApplicationDbContext : IdentityDbContext
     {
         public DbSet<BudgetItemType> BudgetItemTypes { get; set; }
+        public DbSet<BudgetItemGroup> BudgetItemGroups { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

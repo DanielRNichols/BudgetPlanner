@@ -4,6 +4,41 @@
         <name>BudgetPlannerApi</name>
     </assembly>
     <members>
+        <member name="M:BudgetPlannerApi.Controllers.BudgetItemGroupsController.GetItemTypes">
+            <summary>
+            Get all Budget Item Groups
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BudgetPlannerApi.Controllers.BudgetItemGroupsController.GetItemType(System.Int32)">
+            <summary>
+            Get Budget Item Group by Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BudgetPlannerApi.Controllers.BudgetItemGroupsController.Create(BudgetPlannerApi.DataTransfer.BudgetItemGroupCreateDTO)">
+            <summary>
+            Create a new Budget Item Group
+            </summary>
+            <param name="bugetItemTypeDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BudgetPlannerApi.Controllers.BudgetItemGroupsController.Update(System.Int32,BudgetPlannerApi.DataTransfer.BudgetItemGroupCreateDTO)">
+            <summary>
+            Update a Budget Item Group
+            </summary>
+            <param name="id"></param>
+            <param name="bugetItemTypeDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BudgetPlannerApi.Controllers.BudgetItemGroupsController.Delete(System.Int32)">
+            <summary>
+            Delete a Budget Item Group
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:BudgetPlannerApi.Controllers.BudgetItemTypesController.GetItemTypes">
             <summary>
             Get all Budget Item Types

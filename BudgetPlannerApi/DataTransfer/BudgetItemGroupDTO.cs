@@ -6,20 +6,19 @@ using System.Threading.Tasks;
 
 namespace BudgetPlannerApi.DataTransfer
 {
-    public class BudgetItemTypeDTO
+    public class BudgetItemGroupDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public bool IsExpense { get; set; }
-
-        public virtual IList<BudgetItemGroupDTO> BudgetItemGroups { get; set; }
-
+        public int BudgetItemTypeId { get; set; }
+        public virtual BudgetItemTypeDTO BudgetItemType { get; set; }
     }
-    public class BudgetItemTypeCreateDTO
+
+    public class BudgetItemGroupCreateDTO
     {
         [Required]
         public string Name { get; set; }
         [Required]
-        public bool IsExpense { get; set; }
+        public int BudgetItemTypeId { get; set; }
     }
 }

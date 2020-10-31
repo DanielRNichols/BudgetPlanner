@@ -10,33 +10,31 @@ using BudgetPlannerApi.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace BudgetPlannerApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BudgetItemTypesController : ControllerBase
+    public class BudgetItemGroupsController : ControllerBase
     {
-        private readonly IBudgetItemTypeRepository _budgetItemTypeRepository;
+        private readonly IBudgetItemGroupRepository _budgetItemGroupRepository;
         private readonly ILoggerService _logger;
         private readonly IMapper _mapper;
 
-        public BudgetItemTypesController(
-            IBudgetItemTypeRepository budgetItemTypeRepository,
+        public BudgetItemGroupsController(
+            IBudgetItemGroupRepository budgetItemGroupRepository,
             ILoggerService logger,
             IMapper mapper)
         {
-            _budgetItemTypeRepository = budgetItemTypeRepository;
+            _budgetItemGroupRepository = budgetItemGroupRepository;
             _logger = logger;
             _mapper = mapper;
         }
 
         /// <summary>
-        /// Get all Budget Item Types
+        /// Get all Budget Item Groups
         /// </summary>
         /// <returns></returns>
-        // GET: api/<BudgetItemTypesController>
+        // GET: api/<BudgetItemGroupsController>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -45,8 +43,8 @@ namespace BudgetPlannerApi.Controllers
             try
             {
                 _logger.LogInfo("GetItems");
-                var items = await _budgetItemTypeRepository.GetAll();
-                var response = _mapper.Map<IList<BudgetItemTypeDTO>>(items);
+                var items = await _budgetItemGroupRepository.GetAll();
+                var response = _mapper.Map<IList<BudgetItemGroupDTO>>(items);
                 _logger.LogInfo("Successfully retrieved Items");
 
                 return Ok(response);
@@ -58,11 +56,11 @@ namespace BudgetPlannerApi.Controllers
         }
 
         /// <summary>
-        /// Get Budget Item Type by Id
+        /// Get Budget Item Group by Id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        // GET api/<BudgetItemTypesController>/5
+        // GET api/<BudgetItemGroupsController>/5
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -72,14 +70,14 @@ namespace BudgetPlannerApi.Controllers
             try
             {
                 _logger.LogInfo($"GetItem by id: {id}");
-                var item = await _budgetItemTypeRepository.GetById(id);
+                var item = await _budgetItemGroupRepository.GetById(id);
                 if (item == null)
                 {
                     _logger.LogWarn($"Item not found: {id}");
 
                     return NotFound();
                 }
-                var response = _mapper.Map<BudgetItemTypeDTO>(item);
+                var response = _mapper.Map<BudgetItemGroupDTO>(item);
                 _logger.LogInfo($"Successfully retrieved Item {id}");
 
                 return Ok(response);
@@ -91,16 +89,16 @@ namespace BudgetPlannerApi.Controllers
         }
 
         /// <summary>
-        /// Create a new Budget Item Type
+        /// Create a new Budget Item Group
         /// </summary>
         /// <param name="bugetItemTypeDTO"></param>
         /// <returns></returns>
-        // POST api/<BudgetItemTypesController>
+        // POST api/<BudgetItemGroupsController>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Create([FromBody] BudgetItemTypeCreateDTO bugetItemTypeDTO)
+        public async Task<IActionResult> Create([FromBody] BudgetItemGroupCreateDTO bugetItemTypeDTO)
         {
             try
             {
@@ -115,15 +113,15 @@ namespace BudgetPlannerApi.Controllers
                     _logger.LogWarn($"Invalid request submitted");
                     return BadRequest(ModelState);
                 }
-                var budgetItemType = _mapper.Map<BudgetItemType>(bugetItemTypeDTO);
+                var budgetItemGroup = _mapper.Map<BudgetItemGroup>(bugetItemTypeDTO);
 
-                var isSuccess = await _budgetItemTypeRepository.Create(budgetItemType);
+                var isSuccess = await _budgetItemGroupRepository.Create(budgetItemGroup);
                 if (!isSuccess)
                 {
                     return ServerError("Item creation failed");
                 }
                 _logger.LogInfo("Item created");
-                return Created("", new { budgetItemType });
+                return Created("", new { budgetItemGroup });
             }
             catch (Exception e)
             {
@@ -132,18 +130,18 @@ namespace BudgetPlannerApi.Controllers
         }
 
         /// <summary>
-        /// Update a Budget Item Type
+        /// Update a Budget Item Group
         /// </summary>
         /// <param name="id"></param>
         /// <param name="bugetItemTypeDTO"></param>
         /// <returns></returns>
-        // PUT api/<BudgetItemTypesController>/5
+        // PUT api/<BudgetItemGroupsController>/5
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Update(int id, [FromBody] BudgetItemTypeCreateDTO bugetItemTypeDTO)
+        public async Task<IActionResult> Update(int id, [FromBody] BudgetItemGroupCreateDTO bugetItemTypeDTO)
         {
             try
             {
@@ -159,7 +157,7 @@ namespace BudgetPlannerApi.Controllers
                     _logger.LogWarn($"Empty request submitted");
                     return BadRequest();
                 }
-                var exists = await _budgetItemTypeRepository.Exists(id);
+                var exists = await _budgetItemGroupRepository.Exists(id);
                 if (!exists)
                 {
                     _logger.LogWarn($"Item with id {id} was not found");
@@ -171,11 +169,11 @@ namespace BudgetPlannerApi.Controllers
                     return BadRequest(ModelState);
                 }
 
-                var item = _mapper.Map<BudgetItemType>(bugetItemTypeDTO);
+                var item = _mapper.Map<BudgetItemGroup>(bugetItemTypeDTO);
                 // force item.Id to be id passed in 
                 item.Id = id;
 
-                var isSuccess = await _budgetItemTypeRepository.Update(item);
+                var isSuccess = await _budgetItemGroupRepository.Update(item);
                 if (!isSuccess)
                 {
                     return ServerError("Item update failed");
@@ -190,11 +188,11 @@ namespace BudgetPlannerApi.Controllers
         }
 
         /// <summary>
-        /// Delete a Budget Item Type
+        /// Delete a Budget Item Group
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        // DELETE api/<BudgetItemTypesController>/5
+        // DELETE api/<BudgetItemGroupsController>/5
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -210,14 +208,14 @@ namespace BudgetPlannerApi.Controllers
                     _logger.LogWarn($"Empty request submitted");
                     return BadRequest();
                 }
-                var item = await _budgetItemTypeRepository.GetById(id);
+                var item = await _budgetItemGroupRepository.GetById(id);
                 if (item == null)
                 {
                     _logger.LogWarn($"Item with id ${id} was not found");
                     return NotFound();
                 }
 
-                var isSuccess = await _budgetItemTypeRepository.Delete(item);
+                var isSuccess = await _budgetItemGroupRepository.Delete(item);
                 if (!isSuccess)
                 {
                     return ServerError("Item delete failed");
