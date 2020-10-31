@@ -38,7 +38,7 @@ namespace BudgetPlannerApi.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetItemTypes()
+        public async Task<IActionResult> GetItems()
         {
             try
             {
@@ -65,7 +65,7 @@ namespace BudgetPlannerApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetItemType(int id)
+        public async Task<IActionResult> GetItem(int id)
         {
             try
             {
