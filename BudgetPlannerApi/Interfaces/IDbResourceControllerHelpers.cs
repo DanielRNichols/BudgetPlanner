@@ -36,6 +36,10 @@ namespace BudgetPlannerApi.Interfaces
     {
     }
 
+    public interface IRegistryEntriesControllerHelper : IDbResourceControllerHelper<RegistryEntry>
+    {
+    }
+
     public interface IBudgetCyclesControllerHelper : IDbResourceControllerHelper<BudgetCycle>
     {
     }

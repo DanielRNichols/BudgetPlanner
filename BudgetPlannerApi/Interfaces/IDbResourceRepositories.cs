@@ -34,6 +34,9 @@ namespace BudgetPlannerApi.Interfaces
     public interface IRegistryRepository : IDbResourceRepository<Registry>
     {
     }
+    public interface IRegistryEntryRepository : IDbResourceRepository<RegistryEntry>
+    {
+    }
     public interface IBudgetCycleRepository : IDbResourceRepository<BudgetCycle>
     {
     }

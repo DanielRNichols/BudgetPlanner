@@ -261,6 +261,43 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:BudgetPlannerApi.Controllers.RegistryEntriesController.Get(System.Boolean)">
+            <summary>
+            Get all Registry Entries
+            </summary>
+            <param name="includeRelated"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BudgetPlannerApi.Controllers.RegistryEntriesController.GetById(System.Int32,System.Boolean)">
+            <summary>
+            Get a Registry Entry by Id
+            </summary>
+            <param name="id"></param>
+            <param name="includeRelated"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BudgetPlannerApi.Controllers.RegistryEntriesController.Create(BudgetPlannerApi.DataTransfer.RegistryEntryCreateDTO)">
+            <summary>
+            Create a new Registry Entry
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BudgetPlannerApi.Controllers.RegistryEntriesController.Update(System.Int32,BudgetPlannerApi.DataTransfer.RegistryEntryCreateDTO)">
+            <summary>
+            Update a Registry Entry
+            </summary>
+            <param name="id"></param>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BudgetPlannerApi.Controllers.RegistryEntriesController.Delete(System.Int32)">
+            <summary>
+            Delete a Registry Entry
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:BudgetPlannerApi.Services.ControllerHelpers.DbResourceControllerHelper`1.GetItems``1(Microsoft.AspNetCore.Mvc.ControllerBase,BudgetPlannerApi.Interfaces.IDbResourceRepository{`0},System.Boolean)">
             <summary>
             Get Items

@@ -77,6 +77,7 @@ namespace BudgetPlanner
             services.AddScoped<IBudgetItemRepository, BudgetItemRepository>();
             services.AddScoped<IMemorizedTransactionRepository, MemorizedTransactionRepository>();
             services.AddScoped<IRegistryRepository, RegistryRepository>();
+            services.AddScoped<IRegistryEntryRepository, RegistryEntryRepository>();
             services.AddScoped<IBudgetCycleRepository, BudgetCycleRepository>();
             services.AddScoped<IBudgetCycleItemRepository, BudgetCycleItemRepository>();
 
@@ -86,6 +87,7 @@ namespace BudgetPlanner
             services.AddScoped<IBudgetItemsControllerHelper, BudgetItemsControllerHelper>();
             services.AddScoped<IMemorizedTransactionsControllerHelper, MemorizedTransactionsControllerHelper>();
             services.AddScoped<IRegistriesControllerHelper, RegistriesControllerHelper>();
+            services.AddScoped<IRegistryEntriesControllerHelper, RegistryEntriesControllerHelper>();
             services.AddScoped<IBudgetCyclesControllerHelper, BudgetCyclesControllerHelper>();
             services.AddScoped<IBudgetCycleItemsControllerHelper, BudgetCycleItemsControllerHelper>();
 
