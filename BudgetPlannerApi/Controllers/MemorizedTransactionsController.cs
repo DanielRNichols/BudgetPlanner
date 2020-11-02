@@ -28,29 +28,31 @@ namespace BudgetPlannerApi.Controllers
         /// <summary>
         /// Get all Memorized Transactions
         /// </summary>
+        /// <param name="includeRelated"></param>
         /// <returns></returns>
         // GET: api/<MemorizedTransactionsController>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery] bool includeRelated = false)
         {
-            return await _controllerHelper.GetItems<MemorizedTransactionDTO>(this, _repo);
+            return await _controllerHelper.GetItems<MemorizedTransactionDTO>(this, _repo, includeRelated);
         }
 
         /// <summary>
         /// Get a Memorized Transaction by Id
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="includeRelated"></param>
         /// <returns></returns>
         // GET api/<MemorizedTransactionsController>/5
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(int id, [FromQuery] bool includeRelated = false)
         {
-            return await _controllerHelper.GetItem<MemorizedTransactionDTO>(this, _repo, id);
+            return await _controllerHelper.GetItem<MemorizedTransactionDTO>(this, _repo, id, includeRelated);
         }
 
         /// <summary>

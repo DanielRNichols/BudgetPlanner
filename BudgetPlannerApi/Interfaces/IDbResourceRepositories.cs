@@ -1,4 +1,5 @@
 ﻿using BudgetPlannerApi.Data;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +9,8 @@ namespace BudgetPlannerApi.Interfaces
 {
     public interface IDbResourceRepository<T> where T : IDbResource
     {
-        Task<IList<T>> GetAll();
-        Task<T> GetById(int id);
+        Task<IList<T>> Get(bool includeRelated = false);
+        Task<T> GetById(int id, bool includeRelated = false);
         Task<bool> Exists(int id);
         Task<bool> Create(T entity);
         Task<bool> Update(T entity);

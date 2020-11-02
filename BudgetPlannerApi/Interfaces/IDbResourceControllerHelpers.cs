@@ -9,8 +9,8 @@ namespace BudgetPlannerApi.Interfaces
 {
     public interface IDbResourceControllerHelper<T> where T : class, IDbResource
     {
-        Task<ObjectResult> GetItems<D>(ControllerBase controller, IDbResourceRepository<T> repo);
-        Task<IActionResult> GetItem<D>(ControllerBase controller, IDbResourceRepository<T> repo, int id);
+        Task<ObjectResult> GetItems<D>(ControllerBase controller, IDbResourceRepository<T> repo, bool includeRelated);
+        Task<IActionResult> GetItem<D>(ControllerBase controller, IDbResourceRepository<T> repo, int id, bool includeRelated);
         Task<IActionResult> CreateItem<D>(ControllerBase controller, IDbResourceRepository<T> repo, D itemDTO);
         Task<IActionResult> UpdateItem<D>(ControllerBase controller, IDbResourceRepository<T> repo, int id, D itemDTO);
         Task<IActionResult> DeleteItem(ControllerBase controller, IDbResourceRepository<T> repo, int id);

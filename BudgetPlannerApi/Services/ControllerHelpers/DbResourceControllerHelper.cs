@@ -25,14 +25,15 @@ namespace BudgetPlannerApi.Services.ControllerHelpers
         /// <typeparam name="D">Data Transfer Object class</typeparam>
         /// <param name="controller"></param>
         /// <param name="repo"></param>
+        /// <param name="includeRelated"></param>
         /// <returns></returns>
-        public async Task<ObjectResult> GetItems<D>(ControllerBase controller, IDbResourceRepository<T> repo)
+        public async Task<ObjectResult> GetItems<D>(ControllerBase controller, IDbResourceRepository<T> repo, bool includeRelated = false)
         {
             try
             {
                 string desc = GetControllerDescription(controller);
                 _logger.LogInfo(desc);
-                var items = await repo.GetAll();
+                var items = await repo.Get(includeRelated);
                 var response = _mapper.Map<IList<D>>(items);
                 _logger.LogInfo($"{desc} - Successful");
 
@@ -51,14 +52,16 @@ namespace BudgetPlannerApi.Services.ControllerHelpers
         /// <param name="controller"></param>
         /// <param name="repo"></param>
         /// <param name="id"></param>
+        /// <param name="includeRelated"></param>
         /// <returns></returns>
-        public async Task<IActionResult> GetItem<D>(ControllerBase controller, IDbResourceRepository<T> repo, int id)
+        public async Task<IActionResult> GetItem<D>(ControllerBase controller, 
+            IDbResourceRepository<T> repo, int id, bool includeRelated)
         {
             try
             {
                 string desc = GetControllerDescription(controller);
                 _logger.LogInfo($"{desc}: {id}");
-                var item = await repo.GetById(id);
+                var item = await repo.GetById(id, includeRelated);
                 if (item == null)
                 {
                     _logger.LogWarn($"{desc}: Item not found: {id}");

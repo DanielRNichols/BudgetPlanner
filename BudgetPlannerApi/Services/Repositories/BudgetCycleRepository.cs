@@ -17,18 +17,27 @@ namespace BudgetPlannerApi.Services.Repositories
         {
             _db = db;
         }
-        public override async Task<IList<BudgetCycle>> GetAll()
+        public override async Task<IList<BudgetCycle>> Get(bool includeRelated = false)
         {
-            var items = await _db.BudgetCycles.Include(i => i.BudgetCycleItems).ToListAsync();
+            if (includeRelated)
+            {
+                return await _db.BudgetCycles.Include(i => i.BudgetCycleItems).ToListAsync();
+            }
 
-            return items;
+            return await base.Get(includeRelated);
         }
 
-        public override async Task<BudgetCycle> GetById(int id)
+        public override async Task<BudgetCycle> GetById(int id, bool includeRelated = false)
         {
-            var item = await _db.BudgetCycles.Include(i => i.BudgetCycleItems).FirstOrDefaultAsync(q => q.Id == id);
+            if(includeRelated)
+            {
+                return await _db.BudgetCycles
+                    .Include(i => i.BudgetCycleItems)
+                    .FirstOrDefaultAsync(q => q.Id == id);
+            }
 
-            return item;
+            return await base.GetById(id, includeRelated);
+
         }
     }
 }

@@ -28,29 +28,31 @@ namespace BudgetPlannerApi.Controllers
         /// <summary>
         /// Get all Budget Item Groups
         /// </summary>
+        /// <param name="includeRelated"></param>
         /// <returns></returns>
         // GET: api/<BudgetItemGroupsController>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery] bool includeRelated = false)
         {
-            return await _controllerHelper.GetItems<BudgetItemGroupDTO>(this, _repo);
+            return await _controllerHelper.GetItems<BudgetItemGroupDTO>(this, _repo, includeRelated);
         }
 
         /// <summary>
         /// Get a Budget Item Group by Id
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="includeRelated"></param>
         /// <returns></returns>
         // GET api/<BudgetItemGroupsController>/5
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(int id, [FromQuery] bool includeRelated = false)
         {
-            return await _controllerHelper.GetItem<BudgetItemGroupDTO>(this, _repo, id);
+            return await _controllerHelper.GetItem<BudgetItemGroupDTO>(this, _repo, id, includeRelated);
         }
 
         /// <summary>

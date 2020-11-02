@@ -37,7 +37,7 @@ namespace BudgetPlannerApi.Services.Repositories
             return await _dbContext.AnyAsync(row => row.Id == id);
         }
 
-        public virtual async Task<IList<T>> GetAll()
+        public virtual async Task<IList<T>> Get(bool includeRelated = false)
         {
             // Override if you need to include related objects
             var items = await _dbContext.ToListAsync();
@@ -45,7 +45,7 @@ namespace BudgetPlannerApi.Services.Repositories
             return items;
         }
 
-        public virtual async Task<T> GetById(int id)
+        public virtual async Task<T> GetById(int id, bool includeRelated = false)
         {
             // Override if you need to include related objects
             var item = await _dbContext.FindAsync(id);
