@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BudgetPlannerApi.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 namespace BudgetPlannerApi.Data
 {
     [Table("MemorizedTransactions")]
-    public class MemorizedTransaction
+    public class MemorizedTransaction : IDbResource
     {
         public int Id { get; set; }
         public string Payee { get; set; }
