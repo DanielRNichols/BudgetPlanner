@@ -15,6 +15,7 @@ namespace BudgetPlanner.Data
         public DbSet<MemorizedTransaction> MemorizedTransactions { get; set; }
         public DbSet<Register> Registers { get; set; }
         public DbSet<RegisterEntry> RegisterEntries { get; set; }
+        public DbSet<RegisterSplitEntry> RegisterSplitEntries { get; set; }
         public DbSet<BudgetCycle> BudgetCycles { get; set; }
         public DbSet<BudgetCycleItem> BudgetCyclesItems { get; set; }
 
