@@ -224,76 +224,76 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:BudgetPlannerApi.Controllers.RegistriesController.Get(System.Boolean)">
+        <member name="M:BudgetPlannerApi.Controllers.RegisterEntriesController.Get(System.Boolean)">
             <summary>
-            Get all Registries
+            Get all Register Entries
             </summary>
             <param name="includeRelated"></param>
             <returns></returns>
         </member>
-        <member name="M:BudgetPlannerApi.Controllers.RegistriesController.GetById(System.Int32,System.Boolean)">
+        <member name="M:BudgetPlannerApi.Controllers.RegisterEntriesController.GetById(System.Int32,System.Boolean)">
             <summary>
-            Get a Registry by Id
-            </summary>
-            <param name="id"></param>
-            <param name="includeRelated"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BudgetPlannerApi.Controllers.RegistriesController.Create(BudgetPlannerApi.DataTransfer.RegistryCreateDTO)">
-            <summary>
-            Create a new Registry
-            </summary>
-            <param name="dto"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BudgetPlannerApi.Controllers.RegistriesController.Update(System.Int32,BudgetPlannerApi.DataTransfer.RegistryCreateDTO)">
-            <summary>
-            Update a Registry
-            </summary>
-            <param name="id"></param>
-            <param name="dto"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BudgetPlannerApi.Controllers.RegistriesController.Delete(System.Int32)">
-            <summary>
-            Delete a Registry
-            </summary>
-            <param name="id"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BudgetPlannerApi.Controllers.RegistryEntriesController.Get(System.Boolean)">
-            <summary>
-            Get all Registry Entries
-            </summary>
-            <param name="includeRelated"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BudgetPlannerApi.Controllers.RegistryEntriesController.GetById(System.Int32,System.Boolean)">
-            <summary>
-            Get a Registry Entry by Id
+            Get a Register Entry by Id
             </summary>
             <param name="id"></param>
             <param name="includeRelated"></param>
             <returns></returns>
         </member>
-        <member name="M:BudgetPlannerApi.Controllers.RegistryEntriesController.Create(BudgetPlannerApi.DataTransfer.RegistryEntryCreateDTO)">
+        <member name="M:BudgetPlannerApi.Controllers.RegisterEntriesController.Create(BudgetPlannerApi.DataTransfer.RegisterEntryCreateDTO)">
             <summary>
-            Create a new Registry Entry
+            Create a new Register Entry
             </summary>
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:BudgetPlannerApi.Controllers.RegistryEntriesController.Update(System.Int32,BudgetPlannerApi.DataTransfer.RegistryEntryCreateDTO)">
+        <member name="M:BudgetPlannerApi.Controllers.RegisterEntriesController.Update(System.Int32,BudgetPlannerApi.DataTransfer.RegisterEntryCreateDTO)">
             <summary>
-            Update a Registry Entry
+            Update a Register Entry
             </summary>
             <param name="id"></param>
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:BudgetPlannerApi.Controllers.RegistryEntriesController.Delete(System.Int32)">
+        <member name="M:BudgetPlannerApi.Controllers.RegisterEntriesController.Delete(System.Int32)">
             <summary>
-            Delete a Registry Entry
+            Delete a Register Entry
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BudgetPlannerApi.Controllers.RegistersController.Get(System.Boolean)">
+            <summary>
+            Get all Registers
+            </summary>
+            <param name="includeRelated"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BudgetPlannerApi.Controllers.RegistersController.GetById(System.Int32,System.Boolean)">
+            <summary>
+            Get a Register by Id
+            </summary>
+            <param name="id"></param>
+            <param name="includeRelated"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BudgetPlannerApi.Controllers.RegistersController.Create(BudgetPlannerApi.DataTransfer.RegisterCreateDTO)">
+            <summary>
+            Create a new Register
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BudgetPlannerApi.Controllers.RegistersController.Update(System.Int32,BudgetPlannerApi.DataTransfer.RegisterCreateDTO)">
+            <summary>
+            Update a Register
+            </summary>
+            <param name="id"></param>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BudgetPlannerApi.Controllers.RegistersController.Delete(System.Int32)">
+            <summary>
+            Delete a Register
             </summary>
             <param name="id"></param>
             <returns></returns>

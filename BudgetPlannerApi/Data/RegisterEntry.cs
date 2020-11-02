@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace BudgetPlannerApi.Data
 {
-    [Table("RegistryEntries")]
-    public class RegistryEntry : IDbResource
+    [Table("RegisterEntries")]
+    public class RegisterEntry : IDbResource
     {
         public int Id { get; set; }
-        public int RegistryId { get; set; }
+        public int RegisterId { get; set; }
         public int BudgetCycleId { get; set; }
         public int BudgetItemId { get; set; }
         public int EntryNumber { get; set; }
@@ -29,7 +29,7 @@ namespace BudgetPlannerApi.Data
         public int Status { get; set; }
         public bool IsSplit { get; set; }
 
-        public virtual Registry Registry { get; set; }
+        public virtual Register Register { get; set; }
         public virtual BudgetCycle BudgetCycle { get; set; }
         public virtual BudgetItem BudgetItem { get; set; }
     }

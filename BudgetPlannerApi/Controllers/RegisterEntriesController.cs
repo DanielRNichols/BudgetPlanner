@@ -13,86 +13,86 @@ namespace BudgetPlannerApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RegistryEntriesController : ControllerBase
+    public class RegisterEntriesController : ControllerBase
     {
-        private readonly IRegistryEntriesControllerHelper _controllerHelper;
-        private readonly IRegistryEntryRepository _repo;
+        private readonly IRegisterEntriesControllerHelper _controllerHelper;
+        private readonly IRegisterEntryRepository _repo;
 
-        public RegistryEntriesController(IRegistryEntriesControllerHelper controllerHelper,
-            IRegistryEntryRepository repo)
+        public RegisterEntriesController(IRegisterEntriesControllerHelper controllerHelper,
+            IRegisterEntryRepository repo)
         {
             _controllerHelper = controllerHelper;
             _repo = repo;
         }
 
         /// <summary>
-        /// Get all Registry Entries
+        /// Get all Register Entries
         /// </summary>
         /// <param name="includeRelated"></param>
         /// <returns></returns>
-        // GET: api/<RegistryEntriesController>
+        // GET: api/<RegisterEntriesController>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get([FromQuery] bool includeRelated = false)
         {
-            return await _controllerHelper.GetItems<RegistryEntryDTO>(this, _repo, includeRelated);
+            return await _controllerHelper.GetItems<RegisterEntryDTO>(this, _repo, includeRelated);
         }
 
         /// <summary>
-        /// Get a Registry Entry by Id
+        /// Get a Register Entry by Id
         /// </summary>
         /// <param name="id"></param>
         /// <param name="includeRelated"></param>
         /// <returns></returns>
-        // GET api/<RegistryEntriesController>/5
+        // GET api/<RegisterEntriesController>/5
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetById(int id, [FromQuery] bool includeRelated = false)
         {
-            return await _controllerHelper.GetItem<RegistryEntryDTO>(this, _repo, id, includeRelated);
+            return await _controllerHelper.GetItem<RegisterEntryDTO>(this, _repo, id, includeRelated);
         }
 
         /// <summary>
-        /// Create a new Registry Entry
+        /// Create a new Register Entry
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        // POST api/<RegistryEntriesController>
+        // POST api/<RegisterEntriesController>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Create([FromBody] RegistryEntryCreateDTO dto)
+        public async Task<IActionResult> Create([FromBody] RegisterEntryCreateDTO dto)
         {
-            return await _controllerHelper.CreateItem<RegistryEntryCreateDTO>(this, _repo, dto);
+            return await _controllerHelper.CreateItem<RegisterEntryCreateDTO>(this, _repo, dto);
         }
 
         /// <summary>
-        /// Update a Registry Entry
+        /// Update a Register Entry
         /// </summary>
         /// <param name="id"></param>
         /// <param name="dto"></param>
         /// <returns></returns>
-        // PUT api/<RegistryEntriesController>/5
+        // PUT api/<RegisterEntriesController>/5
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Update(int id, [FromBody] RegistryEntryCreateDTO dto)
+        public async Task<IActionResult> Update(int id, [FromBody] RegisterEntryCreateDTO dto)
         {
-            return await _controllerHelper.UpdateItem<RegistryEntryCreateDTO>(this, _repo, id, dto);
+            return await _controllerHelper.UpdateItem<RegisterEntryCreateDTO>(this, _repo, id, dto);
         }
 
         /// <summary>
-        /// Delete a Registry Entry
+        /// Delete a Register Entry
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        // DELETE api/<RegistryEntriesController>/5
+        // DELETE api/<RegisterEntriesController>/5
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -31,10 +31,10 @@ namespace BudgetPlannerApi.Interfaces
     public interface IMemorizedTransactionRepository : IDbResourceRepository<MemorizedTransaction>
     {
     }
-    public interface IRegistryRepository : IDbResourceRepository<Registry>
+    public interface IRegisterRepository : IDbResourceRepository<Register>
     {
     }
-    public interface IRegistryEntryRepository : IDbResourceRepository<RegistryEntry>
+    public interface IRegisterEntryRepository : IDbResourceRepository<RegisterEntry>
     {
     }
     public interface IBudgetCycleRepository : IDbResourceRepository<BudgetCycle>

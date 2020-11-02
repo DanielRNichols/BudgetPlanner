@@ -9,21 +9,21 @@ using System.Threading.Tasks;
 
 namespace BudgetPlannerApi.Services.Repositories
 {
-    public class RegistryEntryRepository : DbResourceRepository<RegistryEntry>, IRegistryEntryRepository
+    public class RegisterEntryRepository : DbResourceRepository<RegisterEntry>, IRegisterEntryRepository
     {
         private readonly ApplicationDbContext _db;
 
-        public RegistryEntryRepository(ApplicationDbContext db) : base(db, db.RegistryEntries)
+        public RegisterEntryRepository(ApplicationDbContext db) : base(db, db.RegisterEntries)
         {
             _db = db;
         }
 
-        public override async Task<IList<RegistryEntry>> Get(bool includeRelated = false)
+        public override async Task<IList<RegisterEntry>> Get(bool includeRelated = false)
         {
             if(includeRelated)
             {
-                return await _db.RegistryEntries
-                .Include(r => r.Registry)
+                return await _db.RegisterEntries
+                .Include(r => r.Register)
                 .Include(c => c.BudgetCycle)
                 .Include(i => i.BudgetItem)
                 .ToListAsync();
@@ -33,12 +33,12 @@ namespace BudgetPlannerApi.Services.Repositories
 
         }
 
-        public override async Task<RegistryEntry> GetById(int id, bool includeRelated = false)
+        public override async Task<RegisterEntry> GetById(int id, bool includeRelated = false)
         {
             if (includeRelated)
             {
-                return await _db.RegistryEntries
-                .Include(r => r.Registry)
+                return await _db.RegisterEntries
+                .Include(r => r.Register)
                 .Include(c => c.BudgetCycle)
                 .Include(i => i.BudgetItem)
                 .FirstOrDefaultAsync(q => q.Id == id);

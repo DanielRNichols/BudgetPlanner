@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace BudgetPlannerApi.Services.Repositories
 {
-    public class RegistryRepository : DbResourceRepository<Registry>, IRegistryRepository
+    public class RegisterRepository : DbResourceRepository<Register>, IRegisterRepository
     {
         private readonly ApplicationDbContext _db;
 
-        public RegistryRepository(ApplicationDbContext db) : base(db, db.Registries)
+        public RegisterRepository(ApplicationDbContext db) : base(db, db.Registers)
         {
             _db = db;
         }

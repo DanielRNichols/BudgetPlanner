@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace BudgetPlannerApi.DataTransfer
 {
-    public class RegistryEntryDTO
+    public class RegisterEntryDTO
     {
         public int Id { get; set; }
-        public int RegistryId { get; set; }
+        public int RegisterId { get; set; }
         public int BudgetCycleId { get; set; }
         public int BudgetItemId { get; set; }
         public int EntryNumber { get; set; }
@@ -24,14 +24,14 @@ namespace BudgetPlannerApi.DataTransfer
         public int Status { get; set; }
         public bool IsSplit { get; set; }
 
-        public virtual RegistryDTO Registry { get; set; }
+        public virtual RegisterDTO Register { get; set; }
         public virtual BudgetCycleDTO BudgetCycle { get; set; }
         public virtual BudgetItemDTO BudgetItem { get; set; }
     }
-    public class RegistryEntryCreateDTO
+    public class RegisterEntryCreateDTO
     {
         [Required]
-        public int RegistryId { get; set; }
+        public int RegisterId { get; set; }
         public int BudgetCycleId { get; set; }
         public int BudgetItemId { get; set; }
         [Required]

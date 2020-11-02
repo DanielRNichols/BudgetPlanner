@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace BudgetPlannerApi.DataTransfer
 {
-    public class RegistryDTO
+    public class RegisterDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public decimal StartingBalance { get; set; }
     }
-    public class RegistryCreateDTO
+    public class RegisterCreateDTO
     {
         [Required]
         public string Name { get; set; }

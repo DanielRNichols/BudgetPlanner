@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace BudgetPlannerApi.Services.ControllerHelpers
 {
-    public class RegistriesControllerHelper : DbResourceControllerHelper<Registry>, IRegistriesControllerHelper
+    public class RegistersControllerHelper : DbResourceControllerHelper<Register>, IRegistersControllerHelper
     {
-        public RegistriesControllerHelper(ILoggerService logger, IMapper mapper) : base(logger, mapper)
+        public RegistersControllerHelper(ILoggerService logger, IMapper mapper) : base(logger, mapper)
         {
 
         }

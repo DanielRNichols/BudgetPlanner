@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace BudgetPlannerApi.Data
 {
-    [Table("Registries")]
-    public class Registry : IDbResource
+    [Table("Registers")]
+    public class Register : IDbResource
     {
         public int Id { get; set; }
         public string Name { get; set; }
