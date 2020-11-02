@@ -1,4 +1,5 @@
 ﻿using BudgetPlannerApi.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,5 +22,7 @@ namespace BudgetPlannerApi.Data
 
         [Column(TypeName = "money")]
         public decimal StartingBalance { get; set; }
+
+        public virtual IList<BudgetCycleItem> BudgetCycleItems { get; set; }
     }
 }

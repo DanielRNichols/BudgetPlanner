@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BudgetPlannerApi.Services
+namespace BudgetPlannerApi.Services.Repositories
 {
     public class BudgetItemGroupRepository : DbResourceRepository<BudgetItemGroup>, IBudgetItemGroupRepository
     {
@@ -19,7 +19,6 @@ namespace BudgetPlannerApi.Services
         }
         public override async Task<IList<BudgetItemGroup>> GetAll()
         {
-            //var items = await _db.BudgetItemGroups.ToListAsync();
             var items = await _db.BudgetItemGroups.Include(t => t.BudgetItemType).ToListAsync();
 
             return items;

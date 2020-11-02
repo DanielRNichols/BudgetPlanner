@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BudgetPlannerApi.Services
+namespace BudgetPlannerApi.Services.Repositories
 {
     public class DbResourceRepository<T> : IDbResourceRepository<T> where T: class, IDbResource
     {

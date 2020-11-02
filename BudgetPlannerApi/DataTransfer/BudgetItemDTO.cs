@@ -13,6 +13,8 @@ namespace BudgetPlannerApi.DataTransfer
         public int BudgetItemGroupId { get; set; }
 
         public virtual BudgetItemGroupDTO BudgetItemGroup { get; set; }
+
+        public virtual IList<BudgetCycleItemDTO> BudgetCycleItems { get; set; }
     }
 
     public class BudgetItemCreateDTO

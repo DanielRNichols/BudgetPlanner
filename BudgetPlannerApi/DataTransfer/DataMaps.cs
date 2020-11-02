@@ -28,6 +28,9 @@ namespace BudgetPlannerApi.DataTransfer
 
             CreateMap<BudgetCycle, BudgetCycleDTO>().ReverseMap();
             CreateMap<BudgetCycle, BudgetCycleCreateDTO>().ReverseMap();
+
+            CreateMap<BudgetCycleItem, BudgetCycleItemDTO>().ReverseMap();
+            CreateMap<BudgetCycleItem, BudgetCycleItemCreateDTO>().ReverseMap();
         }
     }
 }

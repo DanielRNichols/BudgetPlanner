@@ -37,4 +37,8 @@ namespace BudgetPlannerApi.Interfaces
     {
     }
 
+    public interface IBudgetCycleItemRepository : IDbResourceRepository<BudgetCycleItem>
+    {
+    }
+
 }

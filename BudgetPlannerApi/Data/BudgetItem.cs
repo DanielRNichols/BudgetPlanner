@@ -15,5 +15,8 @@ namespace BudgetPlannerApi.Data
         public int BudgetItemGroupId { get; set; }
 
         public virtual BudgetItemGroup BudgetItemGroup { get; set; }
+
+        public virtual IList<BudgetCycleItem> BudgetCycleItems { get; set; }
+
     }
 }

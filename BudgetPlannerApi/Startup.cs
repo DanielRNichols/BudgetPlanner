@@ -15,12 +15,12 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.IO;
-using BudgetPlanner.Interfaces;
-using BudgetPlanner.Services;
 using BudgetPlannerApi.DataTransfer;
 using AutoMapper;
 using BudgetPlannerApi.Interfaces;
 using BudgetPlannerApi.Services;
+using BudgetPlannerApi.Services.ControllerHelpers;
+using BudgetPlannerApi.Services.Repositories;
 
 namespace BudgetPlanner
 {
@@ -70,12 +70,24 @@ namespace BudgetPlanner
             });
 
             services.AddSingleton<ILoggerService, LoggerService>();
+
+            // Repositories Dependency Injection
             services.AddScoped<IBudgetItemTypeRepository, BudgetItemTypeRepository>();
             services.AddScoped<IBudgetItemGroupRepository, BudgetItemGroupRepository>();
             services.AddScoped<IBudgetItemRepository, BudgetItemRepository>();
             services.AddScoped<IMemorizedTransactionRepository, MemorizedTransactionRepository>();
             services.AddScoped<IRegistryRepository, RegistryRepository>();
             services.AddScoped<IBudgetCycleRepository, BudgetCycleRepository>();
+            services.AddScoped<IBudgetCycleItemRepository, BudgetCycleItemRepository>();
+
+            // Controller Helpers Dependency Injection
+            services.AddScoped<IBudgetItemTypesControllerHelper, BudgetItemTypesControllerHelper>();
+            services.AddScoped<IBudgetItemGroupsControllerHelper, BudgetItemGroupsControllerHelper>();
+            services.AddScoped<IBudgetItemsControllerHelper, BudgetItemsControllerHelper>();
+            services.AddScoped<IMemorizedTransactionsControllerHelper, MemorizedTransactionsControllerHelper>();
+            services.AddScoped<IRegistriesControllerHelper, RegistriesControllerHelper>();
+            services.AddScoped<IBudgetCyclesControllerHelper, BudgetCyclesControllerHelper>();
+            services.AddScoped<IBudgetCycleItemsControllerHelper, BudgetCycleItemsControllerHelper>();
 
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);

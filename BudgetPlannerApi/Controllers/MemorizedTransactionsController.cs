@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using BudgetPlanner.Interfaces;
 using BudgetPlannerApi.Data;
 using BudgetPlannerApi.DataTransfer;
 using BudgetPlannerApi.Interfaces;
@@ -16,18 +15,14 @@ namespace BudgetPlannerApi.Controllers
     [ApiController]
     public class MemorizedTransactionsController : ControllerBase
     {
-        private readonly IMemorizedTransactionRepository _memorizedTransactionRepository;
-        private readonly ILoggerService _logger;
-        private readonly IMapper _mapper;
+        private readonly IMemorizedTransactionsControllerHelper _controllerHelper;
+        private readonly IMemorizedTransactionRepository _repo;
 
-        public MemorizedTransactionsController(
-            IMemorizedTransactionRepository memorizedTransactionRepository,
-            ILoggerService logger,
-            IMapper mapper)
+        public MemorizedTransactionsController(IMemorizedTransactionsControllerHelper controllerHelper,
+            IMemorizedTransactionRepository repo)
         {
-            _memorizedTransactionRepository = memorizedTransactionRepository;
-            _logger = logger;
-            _mapper = mapper;
+            _controllerHelper = controllerHelper;
+            _repo = repo;
         }
 
         /// <summary>
@@ -38,25 +33,13 @@ namespace BudgetPlannerApi.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetItems()
+        public async Task<IActionResult> Get()
         {
-            try
-            {
-                _logger.LogInfo("GetItems");
-                var items = await _memorizedTransactionRepository.GetAll();
-                var response = _mapper.Map<IList<MemorizedTransactionDTO>>(items);
-                _logger.LogInfo("Successfully retrieved Items");
-
-                return Ok(response);
-            }
-            catch (Exception e)
-            {
-                return ServerError(e);
-            }
+            return await _controllerHelper.GetItems<MemorizedTransactionDTO>(this, _repo);
         }
 
         /// <summary>
-        /// Get  Memorized Transaction by Id
+        /// Get a Memorized Transaction by Id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -65,75 +48,31 @@ namespace BudgetPlannerApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetItem(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            try
-            {
-                _logger.LogInfo($"GetItem by id: {id}");
-                var item = await _memorizedTransactionRepository.GetById(id);
-                if (item == null)
-                {
-                    _logger.LogWarn($"Item not found: {id}");
-
-                    return NotFound();
-                }
-                var response = _mapper.Map<MemorizedTransactionDTO>(item);
-                _logger.LogInfo($"Successfully retrieved Item {id}");
-
-                return Ok(response);
-            }
-            catch (Exception e)
-            {
-                return ServerError(e);
-            }
+            return await _controllerHelper.GetItem<MemorizedTransactionDTO>(this, _repo, id);
         }
 
         /// <summary>
         /// Create a new Memorized Transaction
         /// </summary>
-        /// <param name="bugetItemTypeDTO"></param>
+        /// <param name="dto"></param>
         /// <returns></returns>
         // POST api/<MemorizedTransactionsController>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Create([FromBody] MemorizedTransactionCreateDTO bugetItemTypeDTO)
+        public async Task<IActionResult> Create([FromBody] MemorizedTransactionCreateDTO dto)
         {
-            try
-            {
-                _logger.LogInfo("Attempted to create Item");
-                if (bugetItemTypeDTO == null)
-                {
-                    _logger.LogWarn($"Empty request submitted");
-                    return BadRequest();
-                }
-                if (!ModelState.IsValid)
-                {
-                    _logger.LogWarn($"Invalid request submitted");
-                    return BadRequest(ModelState);
-                }
-                var memorizedTransaction = _mapper.Map<MemorizedTransaction>(bugetItemTypeDTO);
-
-                var isSuccess = await _memorizedTransactionRepository.Create(memorizedTransaction);
-                if (!isSuccess)
-                {
-                    return ServerError("Item creation failed");
-                }
-                _logger.LogInfo("Item created");
-                return Created("", new { memorizedTransaction });
-            }
-            catch (Exception e)
-            {
-                return ServerError(e);
-            }
+            return await _controllerHelper.CreateItem<MemorizedTransactionCreateDTO>(this, _repo, dto);
         }
 
         /// <summary>
         /// Update a Memorized Transaction
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="bugetItemTypeDTO"></param>
+        /// <param name="dto"></param>
         /// <returns></returns>
         // PUT api/<MemorizedTransactionsController>/5
         [HttpPut("{id}")]
@@ -141,50 +80,9 @@ namespace BudgetPlannerApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Update(int id, [FromBody] MemorizedTransactionCreateDTO bugetItemTypeDTO)
+        public async Task<IActionResult> Update(int id, [FromBody] MemorizedTransactionCreateDTO dto)
         {
-            try
-            {
-                _logger.LogInfo("Attempted to update Item");
-                if (id < 1)
-                {
-                    _logger.LogWarn($"Invalid id submitted: {id}");
-                    return BadRequest();
-                }
-
-                if (bugetItemTypeDTO == null)
-                {
-                    _logger.LogWarn($"Empty request submitted");
-                    return BadRequest();
-                }
-                var exists = await _memorizedTransactionRepository.Exists(id);
-                if (!exists)
-                {
-                    _logger.LogWarn($"Item with id {id} was not found");
-                    return NotFound();
-                }
-                if (!ModelState.IsValid)
-                {
-                    _logger.LogWarn($"Invalid request submitted");
-                    return BadRequest(ModelState);
-                }
-
-                var item = _mapper.Map<MemorizedTransaction>(bugetItemTypeDTO);
-                // force item.Id to be id passed in 
-                item.Id = id;
-
-                var isSuccess = await _memorizedTransactionRepository.Update(item);
-                if (!isSuccess)
-                {
-                    return ServerError("Item update failed");
-                }
-                _logger.LogInfo("Item updated");
-                return Ok(new { item });
-            }
-            catch (Exception e)
-            {
-                return ServerError(e);
-            }
+            return await _controllerHelper.UpdateItem<MemorizedTransactionCreateDTO>(this, _repo, id, dto);
         }
 
         /// <summary>
@@ -200,44 +98,8 @@ namespace BudgetPlannerApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Delete(int id)
         {
-            try
-            {
-                _logger.LogInfo("Attempted to delete Item");
-                if (id < 1)
-                {
-                    _logger.LogWarn($"Empty request submitted");
-                    return BadRequest();
-                }
-                var item = await _memorizedTransactionRepository.GetById(id);
-                if (item == null)
-                {
-                    _logger.LogWarn($"Item with id ${id} was not found");
-                    return NotFound();
-                }
-
-                var isSuccess = await _memorizedTransactionRepository.Delete(item);
-                if (!isSuccess)
-                {
-                    return ServerError("Item delete failed");
-                }
-                _logger.LogInfo("Item deleted");
-                return Ok(id);
-            }
-            catch (Exception e)
-            {
-                return ServerError(e);
-            }
+            return await _controllerHelper.DeleteItem(this, _repo, id);
         }
 
-        private ObjectResult ServerError(string msg)
-        {
-            _logger.LogServerError(msg);
-            return StatusCode(500, "Server Error");
-        }
-        private ObjectResult ServerError(Exception e)
-        {
-            _logger.LogServerError(e);
-            return StatusCode(500, "Server Error");
-        }
     }
 }
