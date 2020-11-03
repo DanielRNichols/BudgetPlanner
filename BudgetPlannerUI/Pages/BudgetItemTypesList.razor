@@ -1,0 +1,33 @@
+﻿@page "/budgetitemtypes"
+
+<h1>Budget Item Types</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (BudgetItemTypes == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>IsExpense</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var itemType in BudgetItemTypes)
+            {
+                <tr>
+                    <td>@itemType.Id</td>
+                    <td>@itemType.Name</td>
+                    <td>@itemType.IsExpense.ToString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
