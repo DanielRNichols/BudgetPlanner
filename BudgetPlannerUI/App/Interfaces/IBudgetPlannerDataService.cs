@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 
 namespace BudgetPlannerUI.Interfaces
 {
-    public interface IBudgetPlannerDataService
+    public interface IBudgetPlannerDataService<T> where T : class
     {
-        // BudgetItemTypes
-        Task<IEnumerable<BudgetItemType>> GetBudgetItemTypes(bool includeRelated = false);
-        Task<BudgetItemType> GetBudgetItemType(int id, bool includeRelated = false);
+        Task<IEnumerable<T>> Get(bool includeRelated = false);
+        Task<T> Get(int id, bool includeRelated = false);
+    }
+
+    public interface IBudgetItemTypesDataService : IBudgetPlannerDataService<BudgetItemType>
+    {
     }
 }

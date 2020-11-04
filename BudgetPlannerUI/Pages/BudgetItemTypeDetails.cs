@@ -8,17 +8,20 @@ using System.Threading.Tasks;
 
 namespace BudgetPlannerUI.Pages
 {
-    public partial class BudgetItemTypesList
+    public partial class BudgetItemTypeDetails
     {
-        public IEnumerable<BudgetItemType> BudgetItemTypes { get; set; }
+        [Parameter]
+        public string Id { get; set; }
 
         [Inject]
         public IBudgetItemTypesDataService BudgetItemTypesDataService { get; set; }
 
+        public BudgetItemType BudgetItemType { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
-            var result = await BudgetItemTypesDataService.Get();
-            BudgetItemTypes = result.ToList();
+            int itemTypeId = int.Parse(Id);
+            BudgetItemType = await BudgetItemTypesDataService.Get(itemTypeId);
         }
     }
 }

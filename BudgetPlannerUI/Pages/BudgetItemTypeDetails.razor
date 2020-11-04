@@ -1,0 +1,17 @@
+﻿@page "/budgetitemtypes/{id}"
+
+<h3>Budget Item TypeDetails</h3>
+
+@if (BudgetItemType == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <p>Id: @BudgetItemType.Id</p>
+    <p>Name: @BudgetItemType.Name</p>
+    <p>IsExpense: @BudgetItemType.IsExpense.ToString()</p>
+
+}
+
+
