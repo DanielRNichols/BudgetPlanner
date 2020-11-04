@@ -19,17 +19,13 @@ namespace BudgetPlannerUI
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
 
-            //builder.Services.AddScoped(sp => 
-            //    new HttpClient
-            //    { 
-            //        BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) 
-            //    }
-            //);
+            builder.Services.AddScoped(sp =>
+                new HttpClient
+                {
+                    BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
+                }
+            );
 
-            //builder.Services.AddHttpClient<IBudgetPlannerDataService, BudgetPlannerDataService>(client =>
-            //    client.BaseAddress = new Uri("https://localhost:44371/"));
-
-            builder.Services.AddHttpClient();
             builder.Services.AddTransient<IBudgetItemTypesDataService, BudgetItemTypesDataService>();
 
             await builder.Build().RunAsync();

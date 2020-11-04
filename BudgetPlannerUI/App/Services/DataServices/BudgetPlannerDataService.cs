@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -15,12 +16,12 @@ namespace BudgetPlannerUI.Services
     {
         //private readonly IHttpClientFactory _httpClientFactory;
         private readonly HttpClient _httpClient;
-        protected string ResourceName { get; set; } = "";
+        private readonly string _resourceUrl = "";
 
-        public BudgetPlannerDataService(IHttpClientFactory httpClientFactory)
+        public BudgetPlannerDataService(HttpClient httpClient, string resourceUrl)
         {
-            _httpClient = httpClientFactory.CreateClient();
-            _httpClient.BaseAddress = new Uri("https://localhost:44371/api/");
+            _httpClient = httpClient;
+            _resourceUrl = resourceUrl;
         }
 
         public async Task<T> Get(int id, bool includeRelated = false)
@@ -28,25 +29,26 @@ namespace BudgetPlannerUI.Services
             if (id < 1)
                 return null;
 
-            var response = await _httpClient.GetAsync($"{ResourceName}/{id}");
-
-            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<T>($"{_resourceUrl}{id}");
+            }
+            catch
+            {
                 return null;
-
-            var responseBody = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<T>(responseBody);
-
-            //return await JsonSerializer.DeserializeAsync<BudgetItemType>
-            //    (await _httpClient.GetStreamAsync($"api/budgetitemtypes/{id}"),
-            //    new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+            }
         }
 
         public async Task<IEnumerable<T>> Get(bool includeRelated = false)
         {
-            return await System.Text.Json.JsonSerializer.DeserializeAsync<IEnumerable<T>>
-                (await _httpClient.GetStreamAsync($"" +
-                $"{ResourceName}"),
-                new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<IList<T>>(_resourceUrl);
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

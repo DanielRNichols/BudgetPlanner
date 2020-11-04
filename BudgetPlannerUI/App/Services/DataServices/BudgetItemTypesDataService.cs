@@ -1,4 +1,5 @@
-﻿using BudgetPlannerUI.Interfaces;
+﻿using BudgetPlannerUI.Static;
+using BudgetPlannerUI.Interfaces;
 using BudgetPlannerUI.Models;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,8 @@ namespace BudgetPlannerUI.Services
 {
     public class BudgetItemTypesDataService : BudgetPlannerDataService<BudgetItemType>, IBudgetItemTypesDataService
     {
-        public BudgetItemTypesDataService(IHttpClientFactory httpClientFactory) : base(httpClientFactory)
+        public BudgetItemTypesDataService(HttpClient httpClient) : base(httpClient, Endpoints.BudgetItemTypes)
         {
-            ResourceName = "budgetitemtypes";
         }
     }
 }
