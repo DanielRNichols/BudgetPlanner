@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Pages\BudgetItemGroups\" />
     <Folder Include="wwwroot\sample-data\" />
   </ItemGroup>
 

@@ -17,15 +17,16 @@ else
 {
 <EditForm Model="Model" OnValidSubmit="Save">
     <DataAnnotationsValidator />
-    <ValidationSummary />
     <div class="form-group">
         <label for="name">Name</label>
         <InputText @bind-Value="Model.Name" class="form-control" id="name" />
+        <ValidationMessage For="@(() => Model.Name)" />
     </div>
     <div class="form-group">
         <label>Is Expense</label>
         <InputCheckbox @bind-Value="Model.IsExpense" />
     </div>
+    <ValidationSummary />
     <button class="btn btn-primary" type="submit">
         <span class="oi oi-check"></span>
         Save
@@ -41,5 +42,5 @@ else
         <span class="oi oi-x"></span>
         Cancel
     </button>
-    </EditForm>
+</EditForm>
 }
