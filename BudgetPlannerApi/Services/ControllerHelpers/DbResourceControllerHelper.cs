@@ -149,9 +149,9 @@ namespace BudgetPlannerApi.Services.ControllerHelpers
                 var isSuccess = await repo.Update(item);
                 if (!isSuccess)
                 {
-                    return InternalError(controller, "{desc}: Update failed");
+                    return InternalError(controller, $"{desc}: Update failed");
                 }
-                _logger.LogInfo("{desc}: Update Successful");
+                _logger.LogInfo($"{desc}: Update Successful");
                 return controller.Ok(new { item });
             }
             catch (Exception e)
@@ -185,7 +185,7 @@ namespace BudgetPlannerApi.Services.ControllerHelpers
                 {
                     return InternalError(controller, "{desc}: Item delete failed");
                 }
-                _logger.LogInfo("{desc}: Item deleted");
+                _logger.LogInfo($"{desc}: Item deleted");
                 return controller.Ok(id);
             }
             catch (Exception e)

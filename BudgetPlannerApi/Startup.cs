@@ -63,13 +63,21 @@ namespace BudgetPlanner
                     Version = "v1",
                     Description = "Budget Planner API"
                 });
-                var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlFullPath = Path.Combine(AppContext.BaseDirectory, xmlFileName);
 
-                cfg.IncludeXmlComments(xmlFullPath);
+                // commenting out for now, need to resolve path issue in docker container
+                //   fail: Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddleware[3]
+                //   An exception was thrown attempting to execute the error handler.
+                //   System.IO.FileNotFoundException: Could not find file '/app/BudgetPlannerApi.xml'.
+                //
+
+                //var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                //var xmlFullPath = Path.Combine(AppContext.BaseDirectory, xmlFileName);
+
+                //cfg.IncludeXmlComments(xmlFullPath);
             });
 
-            services.AddSingleton<ILoggerService, LoggerService>();
+            // Using ConsoleLoggerService temporarily to until path issues for NLog configuration with Docker 
+            services.AddSingleton<ILoggerService, ConsoleLoggerService>(); //LoggerService>();
 
             // Repositories Dependency Injection
             services.AddScoped<IBudgetItemTypeRepository, BudgetItemTypeRepository>();
