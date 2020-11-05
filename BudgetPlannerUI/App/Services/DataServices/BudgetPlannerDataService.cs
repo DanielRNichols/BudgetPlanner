@@ -1,5 +1,6 @@
 ﻿using BudgetPlannerUI.Interfaces;
 using BudgetPlannerUI.Models;
+using BudgetPlannerUI.Pages.BudgetItemTypes;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -50,5 +51,48 @@ namespace BudgetPlannerUI.Services
                 return null;
             }
         }
+
+        public async Task<bool> Create(T entity)
+        {
+            if (entity == null)
+                return false;
+
+            //_httpClient.DefaultRequestHeaders.Authorization =
+            //    new AuthenticationHeaderValue("bearer", await GetBearerToken());
+
+            var response = await _httpClient.PostAsJsonAsync<T>(_resourceUrl, entity);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.Created)
+                return true;
+
+            return false;
+
+        }
+
+        public async Task<bool> Update(int id, T entity)
+        {
+            if (entity == null)
+                return false;
+
+            //_httpClient.DefaultRequestHeaders.Authorization =
+            //    new AuthenticationHeaderValue("bearer", await GetBearerToken());
+
+            var response = await _httpClient.PutAsJsonAsync<T>(_resourceUrl + id, entity);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                return true;
+
+            return false;
+        }
+
+        public async Task<bool> Delete(int id)
+        {
+            var response = await _httpClient.DeleteAsync(_resourceUrl + id);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                return true;
+
+            return false;
+        }
+
     }
 }

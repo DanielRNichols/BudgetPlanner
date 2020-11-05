@@ -1,0 +1,29 @@
+﻿@page "/budgetitemtypes/details/{id}"
+
+<h3>Budget Item TypeDetails</h3>
+
+@if (Model == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-responsive">
+        <tbody>
+            <tr>
+                <td>Id</td>
+                <td>@Model.Id</td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>@Model.Name</td>
+            </tr>
+            <tr>
+                <td>IsExpense</td>
+                <td>@Model.IsExpense</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="/budgetitemtypes/" class="btn btn-outline-secondary">Back</a>
+}

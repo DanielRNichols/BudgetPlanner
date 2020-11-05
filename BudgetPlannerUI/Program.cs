@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using BudgetPlannerUI.Services;
 using BudgetPlannerUI.Interfaces;
+using Blazored.Toast;
+using Blazored.LocalStorage;
 
 namespace BudgetPlannerUI
 {
@@ -26,7 +28,11 @@ namespace BudgetPlannerUI
                 }
             );
 
+            builder.Services.AddBlazoredToast();
+            builder.Services.AddBlazoredLocalStorage();
+
             builder.Services.AddTransient<IBudgetItemTypesDataService, BudgetItemTypesDataService>();
+
 
             await builder.Build().RunAsync();
         }

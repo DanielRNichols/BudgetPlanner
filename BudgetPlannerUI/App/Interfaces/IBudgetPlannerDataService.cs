@@ -10,6 +10,11 @@ namespace BudgetPlannerUI.Interfaces
     {
         Task<IEnumerable<T>> Get(bool includeRelated = false);
         Task<T> Get(int id, bool includeRelated = false);
+
+        Task<bool> Create(T entity);
+        Task<bool> Update(int id, T entity);
+        Task<bool> Delete(int id);
+
     }
 
     public interface IBudgetItemTypesDataService : IBudgetPlannerDataService<BudgetItemType>

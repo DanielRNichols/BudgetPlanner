@@ -1,0 +1,42 @@
+﻿@page "/budgetitemtypes"
+
+<h3>Budget Item Types</h3>
+
+@if (Model == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>
+                    <a href="/budgetitemtypes/create" class="btn btn-primary">
+                        <span class="oi oi-plus"></span>
+                    </a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var itemType in Model)
+            {
+                <tr>
+                    <td>@itemType.Id</td>
+                    <td>@itemType.Name</td>
+                    <td>
+                        <a href="/budgetitemtypes/details/@itemType.Id" class="btn btn-primary">
+                            <span class="oi oi-info"></span>
+                        </a>
+                        <a href="/budgetitemtypes/edit/@itemType.Id" class="btn btn-primary">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+

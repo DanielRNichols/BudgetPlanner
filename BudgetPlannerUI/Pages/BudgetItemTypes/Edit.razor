@@ -1,0 +1,45 @@
+﻿@page "/budgetitemtypes/edit/{id}"
+@page "/budgetitemtypes/create"
+
+<h3 class="card-title">@(IsCreateMode ? "Create" : "Edit") Budget Item Type</h3>
+<hr />
+<br />
+@if (!IsSuccess)
+{
+    <p>"Somewthing Went Wrong With the Operation" </p>
+}
+
+@if (Model == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+<EditForm Model="Model" OnValidSubmit="Save">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group">
+        <label for="name">Name</label>
+        <InputText @bind-Value="Model.Name" class="form-control" id="name" />
+    </div>
+    <div class="form-group">
+        <label>Is Expense</label>
+        <InputCheckbox @bind-Value="Model.IsExpense" />
+    </div>
+    <button class="btn btn-primary" type="submit">
+        <span class="oi oi-check"></span>
+        Save
+    </button>
+    @if (!IsCreateMode)
+    {
+        <button @onclick="Delete" class="btn btn-danger">
+            <span class="oi oi-delete"></span>
+            Delete
+        </button>
+    }
+    <button @onclick="Cancel" class="btn btn-outline-secondary">
+        <span class="oi oi-x"></span>
+        Cancel
+    </button>
+    </EditForm>
+}
