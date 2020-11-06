@@ -1,12 +1,12 @@
-﻿@page "/budgetitemtypes/edit/{id}"
-@page "/budgetitemtypes/create"
+﻿@page "/budgetitemgroups/edit/{id}"
+@page "/budgetitemgroups/create"
 
-<h3 class="card-title">@(IsCreateMode ? "Create" : "Edit") Budget Item Type</h3>
+<h3 class="card-title">@(IsCreateMode ? "Create" : "Edit") Budget Item Group</h3>
 <hr />
 <br />
 @if (!IsSuccess)
 {
-    <ErrorMessage Message="Somewthing Went Wrong With the Operation" />
+    <ErrorMessage>"Somewthing Went Wrong With the Operation" </ErrorMessage>
 }
 
 @if (Model == null)
@@ -23,8 +23,13 @@ else
             <ValidationMessage For="@(() => Model.Name)" />
         </div>
         <div class="form-group">
-            <label>Is Expense</label>
-            <InputCheckbox @bind-Value="Model.IsExpense" />
+            <label for="type">Type</label>
+            <InputSelect @bind-Value="SelectedBudgetItemTypeId" class="form-control" id="type">
+                @foreach (var item in BudgetItemTypes)
+                    {
+                    <option value="@item.Id">@item.Name</option>
+                    }
+            </InputSelect>
         </div>
         <ValidationSummary />
         <button class="btn btn-primary" type="submit">
@@ -43,6 +48,7 @@ else
             Cancel
         </a>
     </EditForm>
+
     @if (ShowDeleteDialog)
     {
         <AcceptRejectDialog Title="Delete" Message="Are you sure?" OnClose="OnDeleteClose"></AcceptRejectDialog>

@@ -32,7 +32,8 @@ namespace BudgetPlannerUI.Services
 
             try
             {
-                return await _httpClient.GetFromJsonAsync<T>($"{_resourceUrl}{id}");
+                var queryStr = CreateQueryString(includeRelated);
+                return await _httpClient.GetFromJsonAsync<T>($"{_resourceUrl}{id}{queryStr}");
             }
             catch
             {
@@ -44,7 +45,8 @@ namespace BudgetPlannerUI.Services
         {
             try
             {
-                return await _httpClient.GetFromJsonAsync<IList<T>>(_resourceUrl);
+                var queryStr = CreateQueryString(includeRelated);
+                return await _httpClient.GetFromJsonAsync<IList<T>>($"{_resourceUrl}{queryStr}");
             }
             catch
             {
@@ -92,6 +94,11 @@ namespace BudgetPlannerUI.Services
                 return true;
 
             return false;
+        }
+
+        private string CreateQueryString(bool includeRelated)
+        {
+            return includeRelated ? "?includeRelated=true" : "";
         }
 
     }

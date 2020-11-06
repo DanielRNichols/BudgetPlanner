@@ -14,21 +14,21 @@ namespace BudgetPlannerUI.Pages.BudgetItemTypes
         public string Id { get; set; }
 
         [Inject]
-        public IBudgetItemTypesDataService BudgetItemTypesDataService { get; set; }
+        private IBudgetItemTypesDataService _budgetItemTypesDataService { get; set; }
         [Inject]
-        public NavigationManager NavigationManager { get; set; }
+        public NavigationManager _navManager { get; set; }
 
         public BudgetItemType Model { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             int itemTypeId = int.Parse(Id);
-            Model = await BudgetItemTypesDataService.Get(itemTypeId);
+            Model = await _budgetItemTypesDataService.Get(id: itemTypeId, includeRelated: false);
         }
 
         public void BackToList()
         {
-            NavigationManager.NavigateTo("/budgetitemtypes/");
+            _navManager.NavigateTo("/budgetitemtypes/");
         }
     }
 }

@@ -1,7 +1,11 @@
-﻿@page "/budgetitemtypes"
+﻿@page "/budgetitemgroups"
 
-<h3 class="card-title">Budget Item Types</h3>
+<h3 class="card-title">Budget Item Groups</h3>
 <hr />
+@if (!IsSuccess)
+{
+    <ErrorMessage>"Somewthing Went Wrong With the Operation" </ErrorMessage>
+}
 
 @if (Model == null)
 {
@@ -14,9 +18,10 @@ else
             <tr>
                 <th>Id</th>
                 <th>Name</th>
+                <th>Type</th>
                 <th>
-                    <a href="/budgetitemtypes/create" class="btn btn-primary">
-                        <span class="oi oi-plus"></span>
+                    <a href="/budgetitemgroups/create" class="btn btn-primary">
+                        <span class="oi oi-plus">New</span>
                     </a>
                 </th>
             </tr>
@@ -27,16 +32,18 @@ else
                 <tr>
                     <td>@item.Id</td>
                     <td>@item.Name</td>
+                    <td>@item.BudgetItemType?.Name</td>
                     <td>
-                        <a href="/budgetitemtypes/details/@item.Id" class="btn btn-primary">
+                        <a href="/budgetitemgroups/details/@item.Id" class="btn btn-primary">
                             <span class="oi oi-info"></span>
                         </a>
-                        <a href="/budgetitemtypes/edit/@item.Id" class="btn btn-primary">
+                        <a href="/budgetitemgroups/edit/@item.Id" class="btn btn-primary">
                             <span class="oi oi-pencil"></span>
                         </a>
                         <a @onclick="@(() => Delete(item.Id))" class="btn btn-danger">
                             <span class="oi oi-trash"></span>
                         </a>
+
                     </td>
                 </tr>
             }
@@ -46,5 +53,6 @@ else
     {
         <AcceptRejectDialog Title="Delete" Message="Are you sure?" OnClose="OnDeleteClose"></AcceptRejectDialog>
     }
+
 }
 

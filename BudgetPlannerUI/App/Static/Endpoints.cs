@@ -10,5 +10,6 @@ namespace BudgetPlannerUI.Static
         public static string BaseUrl = "https://localhost:44371/";
         public static string ApiUrl = $"{BaseUrl}api/";
         public static string BudgetItemTypes = $"{BaseUrl}api/budgetitemtypes/";
+        public static string BudgetItemGroups = $"{BaseUrl}api/budgetitemgroups/";
     }
 }

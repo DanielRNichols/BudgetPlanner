@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlannerApi", "BudgetPlannerApi\BudgetPlannerApi.csproj", "{7359A787-B97E-4D49-9338-84310091B04F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetPlannerUI", "BudgetPlannerUI\BudgetPlannerUI.csproj", "{5AC77095-C545-4BD8-B057-25321564F1AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BudgetPlannerUI", "BudgetPlannerUI\BudgetPlannerUI.csproj", "{5AC77095-C545-4BD8-B057-25321564F1AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

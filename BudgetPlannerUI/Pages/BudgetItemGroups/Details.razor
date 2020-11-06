@@ -1,6 +1,6 @@
-﻿@page "/budgetitemtypes/details/{id}"
+﻿@page "/budgetitemgroups/details/{id}"
 
-<h3>Budget Item TypeDetails</h3>
+<h3>Budget Item Group Details</h3>
 
 @if (Model == null)
 {
@@ -19,11 +19,11 @@ else
                 <td>@Model.Name</td>
             </tr>
             <tr>
-                <td>IsExpense</td>
-                <td>@Model.IsExpense</td>
+                <td>Type</td>
+                <td>@Model.BudgetItemType?.Name</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="/budgetitemtypes/" class="btn btn-outline-secondary">Back</a>
+    <a href="/budgetitemgroups/" class="btn btn-outline-secondary">Back</a>
 }

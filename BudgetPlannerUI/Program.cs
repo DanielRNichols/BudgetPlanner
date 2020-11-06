@@ -31,7 +31,8 @@ namespace BudgetPlannerUI
             builder.Services.AddBlazoredToast();
             builder.Services.AddBlazoredLocalStorage();
 
-            builder.Services.AddTransient<IBudgetItemTypesDataService, BudgetItemTypesDataService>();
+            builder.Services.AddTransient<IBudgetItemTypesDataService, BudgetItemTypesDataServices>();
+            builder.Services.AddTransient<IBudgetItemGroupsDataService, BudgetItemGroupsDataServices>();
 
 
             await builder.Build().RunAsync();
