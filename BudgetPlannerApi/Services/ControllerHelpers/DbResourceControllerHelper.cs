@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BudgetPlannerApi.Data;
 using BudgetPlannerApi.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -204,12 +205,22 @@ namespace BudgetPlannerApi.Services.ControllerHelpers
         private ObjectResult InternalError(ControllerBase controller, string msg)
         {
             _logger.LogServerError(msg);
-            return controller.StatusCode(500, "Server Error");
+            ServerError serverError = new ServerError
+            {
+                Error = $"Server Error: {msg}",
+                Details = ""
+            };
+            return controller.StatusCode(500, new { serverError });
         }
         private ObjectResult InternalError(ControllerBase controller, Exception e)
         {
             _logger.LogServerError(e);
-            return controller.StatusCode(500, "Server Error");
+            ServerError serverError = new ServerError
+            {
+                Error = e.Message,
+                Details = e.InnerException?.ToString()
+            };
+            return controller.StatusCode(500, new { serverError});
         }
 
     }
