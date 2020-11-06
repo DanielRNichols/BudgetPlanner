@@ -47,6 +47,10 @@ namespace BudgetPlannerUI.Pages.BudgetItemTypes
                     var result = await _dataService.Get(includeRelated: true);
                     Model = result.ToList();
                 }
+                else
+                {
+                    _toastService.ShowWarning("Delete Failed", "");
+                }
             }
 
         }

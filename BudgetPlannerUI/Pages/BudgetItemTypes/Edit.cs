@@ -23,10 +23,28 @@ namespace BudgetPlannerUI.Pages.BudgetItemTypes
         public string Id { get; set; }
         private int _id = 0;
 
-        private bool IsSuccess { get; set; } = true;
-        private bool IsCreateMode { get; set; } = true;
+        public bool IsSuccess { get; set; } = true;
+        public bool IsCreateMode { get; set; } = true;
         public BudgetItemType Model { get; set; }
         public bool ShowDeleteDialog { get; set; } = false;
+
+        public string Title
+        {
+            get
+            {
+                string mode = IsCreateMode ? "Create" : "Edit";
+                return $"{mode} Budget Item Type";
+            }
+        }
+
+        public bool ShowDeleteButton
+        {
+            get
+            {
+                return !IsCreateMode;
+            }
+        }
+
 
         protected override async Task OnInitializedAsync()
         {
@@ -48,8 +66,12 @@ namespace BudgetPlannerUI.Pages.BudgetItemTypes
                 IsSuccess = await _budgetItemTypesDataService.Update(_id, Model);
             if(IsSuccess)
             {
-                _toastService.ShowSuccess("Update Successful", "");
+                _toastService.ShowSuccess("Save Successful", "");
                 BackToList();
+            }
+            else
+            {
+                _toastService.ShowWarning("Save Failed", "");
             }
         }
 
@@ -61,12 +83,6 @@ namespace BudgetPlannerUI.Pages.BudgetItemTypes
         public void Delete()
         {
             ShowDeleteDialog = true;
-            //IsSuccess = await _budgetItemTypesDataService.Delete(_id);
-            //if (IsSuccess)
-            //{
-            //    _toastService.ShowSuccess("Delete Successful", "");
-            //    BackToList();
-            //}
         }
 
         public async Task OnDeleteClose(bool accepted)
@@ -79,6 +95,10 @@ namespace BudgetPlannerUI.Pages.BudgetItemTypes
                 {
                     _toastService.ShowSuccess("Delete Successful", "");
                     BackToList();
+                }
+                else
+                {
+                    _toastService.ShowWarning("Delete Failed", "");
                 }
             }
         }

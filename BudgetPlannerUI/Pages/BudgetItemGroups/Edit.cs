@@ -2,8 +2,10 @@
 using BudgetPlannerUI.Interfaces;
 using BudgetPlannerUI.Models;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -24,13 +26,30 @@ namespace BudgetPlannerUI.Pages.BudgetItemGroups
         public string Id { get; set; }
         private int _id = 0;
 
-        private bool IsSuccess { get; set; } = true;
-        private bool IsCreateMode { get; set; } = true;
+        public bool IsSuccess { get; set; } = true;
+        public bool IsCreateMode { get; set; } = true;
         public BudgetItemGroup Model { get; set; }
-        public string SelectedBudgetItemTypeId { get; set; }
+
         public IList<BudgetItemType> BudgetItemTypes { get; set; }
 
         public bool ShowDeleteDialog { get; set; } = false;
+
+        public string Title
+        {
+            get
+            {
+                string mode = IsCreateMode ? "Create" : "Edit";
+                return $"{mode} Budget Item Group";
+            }
+        }
+
+        public bool ShowDeleteButton
+        {
+            get
+            {
+                return !IsCreateMode;
+            }
+        }
 
         protected override async Task OnInitializedAsync()
         {
@@ -47,20 +66,24 @@ namespace BudgetPlannerUI.Pages.BudgetItemGroups
             else
                 Model = await _budgetItemGroupsDataService.Get(id: _id, includeRelated: true);
 
-            SelectedBudgetItemTypeId = Model.BudgetItemTypeId.ToString();
+            Model.SelectedBudgetItemTypeId = Model.BudgetItemTypeId.ToString();
         }
 
         private async Task Save()
         {
-            Model.BudgetItemTypeId = int.Parse(SelectedBudgetItemTypeId);
+            Model.BudgetItemTypeId = int.Parse(Model.SelectedBudgetItemTypeId);
             if (IsCreateMode)
                 IsSuccess = await _budgetItemGroupsDataService.Create(Model);
             else
                 IsSuccess = await _budgetItemGroupsDataService.Update(_id, Model);
             if (IsSuccess)
             {
-                _toastService.ShowSuccess("Update Successful", "");
+                _toastService.ShowSuccess("Save Successful", "");
                 BackToList();
+            }
+            else
+            {
+                _toastService.ShowWarning("Save Failed", "");
             }
         }
 
@@ -72,12 +95,6 @@ namespace BudgetPlannerUI.Pages.BudgetItemGroups
         public void Delete()
         {
             ShowDeleteDialog = true;
-            //IsSuccess = await _budgetItemGroupsDataService.Delete(_id);
-            //if (IsSuccess)
-            //{
-            //    _toastService.ShowSuccess("Delete Successful", "");
-            //    BackToList();
-            //}
         }
 
         public async Task OnDeleteClose(bool accepted)
@@ -90,6 +107,10 @@ namespace BudgetPlannerUI.Pages.BudgetItemGroups
                 {
                     _toastService.ShowSuccess("Delete Successful", "");
                     BackToList();
+                }
+                else
+                {
+                    _toastService.ShowWarning("Delete Failed", "");
                 }
             }
         }

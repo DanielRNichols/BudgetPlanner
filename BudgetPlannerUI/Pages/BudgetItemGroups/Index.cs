@@ -48,6 +48,10 @@ namespace BudgetPlannerUI.Pages.BudgetItemGroups
                     var result = await _budgetItemGroupsDataService.Get(includeRelated: true);
                     Model = result.ToList();
                 }
+                else
+                {
+                    _toastService.ShowWarning("Delete Failed", "");
+                }
             }
 
         }

@@ -1,7 +1,7 @@
 ﻿@page "/budgetitemgroups/edit/{id}"
 @page "/budgetitemgroups/create"
 
-<h3 class="card-title">@(IsCreateMode ? "Create" : "Edit") Budget Item Group</h3>
+<h3 class="card-title">@Title</h3>
 <hr />
 <br />
 @if (!IsSuccess)
@@ -24,19 +24,20 @@ else
         </div>
         <div class="form-group">
             <label for="type">Type</label>
-            <InputSelect @bind-Value="SelectedBudgetItemTypeId" class="form-control" id="type">
+            <InputSelect @bind-Value="Model.SelectedBudgetItemTypeId"
+                         class="form-control" id="type">
                 @foreach (var item in BudgetItemTypes)
                     {
                     <option value="@item.Id">@item.Name</option>
                     }
             </InputSelect>
+            <ValidationMessage For="@(() => Model.SelectedBudgetItemTypeId)" />
         </div>
-        <ValidationSummary />
         <button class="btn btn-primary" type="submit">
             <span class="oi oi-check"></span>
             Save
         </button>
-        @if (!IsCreateMode)
+        @if (ShowDeleteButton)
         {
             <a @onclick="Delete" class="btn btn-danger">
                 <span class="oi oi-x"></span>

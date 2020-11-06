@@ -1,14 +1,9 @@
 ﻿@page "/budgetitemtypes/edit/{id}"
 @page "/budgetitemtypes/create"
 
-<h3 class="card-title">@(IsCreateMode ? "Create" : "Edit") Budget Item Type</h3>
+<h3 class="card-title">@Title</h3>
 <hr />
 <br />
-@if (!IsSuccess)
-{
-    <ErrorMessage Message="Somewthing Went Wrong With the Operation" />
-}
-
 @if (Model == null)
 {
     <LoadingMessage Message="Loading..." />
@@ -31,7 +26,7 @@ else
             <span class="oi oi-check"></span>
             Save
         </button>
-        @if (!IsCreateMode)
+        @if (ShowDeleteButton)
         {
             <a @onclick="Delete" class="btn btn-danger">
                 <span class="oi oi-x"></span>

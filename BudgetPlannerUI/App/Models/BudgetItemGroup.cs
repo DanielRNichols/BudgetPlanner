@@ -14,9 +14,15 @@ namespace BudgetPlannerUI.Models
         [Required]
         public string Name { get; set; }
 
-        [Required]
         public int BudgetItemTypeId { get; set; }
 
         public virtual BudgetItemType BudgetItemType { get; set; }
+
+        // Workaround for select no handling integers
+        [Required]
+        [RegularExpression(@"^[1-9]\d*$", ErrorMessage = "Must select a Budget Item Type")]
+        public string SelectedBudgetItemTypeId { get; set; }
     }
-}
+
+ }
+
