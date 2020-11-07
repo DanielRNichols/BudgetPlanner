@@ -1,0 +1,14 @@
+﻿sudo docker cp BudgetPlanner.bak SqlServer2019:/var/opt/mssql/backup
+
+sudo docker exec -it SqlServer2019 /opt/mssql-tools/bin/sqlcmd -S localhost \
+   -U SA -P 'DanN@123' \
+   -Q 'RESTORE FILELISTONLY FROM DISK = "/var/opt/mssql/backup/BudgetPlanner.bak"' \
+   | tr -s ' ' | cut -d ' ' -f 1-2
+
+
+sudo docker exec -it SqlServer2019 /opt/mssql-tools/bin/sqlcmd \
+   -S localhost -U SA -P 'DanN@123' \
+   -Q 'RESTORE DATABASE BudgetPlanner FROM DISK = "/var/opt/mssql/backup/BudgetPlanner.bak" WITH MOVE "BudgetPlanner" TO "/var/opt/mssql/data/BudgetPlanner.mdf", MOVE "BudgetPlanner_log" TO "/var/opt/mssql/data/BudgetPlanner.ldf"'
+
+
+IP Address: 172.17.0.2
