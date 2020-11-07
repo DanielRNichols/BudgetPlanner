@@ -12,9 +12,10 @@ namespace BudgetPlannerApi.Data
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int BudgetItemGroupId { get; set; }
+        private bool IsIncome { get; set; }
+        public int BudgetCategoryId { get; set; }
 
-        public virtual BudgetItemGroup BudgetItemGroup { get; set; }
+        public virtual BudgetCategory BudgetCategory { get; set; }
 
         public virtual IList<BudgetCycleItem> BudgetCycleItems { get; set; }
 

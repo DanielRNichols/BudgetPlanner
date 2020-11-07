@@ -4,6 +4,43 @@
         <name>BudgetPlannerApi</name>
     </assembly>
     <members>
+        <member name="M:BudgetPlannerApi.Controllers.BudgetCategoriesController.Get(System.Boolean)">
+            <summary>
+            Get all Budget Item Groups
+            </summary>
+            <param name="includeRelated"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BudgetPlannerApi.Controllers.BudgetCategoriesController.GetById(System.Int32,System.Boolean)">
+            <summary>
+            Get a Budget Item Group by Id
+            </summary>
+            <param name="id"></param>
+            <param name="includeRelated"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BudgetPlannerApi.Controllers.BudgetCategoriesController.Create(BudgetPlannerApi.DataTransfer.BudgetCategoryCreateDTO)">
+            <summary>
+            Create a new Budget Item Group
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BudgetPlannerApi.Controllers.BudgetCategoriesController.Update(System.Int32,BudgetPlannerApi.DataTransfer.BudgetCategoryCreateDTO)">
+            <summary>
+            Update a Budget Item Group
+            </summary>
+            <param name="id"></param>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BudgetPlannerApi.Controllers.BudgetCategoriesController.Delete(System.Int32)">
+            <summary>
+            Delete a Budget Item Group
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:BudgetPlannerApi.Controllers.BudgetCycleItemsController.Get(System.Boolean)">
             <summary>
             Get all Budget Cycles Items
@@ -77,39 +114,38 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:BudgetPlannerApi.Controllers.BudgetItemGroupsController.Get(System.Boolean)">
+        <member name="M:BudgetPlannerApi.Controllers.BudgetGroupsController.Get(System.Boolean)">
             <summary>
-            Get all Budget Item Groups
+            Get all Budget Item Types
             </summary>
-            <param name="includeRelated"></param>
             <returns></returns>
         </member>
-        <member name="M:BudgetPlannerApi.Controllers.BudgetItemGroupsController.GetById(System.Int32,System.Boolean)">
+        <member name="M:BudgetPlannerApi.Controllers.BudgetGroupsController.GetById(System.Int32,System.Boolean)">
             <summary>
-            Get a Budget Item Group by Id
+            Get a Budget Item Type by Id
             </summary>
             <param name="id"></param>
             <param name="includeRelated"></param>
             <returns></returns>
         </member>
-        <member name="M:BudgetPlannerApi.Controllers.BudgetItemGroupsController.Create(BudgetPlannerApi.DataTransfer.BudgetItemGroupCreateDTO)">
+        <member name="M:BudgetPlannerApi.Controllers.BudgetGroupsController.Create(BudgetPlannerApi.DataTransfer.BudgetGroupCreateDTO)">
             <summary>
-            Create a new Budget Item Group
+            Create a new Budget Item Type
             </summary>
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:BudgetPlannerApi.Controllers.BudgetItemGroupsController.Update(System.Int32,BudgetPlannerApi.DataTransfer.BudgetItemGroupCreateDTO)">
+        <member name="M:BudgetPlannerApi.Controllers.BudgetGroupsController.Update(System.Int32,BudgetPlannerApi.DataTransfer.BudgetGroupCreateDTO)">
             <summary>
-            Update a Budget Item Group
+            Update a Budget Item Type
             </summary>
             <param name="id"></param>
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:BudgetPlannerApi.Controllers.BudgetItemGroupsController.Delete(System.Int32)">
+        <member name="M:BudgetPlannerApi.Controllers.BudgetGroupsController.Delete(System.Int32)">
             <summary>
-            Delete a Budget Item Group
+            Delete a Budget Item Type
             </summary>
             <param name="id"></param>
             <returns></returns>
@@ -147,42 +183,6 @@
         <member name="M:BudgetPlannerApi.Controllers.BudgetItemsController.Delete(System.Int32)">
             <summary>
             Delete a Budget Item
-            </summary>
-            <param name="id"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BudgetPlannerApi.Controllers.BudgetItemTypesController.Get(System.Boolean)">
-            <summary>
-            Get all Budget Item Types
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:BudgetPlannerApi.Controllers.BudgetItemTypesController.GetById(System.Int32,System.Boolean)">
-            <summary>
-            Get a Budget Item Type by Id
-            </summary>
-            <param name="id"></param>
-            <param name="includeRelated"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BudgetPlannerApi.Controllers.BudgetItemTypesController.Create(BudgetPlannerApi.DataTransfer.BudgetItemTypeCreateDTO)">
-            <summary>
-            Create a new Budget Item Type
-            </summary>
-            <param name="dto"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BudgetPlannerApi.Controllers.BudgetItemTypesController.Update(System.Int32,BudgetPlannerApi.DataTransfer.BudgetItemTypeCreateDTO)">
-            <summary>
-            Update a Budget Item Type
-            </summary>
-            <param name="id"></param>
-            <param name="dto"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BudgetPlannerApi.Controllers.BudgetItemTypesController.Delete(System.Int32)">
-            <summary>
-            Delete a Budget Item Type
             </summary>
             <param name="id"></param>
             <returns></returns>

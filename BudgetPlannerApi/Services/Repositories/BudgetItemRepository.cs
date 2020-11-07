@@ -23,7 +23,7 @@ namespace BudgetPlannerApi.Services.Repositories
             if(includeRelated)
             {
                 return await _db.BudgetItems
-                .Include(g => g.BudgetItemGroup)
+                .Include(g => g.BudgetCategory)
                 .Include(i => i.BudgetCycleItems)
                 .ToListAsync();
             }
@@ -37,7 +37,7 @@ namespace BudgetPlannerApi.Services.Repositories
             if (includeRelated)
             {
                 return await _db.BudgetItems
-                    .Include(g => g.BudgetItemGroup)
+                    .Include(g => g.BudgetCategory)
                     .Include(i => i.BudgetCycleItems)
                     .FirstOrDefaultAsync(q => q.Id == id);
             }

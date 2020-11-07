@@ -9,29 +9,29 @@ using System.Threading.Tasks;
 
 namespace BudgetPlannerApi.Services.Repositories
 {
-    public class BudgetItemTypeRepository : DbResourceRepository<BudgetItemType>, IBudgetItemTypeRepository
+    public class BudgetGroupRepository : DbResourceRepository<BudgetGroup>, IBudgetGroupRepository
     {
         private readonly ApplicationDbContext _db;
 
-        public BudgetItemTypeRepository(ApplicationDbContext db) : base(db, db.BudgetItemTypes)
+        public BudgetGroupRepository(ApplicationDbContext db) : base(db, db.BudgetGroups)
         {
             _db = db;
         }
-        public override async Task<IList<BudgetItemType>> Get(bool includeRelated = false)
+        public override async Task<IList<BudgetGroup>> Get(bool includeRelated = false)
         {
             if (includeRelated)
             {
-                return await _db.BudgetItemTypes.Include(g => g.BudgetItemGroups).ToListAsync();
+                return await _db.BudgetGroups.Include(g => g.BudgetCategories).ToListAsync();
             }
 
             return await base.Get(includeRelated);
         }
 
-        public override async Task<BudgetItemType> GetById(int id, bool includeRelated = false)
+        public override async Task<BudgetGroup> GetById(int id, bool includeRelated = false)
         {
             if (includeRelated)
             {
-                return await _db.BudgetItemTypes.Include(g => g.BudgetItemGroups).FirstOrDefaultAsync(q => q.Id == id);
+                return await _db.BudgetGroups.Include(g => g.BudgetCategories).FirstOrDefaultAsync(q => q.Id == id);
             }
 
             return await base.GetById(id, includeRelated);

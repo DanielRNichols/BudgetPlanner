@@ -16,11 +16,11 @@ namespace BudgetPlannerApi.Interfaces
         Task<IActionResult> DeleteItem(ControllerBase controller, IDbResourceRepository<T> repo, int id);
     }
 
-    public interface IBudgetItemTypesControllerHelper : IDbResourceControllerHelper<BudgetItemType>
+    public interface IBudgetGroupsControllerHelper : IDbResourceControllerHelper<BudgetGroup>
     {
     }
 
-    public interface IBudgetItemGroupsControllerHelper : IDbResourceControllerHelper<BudgetItemGroup>
+    public interface IBudgetCategoriesControllerHelper : IDbResourceControllerHelper<BudgetCategory>
     {
     }
 

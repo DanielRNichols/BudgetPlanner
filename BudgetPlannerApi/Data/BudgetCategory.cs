@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 
 namespace BudgetPlannerApi.Data
 {
-    [Table("BudgetItemGroups")]
-    public class BudgetItemGroup : IDbResource
+    [Table("BudgetCategories")]
+    public class BudgetCategory : IDbResource
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int BudgetItemTypeId { get; set; }
-        public virtual BudgetItemType BudgetItemType { get; set; }
+        public int BudgetGroupId { get; set; }
+        public virtual BudgetGroup BudgetGroup { get; set; }
+
+        public virtual IList<BudgetItem> BudgetItems { get; set; }
     }
 }

@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace BudgetPlannerApi.Services.ControllerHelpers
 {
-    public class BudgetItemGroupsControllerHelper : DbResourceControllerHelper<BudgetItemGroup>, IBudgetItemGroupsControllerHelper
+    public class BudgetGroupsControllerHelper : DbResourceControllerHelper<BudgetGroup>, IBudgetGroupsControllerHelper
     {
-        public BudgetItemGroupsControllerHelper(ILoggerService logger, IMapper mapper) : base(logger, mapper)
+        public BudgetGroupsControllerHelper(ILoggerService logger, IMapper mapper) : base(logger, mapper)
         {
 
         }

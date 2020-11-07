@@ -10,9 +10,10 @@ namespace BudgetPlannerApi.DataTransfer
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int BudgetItemGroupId { get; set; }
+        public bool IsIncome { get; set; }
+        public int BudgetCategoryId { get; set; }
 
-        public virtual BudgetItemGroupDTO BudgetItemGroup { get; set; }
+        public virtual BudgetCategoryDTO BudgetCategory { get; set; }
 
         public virtual IList<BudgetCycleItemDTO> BudgetCycleItems { get; set; }
     }
@@ -22,6 +23,8 @@ namespace BudgetPlannerApi.DataTransfer
         [Required]
         public string Name { get; set; }
         [Required]
-        public int BudgetItemGroupId { get; set; }
+        public bool IsIncome { get; set; }
+        [Required]
+        public int BudgetCategoryId { get; set; }
     }
 }

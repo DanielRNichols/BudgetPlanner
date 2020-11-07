@@ -80,8 +80,8 @@ namespace BudgetPlanner
             services.AddSingleton<ILoggerService, ConsoleLoggerService>(); //LoggerService>();
 
             // Repositories Dependency Injection
-            services.AddScoped<IBudgetItemTypeRepository, BudgetItemTypeRepository>();
-            services.AddScoped<IBudgetItemGroupRepository, BudgetItemGroupRepository>();
+            services.AddScoped<IBudgetGroupRepository, BudgetGroupRepository>();
+            services.AddScoped<IBudgetCategoryRepository, BudgetCategoryRepository>();
             services.AddScoped<IBudgetItemRepository, BudgetItemRepository>();
             services.AddScoped<IMemorizedTransactionRepository, MemorizedTransactionRepository>();
             services.AddScoped<IRegisterRepository, RegisterRepository>();
@@ -91,8 +91,8 @@ namespace BudgetPlanner
             services.AddScoped<IBudgetCycleItemRepository, BudgetCycleItemRepository>();
 
             // Controller Helpers Dependency Injection
-            services.AddScoped<IBudgetItemTypesControllerHelper, BudgetItemTypesControllerHelper>();
-            services.AddScoped<IBudgetItemGroupsControllerHelper, BudgetItemGroupsControllerHelper>();
+            services.AddScoped<IBudgetGroupsControllerHelper, BudgetGroupsControllerHelper>();
+            services.AddScoped<IBudgetCategoriesControllerHelper, BudgetCategoriesControllerHelper>();
             services.AddScoped<IBudgetItemsControllerHelper, BudgetItemsControllerHelper>();
             services.AddScoped<IMemorizedTransactionsControllerHelper, MemorizedTransactionsControllerHelper>();
             services.AddScoped<IRegistersControllerHelper, RegistersControllerHelper>();

@@ -13,13 +13,13 @@ namespace BudgetPlannerApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BudgetItemGroupsController : ControllerBase
+    public class BudgetCategoriesController : ControllerBase
     {
-        private readonly IBudgetItemGroupsControllerHelper _controllerHelper;
-        private readonly IBudgetItemGroupRepository _repo;
+        private readonly IBudgetCategoriesControllerHelper _controllerHelper;
+        private readonly IBudgetCategoryRepository _repo;
 
-        public BudgetItemGroupsController(IBudgetItemGroupsControllerHelper controllerHelper,
-            IBudgetItemGroupRepository repo)
+        public BudgetCategoriesController(IBudgetCategoriesControllerHelper controllerHelper,
+            IBudgetCategoryRepository repo)
         {
             _controllerHelper = controllerHelper;
             _repo = repo;
@@ -30,13 +30,13 @@ namespace BudgetPlannerApi.Controllers
         /// </summary>
         /// <param name="includeRelated"></param>
         /// <returns></returns>
-        // GET: api/<BudgetItemGroupsController>
+        // GET: api/<BudgetCategoriesController>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get([FromQuery] bool includeRelated = false)
         {
-            return await _controllerHelper.GetItems<BudgetItemGroupDTO>(this, _repo, includeRelated);
+            return await _controllerHelper.GetItems<BudgetCategoryDTO>(this, _repo, includeRelated);
         }
 
         /// <summary>
@@ -45,14 +45,14 @@ namespace BudgetPlannerApi.Controllers
         /// <param name="id"></param>
         /// <param name="includeRelated"></param>
         /// <returns></returns>
-        // GET api/<BudgetItemGroupsController>/5
+        // GET api/<BudgetCategoriesController>/5
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetById(int id, [FromQuery] bool includeRelated = false)
         {
-            return await _controllerHelper.GetItem<BudgetItemGroupDTO>(this, _repo, id, includeRelated);
+            return await _controllerHelper.GetItem<BudgetCategoryDTO>(this, _repo, id, includeRelated);
         }
 
         /// <summary>
@@ -60,14 +60,14 @@ namespace BudgetPlannerApi.Controllers
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        // POST api/<BudgetItemGroupsController>
+        // POST api/<BudgetCategoriesController>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Create([FromBody] BudgetItemGroupCreateDTO dto)
+        public async Task<IActionResult> Create([FromBody] BudgetCategoryCreateDTO dto)
         {
-            return await _controllerHelper.CreateItem<BudgetItemGroupCreateDTO>(this, _repo, dto);
+            return await _controllerHelper.CreateItem<BudgetCategoryCreateDTO>(this, _repo, dto);
         }
 
         /// <summary>
@@ -76,15 +76,15 @@ namespace BudgetPlannerApi.Controllers
         /// <param name="id"></param>
         /// <param name="dto"></param>
         /// <returns></returns>
-        // PUT api/<BudgetItemGroupsController>/5
+        // PUT api/<BudgetCategoriesController>/5
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Update(int id, [FromBody] BudgetItemGroupCreateDTO dto)
+        public async Task<IActionResult> Update(int id, [FromBody] BudgetCategoryCreateDTO dto)
         {
-            return await _controllerHelper.UpdateItem<BudgetItemGroupCreateDTO>(this, _repo, id, dto);
+            return await _controllerHelper.UpdateItem<BudgetCategoryCreateDTO>(this, _repo, id, dto);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace BudgetPlannerApi.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        // DELETE api/<BudgetItemGroupsController>/5
+        // DELETE api/<BudgetCategoriesController>/5
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

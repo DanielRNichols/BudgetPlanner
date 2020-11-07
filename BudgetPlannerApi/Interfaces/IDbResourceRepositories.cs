@@ -19,10 +19,10 @@ namespace BudgetPlannerApi.Interfaces
 
     }
 
-    public interface IBudgetItemTypeRepository : IDbResourceRepository<BudgetItemType>
+    public interface IBudgetGroupRepository : IDbResourceRepository<BudgetGroup>
     {
     }
-    public interface IBudgetItemGroupRepository : IDbResourceRepository<BudgetItemGroup>
+    public interface IBudgetCategoryRepository : IDbResourceRepository<BudgetCategory>
     {
     }
     public interface IBudgetItemRepository : IDbResourceRepository<BudgetItem>
