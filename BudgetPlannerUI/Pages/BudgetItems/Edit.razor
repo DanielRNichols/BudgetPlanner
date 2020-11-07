@@ -1,0 +1,61 @@
+﻿@page "/budgetitems/edit/{id}"
+@page "/budgetitems/create"
+
+<h3 class="card-title">@Title</h3>
+<hr />
+<br />
+@if (!IsSuccess)
+{
+    <ErrorMessage>"Somewthing Went Wrong With the Operation" </ErrorMessage>
+}
+
+@if (Model == null)
+{
+    <LoadingMessage Message="Loading..." />
+}
+else
+{
+<EditForm Model="Model" OnValidSubmit="Save">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label for="name">Name</label>
+        <InputText @bind-Value="Model.Name" class="form-control" id="name" />
+        <ValidationMessage For="@(() => Model.Name)" />
+    </div>
+    <div class="form-group">
+        <label for="type">Group</label>
+        <InputSelect @bind-Value="Model.SelectedBudgetCategoryId"
+                     class="form-control" id="type">
+            @foreach (var item in BudgetCategories)
+                {
+                <option value="@item.Id">@item.Name</option>
+                }
+        </InputSelect>
+        <ValidationMessage For="@(() => Model.SelectedBudgetCategoryId)" />
+    </div>
+    <div class="form-group">
+        <label>Is Income</label>
+        <InputCheckbox @bind-Value="Model.IsIncome" />
+    </div>
+    <button class="btn btn-primary" type="submit">
+        <span class="oi oi-check"></span>
+        Save
+    </button>
+    @if (ShowDeleteButton)
+    {
+        <a @onclick="Delete" class="btn btn-danger">
+            <span class="oi oi-x"></span>
+            Delete
+        </a>
+    }
+    <a @onclick="Cancel" class="btn btn-outline-secondary">
+        <span class="oi oi-delete"></span>
+        Cancel
+    </a>
+</EditForm>
+
+    @if (ShowDeleteDialog)
+    {
+        <AcceptRejectDialog Title="Delete" Message="Are you sure?" OnClose="OnDeleteClose"></AcceptRejectDialog>
+    }
+}

@@ -1,5 +1,5 @@
-﻿@page "/budgetitemtypes/edit/{id}"
-@page "/budgetitemtypes/create"
+﻿@page "/budgetgroups/edit/{id}"
+@page "/budgetgroups/create"
 
 <h3 class="card-title">@Title</h3>
 <hr />
@@ -16,10 +16,6 @@ else
             <label for="name">Name</label>
             <InputText @bind-Value="Model.Name" class="form-control" id="name" />
             <ValidationMessage For="@(() => Model.Name)" />
-        </div>
-        <div class="form-group">
-            <label>Is Expense</label>
-            <InputCheckbox @bind-Value="Model.IsExpense" />
         </div>
         <ValidationSummary />
         <button class="btn btn-primary" type="submit">

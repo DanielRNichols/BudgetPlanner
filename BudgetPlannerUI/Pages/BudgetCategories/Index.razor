@@ -1,6 +1,6 @@
-﻿@page "/budgetitemgroups"
+﻿@page "/budgetcategories"
 
-<h3 class="card-title">Budget Item Groups</h3>
+<h3 class="card-title">Budget Categories</h3>
 <hr />
 @if (!IsSuccess)
 {
@@ -18,9 +18,9 @@ else
             <tr>
                 <th>Id</th>
                 <th>Name</th>
-                <th>Type</th>
+                <th>Group</th>
                 <th>
-                    <a href="/budgetitemgroups/create" class="btn btn-primary">
+                    <a href="/budgetcategories/create" class="btn btn-primary">
                         <span class="oi oi-plus">New</span>
                     </a>
                 </th>
@@ -32,12 +32,12 @@ else
                 <tr>
                     <td>@item.Id</td>
                     <td>@item.Name</td>
-                    <td>@item.BudgetItemType?.Name</td>
+                    <td>@item.BudgetGroup?.Name</td>
                     <td>
-                        <a href="/budgetitemgroups/details/@item.Id" class="btn btn-primary">
+                        <a href="/budgetcategories/details/@item.Id" class="btn btn-primary">
                             <span class="oi oi-info"></span>
                         </a>
-                        <a href="/budgetitemgroups/edit/@item.Id" class="btn btn-primary">
+                        <a href="/budgetcategories/edit/@item.Id" class="btn btn-primary">
                             <span class="oi oi-pencil"></span>
                         </a>
                         <a @onclick="@(() => Delete(item.Id))" class="btn btn-danger">

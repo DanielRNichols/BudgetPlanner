@@ -9,15 +9,21 @@ using System.Threading.Tasks;
 
 namespace BudgetPlannerUI.Services
 {
-    public class BudgetItemTypesDataServices : BudgetPlannerDataService<BudgetItemType>, IBudgetItemTypesDataService
+    public class BudgetGroupsDataServices : BudgetPlannerDataService<BudgetGroup>, IBudgetGroupsDataService
     {
-        public BudgetItemTypesDataServices(HttpClient httpClient) : base(httpClient, Endpoints.BudgetItemTypes)
+        public BudgetGroupsDataServices(HttpClient httpClient) : base(httpClient, Endpoints.BudgetGroups)
         {
         }
     }
-    public class BudgetItemGroupsDataServices : BudgetPlannerDataService<BudgetItemGroup>, IBudgetItemGroupsDataService
+    public class BudgetCategoriesDataServices : BudgetPlannerDataService<BudgetCategory>, IBudgetCategoriesDataService
     {
-        public BudgetItemGroupsDataServices(HttpClient httpClient) : base(httpClient, Endpoints.BudgetItemGroups)
+        public BudgetCategoriesDataServices(HttpClient httpClient) : base(httpClient, Endpoints.BudgetCategories)
+        {
+        }
+    }
+    public class BudgetItemsDataServices : BudgetPlannerDataService<BudgetItem>, IBudgetItemsDataService
+    {
+        public BudgetItemsDataServices(HttpClient httpClient) : base(httpClient, Endpoints.BudgetItems)
         {
         }
     }

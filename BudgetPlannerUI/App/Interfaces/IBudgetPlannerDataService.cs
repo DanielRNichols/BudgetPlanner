@@ -17,10 +17,13 @@ namespace BudgetPlannerUI.Interfaces
 
     }
 
-    public interface IBudgetItemTypesDataService : IBudgetPlannerDataService<BudgetItemType>
+    public interface IBudgetGroupsDataService : IBudgetPlannerDataService<BudgetGroup>
     {
     }
-    public interface IBudgetItemGroupsDataService : IBudgetPlannerDataService<BudgetItemGroup>
+    public interface IBudgetCategoriesDataService : IBudgetPlannerDataService<BudgetCategory>
+    {
+    }
+    public interface IBudgetItemsDataService : IBudgetPlannerDataService<BudgetItem>
     {
     }
 }

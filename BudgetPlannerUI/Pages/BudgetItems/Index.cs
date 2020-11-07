@@ -4,18 +4,17 @@ using BudgetPlannerUI.Models;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BudgetPlannerUI.Pages.BudgetItemGroups
+namespace BudgetPlannerUI.Pages.BudgetItems
 {
     public partial class Index
     {
-        public IEnumerable<BudgetItemGroup> Model { get; set; }
+        public IEnumerable<BudgetItem> Model { get; set; }
 
         [Inject]
-        private IBudgetItemGroupsDataService _budgetItemGroupsDataService { get; set; }
+        private IBudgetItemsDataService _budgetItemsDataService { get; set; }
 
         [Inject]
         private IToastService _toastService { get; set; }
@@ -26,7 +25,7 @@ namespace BudgetPlannerUI.Pages.BudgetItemGroups
 
         protected override async Task OnInitializedAsync()
         {
-            var result = await _budgetItemGroupsDataService.Get(includeRelated: true);
+            var result = await _budgetItemsDataService.Get(includeRelated: true);
             Model = result.ToList();
         }
 
@@ -41,11 +40,11 @@ namespace BudgetPlannerUI.Pages.BudgetItemGroups
             ShowDeleteDialog = false;
             if (accepted)
             {
-                IsSuccess = await _budgetItemGroupsDataService.Delete(SelectedId);
+                IsSuccess = await _budgetItemsDataService.Delete(SelectedId);
                 if (IsSuccess)
                 {
                     _toastService.ShowSuccess("Delete Successful", "");
-                    var result = await _budgetItemGroupsDataService.Get(includeRelated: true);
+                    var result = await _budgetItemsDataService.Get(includeRelated: true);
                     Model = result.ToList();
                 }
                 else
@@ -55,5 +54,11 @@ namespace BudgetPlannerUI.Pages.BudgetItemGroups
             }
 
         }
+
+        public string getItemType(BudgetItem budgetItem)
+        {
+            return budgetItem.IsIncome ? "Income" : "Expense";
+        }
     }
 }
+

@@ -4,17 +4,18 @@ using BudgetPlannerUI.Models;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BudgetPlannerUI.Pages.BudgetItemTypes
+namespace BudgetPlannerUI.Pages.BudgetCategories
 {
     public partial class Index
     {
-        public IEnumerable<BudgetItemType> Model { get; set; }
+        public IEnumerable<BudgetCategory> Model { get; set; }
 
         [Inject]
-        private IBudgetItemTypesDataService _dataService { get; set; }
+        private IBudgetCategoriesDataService _budgetCategoriesDataService { get; set; }
 
         [Inject]
         private IToastService _toastService { get; set; }
@@ -25,7 +26,7 @@ namespace BudgetPlannerUI.Pages.BudgetItemTypes
 
         protected override async Task OnInitializedAsync()
         {
-            var result = await _dataService.Get(includeRelated: false);
+            var result = await _budgetCategoriesDataService.Get(includeRelated: true);
             Model = result.ToList();
         }
 
@@ -40,11 +41,11 @@ namespace BudgetPlannerUI.Pages.BudgetItemTypes
             ShowDeleteDialog = false;
             if (accepted)
             {
-                IsSuccess = await _dataService.Delete(SelectedId);
+                IsSuccess = await _budgetCategoriesDataService.Delete(SelectedId);
                 if (IsSuccess)
                 {
                     _toastService.ShowSuccess("Delete Successful", "");
-                    var result = await _dataService.Get(includeRelated: true);
+                    var result = await _budgetCategoriesDataService.Get(includeRelated: true);
                     Model = result.ToList();
                 }
                 else
@@ -54,6 +55,5 @@ namespace BudgetPlannerUI.Pages.BudgetItemTypes
             }
 
         }
-
     }
 }

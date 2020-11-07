@@ -4,16 +4,17 @@ using BudgetPlannerUI.Models;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
-using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BudgetPlannerUI.Pages.BudgetItemTypes
+namespace BudgetPlannerUI.Pages.BudgetItems
 {
     public partial class Edit
     {
         [Inject]
-        private IBudgetItemTypesDataService _budgetItemTypesDataService { get; set; }
+        private IBudgetItemsDataService _budgetItemsDataService { get; set; }
+        [Inject]
+        private IBudgetCategoriesDataService _budgetCategoriesDataService { get; set; }
         [Inject]
         private NavigationManager _navManager { get; set; }
         [Inject]
@@ -25,7 +26,10 @@ namespace BudgetPlannerUI.Pages.BudgetItemTypes
 
         public bool IsSuccess { get; set; } = true;
         public bool IsCreateMode { get; set; } = true;
-        public BudgetItemType Model { get; set; }
+        public BudgetItem Model { get; set; }
+
+        public IList<BudgetCategory> BudgetCategories { get; set; }
+
         public bool ShowDeleteDialog { get; set; } = false;
 
         public string Title
@@ -33,7 +37,7 @@ namespace BudgetPlannerUI.Pages.BudgetItemTypes
             get
             {
                 string mode = IsCreateMode ? "Create" : "Edit";
-                return $"{mode} Budget Item Type";
+                return $"{mode} Budget Item";
             }
         }
 
@@ -45,26 +49,32 @@ namespace BudgetPlannerUI.Pages.BudgetItemTypes
             }
         }
 
-
         protected override async Task OnInitializedAsync()
         {
             _id = 0;
-            if(Int32.TryParse(Id, out _id) && (_id > 0))
+            if (Int32.TryParse(Id, out _id) && (_id > 0))
                 IsCreateMode = false;
 
+
+            var result = await _budgetCategoriesDataService.Get(includeRelated: false);
+            BudgetCategories = result.ToList();
+
             if (IsCreateMode)
-                Model = new BudgetItemType();
+                Model = new BudgetItem();
             else
-                Model = await _budgetItemTypesDataService.Get(id: _id, includeRelated: false);
+                Model = await _budgetItemsDataService.Get(id: _id, includeRelated: true);
+
+            Model.SelectedBudgetCategoryId = Model.BudgetCategoryId.ToString();
         }
 
         private async Task Save()
         {
+            Model.BudgetCategoryId = int.Parse(Model.SelectedBudgetCategoryId);
             if (IsCreateMode)
-                IsSuccess = await _budgetItemTypesDataService.Create(Model);
+                IsSuccess = await _budgetItemsDataService.Create(Model);
             else
-                IsSuccess = await _budgetItemTypesDataService.Update(_id, Model);
-            if(IsSuccess)
+                IsSuccess = await _budgetItemsDataService.Update(_id, Model);
+            if (IsSuccess)
             {
                 _toastService.ShowSuccess("Save Successful", "");
                 BackToList();
@@ -90,7 +100,7 @@ namespace BudgetPlannerUI.Pages.BudgetItemTypes
             ShowDeleteDialog = false;
             if (accepted)
             {
-                IsSuccess = await _budgetItemTypesDataService.Delete(_id);
+                IsSuccess = await _budgetItemsDataService.Delete(_id);
                 if (IsSuccess)
                 {
                     _toastService.ShowSuccess("Delete Successful", "");
@@ -105,7 +115,8 @@ namespace BudgetPlannerUI.Pages.BudgetItemTypes
 
         public void BackToList()
         {
-            _navManager.NavigateTo("/budgetitemtypes/");
+            _navManager.NavigateTo("/budgetitems/");
         }
     }
 }
+
