@@ -27,4 +27,10 @@ namespace BudgetPlannerUI.Services
         {
         }
     }
+    public class BudgetCyclesDataServices : BudgetPlannerDataService<BudgetCycle>, IBudgetCyclesDataService
+    {
+        public BudgetCyclesDataServices(HttpClient httpClient) : base(httpClient, Endpoints.BudgetCycles)
+        {
+        }
+    }
 }

@@ -1,0 +1,55 @@
+﻿@page "/budgetcycles/edit/{id}"
+@page "/budgetcycles/create"
+
+<h3 class="card-title">@Title</h3>
+<hr />
+<br />
+@if (Model == null)
+{
+    <LoadingMessage Message="Loading..." />
+}
+else
+{
+<EditForm Model="Model" OnValidSubmit="Save">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label for="name">Name</label>
+        <InputText @bind-Value="Model.Name" class="form-control" id="name" />
+        <ValidationMessage For="@(() => Model.Name)" />
+    </div>
+    <div class="form-group">
+        <label for="startdate">Start Date</label>
+        <InputDate @bind-Value="Model.StartDate" class="form-control" id="startdate" />
+        <ValidationMessage For="@(() => Model.StartDate)" />
+    </div>
+    <div class="form-group">
+        <label for="enddate">End Date</label>
+        <InputDate @bind-Value="Model.EndDate" class="form-control" id="enddate" />
+        <ValidationMessage For="@(() => Model.EndDate)" />
+    </div>
+    <div class="form-group">
+        <label for="startingbalance">Starting Balance</label>
+        <InputNumber @bind-Value="Model.StartingBalance" class="form-control" id="startingbalance" />
+        <ValidationMessage For="@(() => Model.StartingBalance)" />
+    </div>
+    <button class="btn btn-primary" type="submit">
+        <span class="oi oi-check"></span>
+        Save
+    </button>
+    @if (ShowDeleteButton)
+    {
+        <a @onclick="Delete" class="btn btn-danger">
+            <span class="oi oi-x"></span>
+            Delete
+        </a>
+    }
+    <a @onclick="Cancel" class="btn btn-outline-secondary">
+        <span class="oi oi-delete"></span>
+        Cancel
+    </a>
+</EditForm>
+    @if (ShowDeleteDialog)
+    {
+        <AcceptRejectDialog Title="Delete" Message="Are you sure?" OnClose="OnDeleteClose"></AcceptRejectDialog>
+    }
+}

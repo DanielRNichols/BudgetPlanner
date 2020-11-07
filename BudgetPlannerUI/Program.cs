@@ -34,6 +34,7 @@ namespace BudgetPlannerUI
             builder.Services.AddTransient<IBudgetGroupsDataService, BudgetGroupsDataServices>();
             builder.Services.AddTransient<IBudgetCategoriesDataService, BudgetCategoriesDataServices>();
             builder.Services.AddTransient<IBudgetItemsDataService, BudgetItemsDataServices>();
+            builder.Services.AddTransient<IBudgetCyclesDataService, BudgetCyclesDataServices>();
 
 
             await builder.Build().RunAsync();

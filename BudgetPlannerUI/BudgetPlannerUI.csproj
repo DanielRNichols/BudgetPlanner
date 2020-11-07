@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Pages\MemorizedTransactions\" />
     <Folder Include="wwwroot\sample-data\" />
   </ItemGroup>
 

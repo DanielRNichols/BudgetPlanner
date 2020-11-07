@@ -1,0 +1,37 @@
+﻿@page "/budgetcycles/details/{id}"
+
+<h3>Budget Cycle Details</h3>
+
+@if (Model == null)
+{
+    <LoadingMessage Message="Loading..." />
+}
+else
+{
+    <table class="table table-responsive">
+        <tbody>
+            <tr>
+                <td>Id</td>
+                <td>@Model.Id</td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>@Model.Name</td>
+            </tr>
+            <tr>
+                <td>Start Date</td>
+                <td>@FormatDate(Model.StartDate)</td>
+            </tr>
+            <tr>
+                <td>End Date</td>
+                <td>@FormatDate(Model.EndDate)</td>
+            </tr>
+            <tr>
+                <td>Starting Balance</td>
+                <td>@FormatCurrency(Model.StartingBalance)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="/budgetcycles/" class="btn btn-outline-secondary">Back</a>
+}
