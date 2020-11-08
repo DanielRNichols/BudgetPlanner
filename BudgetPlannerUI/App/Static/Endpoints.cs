@@ -13,5 +13,6 @@ namespace BudgetPlannerUI.Static
         public static string BudgetCategories = $"{BaseUrl}api/budgetcategories/";
         public static string BudgetItems = $"{BaseUrl}api/budgetitems/";
         public static string BudgetCycles = $"{BaseUrl}api/budgetcycles/";
+        public static string MemorizedTransactions = $"{BaseUrl}api/memorizedtransactions/";
     }
 }
