@@ -33,9 +33,8 @@ namespace BudgetPlannerApi.Services.Repositories
 
         }
 
-        public override async Task<BudgetItem> GetById(int id, BaseQueryOptions options)
+        public override async Task<BudgetItem> GetById(int id, bool includeRelated = false)
         {
-            bool includeRelated = options != null && options.IncludeRelated;
             if (includeRelated)
             {
                 return await _db.BudgetItems
@@ -44,7 +43,7 @@ namespace BudgetPlannerApi.Services.Repositories
                     .FirstOrDefaultAsync(q => q.Id == id);
             }
 
-            return await base.GetById(id, options);
+            return await base.GetById(id);
         }
     }
 }

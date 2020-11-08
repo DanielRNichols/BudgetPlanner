@@ -30,19 +30,26 @@ namespace BudgetPlannerApi.Controllers
         /// Get all Budget Categories
         /// </summary>
         /// <param name="includeRelated"></param>
+        /// <param name="limit"></param>
+        /// <param name="skip"></param>
         /// <param name="budgetgroupId"></param>
         /// <returns></returns>
         // GET: api/<BudgetCategoriesController>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Get([FromQuery] bool includeRelated = false,
+        public async Task<IActionResult> Get(
+            [FromQuery] bool includeRelated = false,
+            [FromQuery] int limit = 0,
+            [FromQuery] int skip = 0,
             [FromQuery] int budgetgroupId = 0)
         {
             return await _controllerHelper.GetItems<BudgetCategoryDTO>(this, _repo,
                 new BudgetCategoriesQueryOptions()
                 {
                     IncludeRelated = includeRelated,
+                    Limit = limit,
+                    Skip = skip,
                     BudgetGroupId = budgetgroupId
                 });
         }
@@ -61,11 +68,7 @@ namespace BudgetPlannerApi.Controllers
         public async Task<IActionResult> GetById(int id, 
             [FromQuery] bool includeRelated = false)
         {
-            return await _controllerHelper.GetItem<BudgetCategoryDTO>(this, _repo, id,
-                new BudgetCategoriesQueryOptions() 
-                { 
-                    IncludeRelated = includeRelated
-                });
+            return await _controllerHelper.GetItem<BudgetCategoryDTO>(this, _repo, id, includeRelated);
         }
 
         /// <summary>

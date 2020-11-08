@@ -9,6 +9,8 @@ namespace BudgetPlannerApi.Services.Repositories
     public class BaseQueryOptions : IBaseQueryOptions
     {
         public bool IncludeRelated { get; set; } = false;
+        public int Limit { get; set; } = 0;
+        public int Skip { get; set; } = 0;
     }
 
     public class BudgetCategoriesQueryOptions : BaseQueryOptions, IBudgetCategoriesQueryOptions

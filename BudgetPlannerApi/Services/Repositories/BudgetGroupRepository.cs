@@ -28,15 +28,16 @@ namespace BudgetPlannerApi.Services.Repositories
             return await base.Get(options);
         }
 
-        public override async Task<BudgetGroup> GetById(int id, BaseQueryOptions options)
+        public override async Task<BudgetGroup> GetById(int id, bool includeRelated = false)
         {
-            bool includeRelated = options != null && options.IncludeRelated;
             if (includeRelated)
             {
-                return await _db.BudgetGroups.Include(g => g.BudgetCategories).FirstOrDefaultAsync(q => q.Id == id);
+                return await _db.BudgetGroups
+                    .Include(g => g.BudgetCategories)
+                    .FirstOrDefaultAsync(q => q.Id == id);
             }
 
-            return await base.GetById(id, options);
+            return await base.GetById(id);
         }
     }
 }

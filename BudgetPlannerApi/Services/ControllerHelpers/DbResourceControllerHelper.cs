@@ -54,16 +54,16 @@ namespace BudgetPlannerApi.Services.ControllerHelpers
         /// <param name="controller"></param>
         /// <param name="repo"></param>
         /// <param name="id"></param>
-        /// <param name="options"></param>
+        /// <param name="includeRelated"></param>
         /// <returns></returns>
         public async Task<IActionResult> GetItem<D>(ControllerBase controller, 
-            IDbResourceRepository<T,O> repo, int id, O options = null)
+            IDbResourceRepository<T,O> repo, int id, bool includeRelated)
         {
             try
             {
                 string desc = GetControllerDescription(controller);
                 _logger.LogInfo($"{desc}: {id}");
-                var item = await repo.GetById(id, options);
+                var item = await repo.GetById(id, includeRelated);
                 if (item == null)
                 {
                     _logger.LogWarn($"{desc}: Item not found: {id}");
@@ -175,7 +175,7 @@ namespace BudgetPlannerApi.Services.ControllerHelpers
                     _logger.LogWarn($"{desc}: Empty request submitted");
                     return controller.BadRequest();
                 }
-                var item = await repo.GetById(id, null);
+                var item = await repo.GetById(id, false);
                 if (item == null)
                 {
                     _logger.LogWarn($"{desc}: Item with id ${id} was not found");

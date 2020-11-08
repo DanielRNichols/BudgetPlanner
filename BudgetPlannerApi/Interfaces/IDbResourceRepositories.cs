@@ -11,7 +11,7 @@ namespace BudgetPlannerApi.Interfaces
     public interface IDbResourceRepository<T,O> where T : IDbResource where O: IBaseQueryOptions
     {
         Task<IList<T>> Get(O options);
-        Task<T> GetById(int id, O options);
+        Task<T> GetById(int id, bool includeRelated);
         Task<bool> Exists(int id);
         Task<bool> Create(T entity);
         Task<bool> Update(T entity);

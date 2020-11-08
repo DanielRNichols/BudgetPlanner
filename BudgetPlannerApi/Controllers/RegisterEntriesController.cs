@@ -30,15 +30,26 @@ namespace BudgetPlannerApi.Controllers
         /// Get all Register Entries
         /// </summary>
         /// <param name="includeRelated"></param>
+        /// <param name="limit"></param>
+        /// <param name="skip"></param>
         /// <returns></returns>
         // GET: api/<RegisterEntriesController>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Get([FromQuery] bool includeRelated = false)
+        public async Task<IActionResult> Get(
+            [FromQuery] bool includeRelated = false,
+            [FromQuery] int limit = 0,
+            [FromQuery] int skip = 0)
+
         {
-            return await _controllerHelper.GetItems<RegisterEntryDTO>(this, _repo, 
-                new BaseQueryOptions() { IncludeRelated = includeRelated });
+            return await _controllerHelper.GetItems<RegisterEntryDTO>(this, _repo,
+                new BaseQueryOptions()
+                {
+                    IncludeRelated = includeRelated,
+                    Limit = limit,
+                    Skip = skip
+                });
         }
 
         /// <summary>
@@ -54,8 +65,7 @@ namespace BudgetPlannerApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetById(int id, [FromQuery] bool includeRelated = false)
         {
-            return await _controllerHelper.GetItem<RegisterEntryDTO>(this, _repo, id, 
-                new BaseQueryOptions() { IncludeRelated = includeRelated });
+            return await _controllerHelper.GetItem<RegisterEntryDTO>(this, _repo, id, includeRelated);
         }
 
         /// <summary>

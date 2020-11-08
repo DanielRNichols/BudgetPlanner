@@ -2,6 +2,7 @@
 using BudgetPlannerApi.Data;
 using BudgetPlannerApi.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,22 +27,20 @@ namespace BudgetPlannerApi.Services.Repositories
                 {
                     query = query.Where(r => r.BudgetGroupId == options.BudgetGroupId);
                 }
-
                 if (options.IncludeRelated)
                 {
                     query = query
                         .Include(t => t.BudgetGroup)
                         .Include(i => i.BudgetItems);
                 }
-                return await query.ToListAsync();
+                return await base.ExecuteQuery(query, options);
             }
 
             return await base.Get(options);
         }
 
-        public override async Task<BudgetCategory> GetById(int id, BudgetCategoriesQueryOptions options)
+        public override async Task<BudgetCategory> GetById(int id, bool includeRelated = false)
         {
-            bool includeRelated = options != null && options.IncludeRelated;
             if (includeRelated)
             {
                 return await _db.BudgetCategories
@@ -50,7 +49,7 @@ namespace BudgetPlannerApi.Services.Repositories
                     .FirstOrDefaultAsync(q => q.Id == id);
             }
 
-            return await base.GetById(id, options);
+            return await base.GetById(id);
         }
     }
 }

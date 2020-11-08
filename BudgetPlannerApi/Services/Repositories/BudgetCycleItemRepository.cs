@@ -33,16 +33,15 @@ namespace BudgetPlannerApi.Services.Repositories
                         .Include(c => c.BudgetCycle)
                         .Include(i => i.BudgetItem);
                 }
-                return await query.ToListAsync();
+                return await base.ExecuteQuery(query, options);
             }
 
             return await base.Get();
 
         }
 
-        public override async Task<BudgetCycleItem> GetById(int id, BudgetCycleItemsQueryOptions options = null)
+        public override async Task<BudgetCycleItem> GetById(int id, bool includeRelated = false)
         {
-            bool includeRelated = options != null && options.IncludeRelated;
             if (includeRelated)
             {
                 return await _db.BudgetCyclesItems
@@ -51,7 +50,7 @@ namespace BudgetPlannerApi.Services.Repositories
                 .FirstOrDefaultAsync(q => q.Id == id);
             }
 
-            return await base.GetById(id, options);
+            return await base.GetById(id);
         }
     }
 }

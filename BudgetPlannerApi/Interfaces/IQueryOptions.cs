@@ -8,6 +8,8 @@ namespace BudgetPlannerApi.Interfaces
     public interface IBaseQueryOptions
     {
         bool IncludeRelated { get; set; }
+        int Limit { get; set; }
+        int Skip {get; set; }
     }
 
     public interface IBudgetCategoriesQueryOptions : IBaseQueryOptions

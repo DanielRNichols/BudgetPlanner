@@ -3,6 +3,7 @@ using BudgetPlannerApi.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -41,12 +42,28 @@ namespace BudgetPlannerApi.Services.Repositories
         public virtual async Task<IList<T>> Get(O options = null)
         {
             // Override if you need to include related objects
-            var items = await _dbContext.ToListAsync();
+            var query = _dbContext.AsQueryable();
 
-            return items;
+            return await ExecuteQuery(query, options);
         }
 
-        public virtual async Task<T> GetById(int id, O options = null)
+        public virtual async Task<IList<T>> ExecuteQuery(IQueryable<T> query, IBaseQueryOptions options = null)
+        {
+            if (query == null)
+                return null;
+
+            if (options != null)
+            {
+                if (options.Skip > 0)
+                    query = query.Skip(options.Skip);
+                if (options.Limit > 0)
+                    query = query.Take(options.Limit);
+            }
+
+            return await query.ToListAsync();
+        }
+
+        public virtual async Task<T> GetById(int id, bool includeRelated = false)
         {
             // Override if you need to include related objects
             var item = await _dbContext.FindAsync(id);
