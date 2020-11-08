@@ -6,6 +6,7 @@ using AutoMapper;
 using BudgetPlannerApi.Data;
 using BudgetPlannerApi.DataTransfer;
 using BudgetPlannerApi.Interfaces;
+using BudgetPlannerApi.Services.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,7 +37,8 @@ namespace BudgetPlannerApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get([FromQuery] bool includeRelated = false)
         {
-            return await _controllerHelper.GetItems<BudgetCycleDTO>(this, _repo, includeRelated);
+            return await _controllerHelper.GetItems<BudgetCycleDTO>(this, _repo, 
+                new BaseQueryOptions() { IncludeRelated = includeRelated });
         }
 
         /// <summary>
@@ -52,7 +54,8 @@ namespace BudgetPlannerApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetById(int id, [FromQuery] bool includeRelated = false)
         {
-            return await _controllerHelper.GetItem<BudgetCycleDTO>(this, _repo, id, includeRelated);
+            return await _controllerHelper.GetItem<BudgetCycleDTO>(this, _repo, id, 
+                new BaseQueryOptions() { IncludeRelated = includeRelated });
         }
 
         /// <summary>

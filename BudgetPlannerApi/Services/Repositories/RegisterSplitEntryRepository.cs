@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BudgetPlannerApi.Services.Repositories
 {
-    public class RegisterSplitEntryRepository : DbResourceRepository<RegisterSplitEntry>, IRegisterSplitEntryRepository
+    public class RegisterSplitEntryRepository : DbResourceRepository<RegisterSplitEntry, BaseQueryOptions>, IRegisterSplitEntryRepository
     {
         private readonly ApplicationDbContext _db;
 
@@ -18,9 +18,10 @@ namespace BudgetPlannerApi.Services.Repositories
             _db = db;
         }
 
-        public override async Task<IList<RegisterSplitEntry>> Get(bool includeRelated = false)
+        public override async Task<IList<RegisterSplitEntry>> Get(BaseQueryOptions options)
         {
-            if(includeRelated)
+            bool includeRelated = options != null && options.IncludeRelated;
+            if (includeRelated)
             {
                 return await _db.RegisterSplitEntries
                 .Include(r => r.RegisterEntry)
@@ -28,12 +29,13 @@ namespace BudgetPlannerApi.Services.Repositories
                 .ToListAsync();
             }
 
-            return await base.Get(includeRelated);
+            return await base.Get(options);
 
         }
 
-        public override async Task<RegisterSplitEntry> GetById(int id, bool includeRelated = false)
+        public override async Task<RegisterSplitEntry> GetById(int id, BaseQueryOptions options)
         {
+            bool includeRelated = options != null && options.IncludeRelated;
             if (includeRelated)
             {
                 return await _db.RegisterSplitEntries
@@ -42,7 +44,7 @@ namespace BudgetPlannerApi.Services.Repositories
                 .FirstOrDefaultAsync(q => q.Id == id);
             }
 
-            return await base.GetById(id, includeRelated);
+            return await base.GetById(id, options);
         }
     }
 }

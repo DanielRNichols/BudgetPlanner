@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace BudgetPlannerApi.Services.ControllerHelpers
 {
-    public class DbResourceControllerHelper<T> : IDbResourceControllerHelper<T> where T : class, IDbResource
+    public class DbResourceControllerHelper<T,O> : 
+        IDbResourceControllerHelper<T,O> where T : class, IDbResource where O : class, IBaseQueryOptions
     {
         private readonly ILoggerService _logger;
         private readonly IMapper _mapper;
@@ -26,15 +27,15 @@ namespace BudgetPlannerApi.Services.ControllerHelpers
         /// <typeparam name="D">Data Transfer Object class</typeparam>
         /// <param name="controller"></param>
         /// <param name="repo"></param>
-        /// <param name="includeRelated"></param>
+        /// <param name="options"></param>
         /// <returns></returns>
-        public async Task<ObjectResult> GetItems<D>(ControllerBase controller, IDbResourceRepository<T> repo, bool includeRelated = false)
+        public async Task<ObjectResult> GetItems<D>(ControllerBase controller, IDbResourceRepository<T,O> repo, O options = null)
         {
             try
             {
                 string desc = GetControllerDescription(controller);
                 _logger.LogInfo(desc);
-                var items = await repo.Get(includeRelated);
+                var items = await repo.Get(options);
                 var response = _mapper.Map<IList<D>>(items);
                 _logger.LogInfo($"{desc} - Successful");
 
@@ -53,16 +54,16 @@ namespace BudgetPlannerApi.Services.ControllerHelpers
         /// <param name="controller"></param>
         /// <param name="repo"></param>
         /// <param name="id"></param>
-        /// <param name="includeRelated"></param>
+        /// <param name="options"></param>
         /// <returns></returns>
         public async Task<IActionResult> GetItem<D>(ControllerBase controller, 
-            IDbResourceRepository<T> repo, int id, bool includeRelated)
+            IDbResourceRepository<T,O> repo, int id, O options = null)
         {
             try
             {
                 string desc = GetControllerDescription(controller);
                 _logger.LogInfo($"{desc}: {id}");
-                var item = await repo.GetById(id, includeRelated);
+                var item = await repo.GetById(id, options);
                 if (item == null)
                 {
                     _logger.LogWarn($"{desc}: Item not found: {id}");
@@ -87,7 +88,7 @@ namespace BudgetPlannerApi.Services.ControllerHelpers
         /// <param name="itemDTO"></param>
         /// <returns></returns>
         public async Task<IActionResult> CreateItem<D>(ControllerBase controller, 
-            IDbResourceRepository<T> repo, D itemDTO)
+            IDbResourceRepository<T,O> repo, D itemDTO)
         {
             string desc = GetControllerDescription(controller);
             try
@@ -120,7 +121,7 @@ namespace BudgetPlannerApi.Services.ControllerHelpers
         }
 
         public async Task<IActionResult> UpdateItem<D>(ControllerBase controller, 
-            IDbResourceRepository<T> repo, int id, D itemDTO)
+            IDbResourceRepository<T,O> repo, int id, D itemDTO)
         {
             try
             {
@@ -163,7 +164,7 @@ namespace BudgetPlannerApi.Services.ControllerHelpers
         }
 
         public async Task<IActionResult> DeleteItem(ControllerBase controller,
-            IDbResourceRepository<T> repo, int id)
+            IDbResourceRepository<T,O> repo, int id)
         {
             try
             {
@@ -174,7 +175,7 @@ namespace BudgetPlannerApi.Services.ControllerHelpers
                     _logger.LogWarn($"{desc}: Empty request submitted");
                     return controller.BadRequest();
                 }
-                var item = await repo.GetById(id);
+                var item = await repo.GetById(id, null);
                 if (item == null)
                 {
                     _logger.LogWarn($"{desc}: Item with id ${id} was not found");

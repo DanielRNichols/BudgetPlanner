@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace BudgetPlannerApi.Services.Repositories
 {
-    public class BudgetCycleItemRepository : DbResourceRepository<BudgetCycleItem>, IBudgetCycleItemRepository
+    public class BudgetCycleItemRepository : 
+                    DbResourceRepository<BudgetCycleItem, BudgetCycleItemsQueryOptions>, IBudgetCycleItemRepository
     {
         private readonly ApplicationDbContext _db;
 
@@ -17,22 +18,31 @@ namespace BudgetPlannerApi.Services.Repositories
         {
             _db = db;
         }
-        public override async Task<IList<BudgetCycleItem>> Get(bool includeRelated = false)
+        public override async Task<IList<BudgetCycleItem>> Get(BudgetCycleItemsQueryOptions options = null)
         {
-            if (includeRelated)
+            if(options != null)
             {
-                return await _db.BudgetCyclesItems
-                    .Include(c => c.BudgetCycle)
-                    .Include(i => i.BudgetItem)
-                    .ToListAsync();
+                var query = _db.BudgetCyclesItems.AsQueryable();
+                if(options.BudgetCycleId > 0)
+                {
+                    query = query.Where(r => r.BudgetCycleId == options.BudgetCycleId);
+                }
+                if (options.IncludeRelated)
+                {
+                    query = query
+                        .Include(c => c.BudgetCycle)
+                        .Include(i => i.BudgetItem);
+                }
+                return await query.ToListAsync();
             }
 
-            return await base.Get(includeRelated);
+            return await base.Get();
 
         }
 
-        public override async Task<BudgetCycleItem> GetById(int id, bool includeRelated = false)
+        public override async Task<BudgetCycleItem> GetById(int id, BudgetCycleItemsQueryOptions options = null)
         {
+            bool includeRelated = options != null && options.IncludeRelated;
             if (includeRelated)
             {
                 return await _db.BudgetCyclesItems
@@ -41,7 +51,7 @@ namespace BudgetPlannerApi.Services.Repositories
                 .FirstOrDefaultAsync(q => q.Id == id);
             }
 
-            return await base.GetById(id, includeRelated);
+            return await base.GetById(id, options);
         }
     }
 }

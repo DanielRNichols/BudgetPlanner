@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BudgetPlannerApi.Services.Repositories
 {
-    public class RegisterEntryRepository : DbResourceRepository<RegisterEntry>, IRegisterEntryRepository
+    public class RegisterEntryRepository : DbResourceRepository<RegisterEntry, BaseQueryOptions>, IRegisterEntryRepository
     {
         private readonly ApplicationDbContext _db;
 
@@ -18,9 +18,10 @@ namespace BudgetPlannerApi.Services.Repositories
             _db = db;
         }
 
-        public override async Task<IList<RegisterEntry>> Get(bool includeRelated = false)
+        public override async Task<IList<RegisterEntry>> Get(BaseQueryOptions options)
         {
-            if(includeRelated)
+            bool includeRelated = options != null && options.IncludeRelated;
+            if (includeRelated)
             {
                 return await _db.RegisterEntries
                 .Include(r => r.Register)
@@ -29,12 +30,13 @@ namespace BudgetPlannerApi.Services.Repositories
                 .ToListAsync();
             }
 
-            return await base.Get(includeRelated);
+            return await base.Get(options);
 
         }
 
-        public override async Task<RegisterEntry> GetById(int id, bool includeRelated = false)
+        public override async Task<RegisterEntry> GetById(int id, BaseQueryOptions options)
         {
+            bool includeRelated = options != null && options.IncludeRelated;
             if (includeRelated)
             {
                 return await _db.RegisterEntries
@@ -44,7 +46,7 @@ namespace BudgetPlannerApi.Services.Repositories
                 .FirstOrDefaultAsync(q => q.Id == id);
             }
 
-            return await base.GetById(id, includeRelated);
+            return await base.GetById(id, options);
         }
     }
 }

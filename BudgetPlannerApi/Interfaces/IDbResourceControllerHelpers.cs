@@ -1,4 +1,5 @@
 ﻿using BudgetPlannerApi.Data;
+using BudgetPlannerApi.Services.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,48 +8,48 @@ using System.Threading.Tasks;
 
 namespace BudgetPlannerApi.Interfaces
 {
-    public interface IDbResourceControllerHelper<T> where T : class, IDbResource
+    public interface IDbResourceControllerHelper<T,O> where T : class, IDbResource where O : class, IBaseQueryOptions
     {
-        Task<ObjectResult> GetItems<D>(ControllerBase controller, IDbResourceRepository<T> repo, bool includeRelated);
-        Task<IActionResult> GetItem<D>(ControllerBase controller, IDbResourceRepository<T> repo, int id, bool includeRelated);
-        Task<IActionResult> CreateItem<D>(ControllerBase controller, IDbResourceRepository<T> repo, D itemDTO);
-        Task<IActionResult> UpdateItem<D>(ControllerBase controller, IDbResourceRepository<T> repo, int id, D itemDTO);
-        Task<IActionResult> DeleteItem(ControllerBase controller, IDbResourceRepository<T> repo, int id);
+        Task<ObjectResult> GetItems<D>(ControllerBase controller, IDbResourceRepository<T,O> repo, O options);
+        Task<IActionResult> GetItem<D>(ControllerBase controller, IDbResourceRepository<T,O> repo, int id, O options);
+        Task<IActionResult> CreateItem<D>(ControllerBase controller, IDbResourceRepository<T,O> repo, D itemDTO);
+        Task<IActionResult> UpdateItem<D>(ControllerBase controller, IDbResourceRepository<T,O> repo, int id, D itemDTO);
+        Task<IActionResult> DeleteItem(ControllerBase controller, IDbResourceRepository<T,O> repo, int id);
     }
 
-    public interface IBudgetGroupsControllerHelper : IDbResourceControllerHelper<BudgetGroup>
-    {
-    }
-
-    public interface IBudgetCategoriesControllerHelper : IDbResourceControllerHelper<BudgetCategory>
+    public interface IBudgetGroupsControllerHelper : IDbResourceControllerHelper<BudgetGroup, BaseQueryOptions>
     {
     }
 
-    public interface IBudgetItemsControllerHelper : IDbResourceControllerHelper<BudgetItem>
+    public interface IBudgetCategoriesControllerHelper : IDbResourceControllerHelper<BudgetCategory, BudgetCategoriesQueryOptions>
     {
     }
 
-    public interface IMemorizedTransactionsControllerHelper : IDbResourceControllerHelper<MemorizedTransaction>
+    public interface IBudgetItemsControllerHelper : IDbResourceControllerHelper<BudgetItem, BaseQueryOptions>
     {
     }
 
-    public interface IRegistersControllerHelper : IDbResourceControllerHelper<Register>
+    public interface IMemorizedTransactionsControllerHelper : IDbResourceControllerHelper<MemorizedTransaction, BaseQueryOptions>
     {
     }
 
-    public interface IRegisterEntriesControllerHelper : IDbResourceControllerHelper<RegisterEntry>
+    public interface IRegistersControllerHelper : IDbResourceControllerHelper<Register, BaseQueryOptions>
     {
     }
 
-    public interface IRegisterSplitEntriesControllerHelper : IDbResourceControllerHelper<RegisterSplitEntry>
+    public interface IRegisterEntriesControllerHelper : IDbResourceControllerHelper<RegisterEntry, BaseQueryOptions>
     {
     }
 
-    public interface IBudgetCyclesControllerHelper : IDbResourceControllerHelper<BudgetCycle>
+    public interface IRegisterSplitEntriesControllerHelper : IDbResourceControllerHelper<RegisterSplitEntry, BaseQueryOptions>
     {
     }
 
-    public interface IBudgetCycleItemsControllerHelper : IDbResourceControllerHelper<BudgetCycleItem>
+    public interface IBudgetCyclesControllerHelper : IDbResourceControllerHelper<BudgetCycle, BaseQueryOptions>
+    {
+    }
+
+    public interface IBudgetCycleItemsControllerHelper : IDbResourceControllerHelper<BudgetCycleItem, BudgetCycleItemsQueryOptions>
     {
     }
 

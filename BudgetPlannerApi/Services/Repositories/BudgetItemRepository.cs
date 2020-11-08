@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BudgetPlannerApi.Services.Repositories
 {
-    public class BudgetItemRepository : DbResourceRepository<BudgetItem>, IBudgetItemRepository
+    public class BudgetItemRepository : DbResourceRepository<BudgetItem, BaseQueryOptions>, IBudgetItemRepository
     {
         private readonly ApplicationDbContext _db;
 
@@ -18,9 +18,10 @@ namespace BudgetPlannerApi.Services.Repositories
             _db = db;
         }
 
-        public override async Task<IList<BudgetItem>> Get(bool includeRelated = false)
+        public override async Task<IList<BudgetItem>> Get(BaseQueryOptions options)
         {
-            if(includeRelated)
+            bool includeRelated = options != null && options.IncludeRelated;
+            if (includeRelated)
             {
                 return await _db.BudgetItems
                 .Include(g => g.BudgetCategory)
@@ -28,12 +29,13 @@ namespace BudgetPlannerApi.Services.Repositories
                 .ToListAsync();
             }
 
-            return await base.Get(includeRelated);
+            return await base.Get(options);
 
         }
 
-        public override async Task<BudgetItem> GetById(int id, bool includeRelated = false)
+        public override async Task<BudgetItem> GetById(int id, BaseQueryOptions options)
         {
+            bool includeRelated = options != null && options.IncludeRelated;
             if (includeRelated)
             {
                 return await _db.BudgetItems
@@ -42,7 +44,7 @@ namespace BudgetPlannerApi.Services.Repositories
                     .FirstOrDefaultAsync(q => q.Id == id);
             }
 
-            return await base.GetById(id, includeRelated);
+            return await base.GetById(id, options);
         }
     }
 }

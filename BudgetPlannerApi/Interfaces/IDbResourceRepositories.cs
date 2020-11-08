@@ -1,4 +1,5 @@
 ﻿using BudgetPlannerApi.Data;
+using BudgetPlannerApi.Services.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace BudgetPlannerApi.Interfaces
 {
-    public interface IDbResourceRepository<T> where T : IDbResource
+    public interface IDbResourceRepository<T,O> where T : IDbResource where O: IBaseQueryOptions
     {
-        Task<IList<T>> Get(bool includeRelated = false);
-        Task<T> GetById(int id, bool includeRelated = false);
+        Task<IList<T>> Get(O options);
+        Task<T> GetById(int id, O options);
         Task<bool> Exists(int id);
         Task<bool> Create(T entity);
         Task<bool> Update(T entity);
@@ -19,32 +20,32 @@ namespace BudgetPlannerApi.Interfaces
 
     }
 
-    public interface IBudgetGroupRepository : IDbResourceRepository<BudgetGroup>
+    public interface IBudgetGroupRepository : IDbResourceRepository<BudgetGroup, BaseQueryOptions>
     {
     }
-    public interface IBudgetCategoryRepository : IDbResourceRepository<BudgetCategory>
+    public interface IBudgetCategoryRepository : IDbResourceRepository<BudgetCategory, BudgetCategoriesQueryOptions>
     {
     }
-    public interface IBudgetItemRepository : IDbResourceRepository<BudgetItem>
+    public interface IBudgetItemRepository : IDbResourceRepository<BudgetItem, BaseQueryOptions>
     {
     }
-    public interface IMemorizedTransactionRepository : IDbResourceRepository<MemorizedTransaction>
+    public interface IMemorizedTransactionRepository : IDbResourceRepository<MemorizedTransaction, BaseQueryOptions>
     {
     }
-    public interface IRegisterRepository : IDbResourceRepository<Register>
+    public interface IRegisterRepository : IDbResourceRepository<Register, BaseQueryOptions>
     {
     }
-    public interface IRegisterEntryRepository : IDbResourceRepository<RegisterEntry>
+    public interface IRegisterEntryRepository : IDbResourceRepository<RegisterEntry, BaseQueryOptions>
     {
     }
-    public interface IRegisterSplitEntryRepository : IDbResourceRepository<RegisterSplitEntry>
+    public interface IRegisterSplitEntryRepository : IDbResourceRepository<RegisterSplitEntry, BaseQueryOptions>
     {
     }
-    public interface IBudgetCycleRepository : IDbResourceRepository<BudgetCycle>
+    public interface IBudgetCycleRepository : IDbResourceRepository<BudgetCycle, BaseQueryOptions>
     {
     }
 
-    public interface IBudgetCycleItemRepository : IDbResourceRepository<BudgetCycleItem>
+    public interface IBudgetCycleItemRepository : IDbResourceRepository<BudgetCycleItem, BudgetCycleItemsQueryOptions>
     {
     }
 

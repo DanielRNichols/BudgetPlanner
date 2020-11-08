@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace BudgetPlannerApi.Services.Repositories
 {
-    public class DbResourceRepository<T> : IDbResourceRepository<T> where T: class, IDbResource
+    public class DbResourceRepository<T, O> : 
+        IDbResourceRepository<T, O> where T: class, IDbResource where O: class, IBaseQueryOptions
     {
         private readonly ApplicationDbContext _db;
         private readonly DbSet<T> _dbContext;
@@ -37,7 +38,7 @@ namespace BudgetPlannerApi.Services.Repositories
             return await _dbContext.AnyAsync(row => row.Id == id);
         }
 
-        public virtual async Task<IList<T>> Get(bool includeRelated = false)
+        public virtual async Task<IList<T>> Get(O options = null)
         {
             // Override if you need to include related objects
             var items = await _dbContext.ToListAsync();
@@ -45,7 +46,7 @@ namespace BudgetPlannerApi.Services.Repositories
             return items;
         }
 
-        public virtual async Task<T> GetById(int id, bool includeRelated = false)
+        public virtual async Task<T> GetById(int id, O options = null)
         {
             // Override if you need to include related objects
             var item = await _dbContext.FindAsync(id);

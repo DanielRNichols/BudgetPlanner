@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BudgetPlannerApi.Services.Repositories
 {
-    public class BudgetCategoryRepository : DbResourceRepository<BudgetCategory>, IBudgetCategoryRepository
+    public class BudgetCategoryRepository : DbResourceRepository<BudgetCategory, BudgetCategoriesQueryOptions>, IBudgetCategoryRepository
     {
         private readonly ApplicationDbContext _db;
 
@@ -17,21 +17,31 @@ namespace BudgetPlannerApi.Services.Repositories
         {
             _db = db;
         }
-        public override async Task<IList<BudgetCategory>> Get(bool includeRelated = false)
+        public override async Task<IList<BudgetCategory>> Get(BudgetCategoriesQueryOptions options)
         {
-            if (includeRelated)
+            if (options != null)
             {
-                return await _db.BudgetCategories
-                    .Include(t => t.BudgetGroup)
-                    .Include(i => i.BudgetItems)
-                    .ToListAsync();
+                var query = _db.BudgetCategories.AsQueryable();
+                if (options.BudgetGroupId > 0)
+                {
+                    query = query.Where(r => r.BudgetGroupId == options.BudgetGroupId);
+                }
+
+                if (options.IncludeRelated)
+                {
+                    query = query
+                        .Include(t => t.BudgetGroup)
+                        .Include(i => i.BudgetItems);
+                }
+                return await query.ToListAsync();
             }
 
-            return await base.Get(includeRelated);
+            return await base.Get(options);
         }
 
-        public override async Task<BudgetCategory> GetById(int id, bool includeRelated = false)
+        public override async Task<BudgetCategory> GetById(int id, BudgetCategoriesQueryOptions options)
         {
+            bool includeRelated = options != null && options.IncludeRelated;
             if (includeRelated)
             {
                 return await _db.BudgetCategories
@@ -40,7 +50,7 @@ namespace BudgetPlannerApi.Services.Repositories
                     .FirstOrDefaultAsync(q => q.Id == id);
             }
 
-            return await base.GetById(id, includeRelated);
+            return await base.GetById(id, options);
         }
     }
 }

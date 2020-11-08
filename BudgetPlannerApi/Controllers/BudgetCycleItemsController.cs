@@ -6,6 +6,7 @@ using AutoMapper;
 using BudgetPlannerApi.Data;
 using BudgetPlannerApi.DataTransfer;
 using BudgetPlannerApi.Interfaces;
+using BudgetPlannerApi.Services.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,9 +34,15 @@ namespace BudgetPlannerApi.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Get([FromQuery] bool includeRelated = false)
+        public async Task<IActionResult> Get([FromQuery] bool includeRelated = false,  
+                                             [FromQuery] int budgetCycleId = 0)
         {
-            return await _controllerHelper.GetItems<BudgetCycleItemDTO>(this, _repo, includeRelated);
+            return await _controllerHelper.GetItems<BudgetCycleItemDTO>(this, _repo, 
+                new BudgetCycleItemsQueryOptions() 
+                { 
+                    IncludeRelated = includeRelated,
+                    BudgetCycleId = budgetCycleId
+                });
         }
 
         /// <summary>
@@ -49,9 +56,14 @@ namespace BudgetPlannerApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetById(int id, [FromQuery] bool includeRelated = false)
+        public async Task<IActionResult> GetById(int id, 
+            [FromQuery] bool includeRelated = false)
         {
-            return await _controllerHelper.GetItem<BudgetCycleItemDTO>(this, _repo, id, includeRelated);
+            return await _controllerHelper.GetItem<BudgetCycleItemDTO>(this, _repo, id,
+                new BudgetCycleItemsQueryOptions() 
+                { 
+                    IncludeRelated = includeRelated
+                });
         }
 
         /// <summary>

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BudgetPlannerApi.Services.Repositories
 {
-    public class RegisterRepository : DbResourceRepository<Register>, IRegisterRepository
+    public class RegisterRepository : DbResourceRepository<Register, BaseQueryOptions>, IRegisterRepository
     {
         private readonly ApplicationDbContext _db;
 

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BudgetPlannerApi.Services.Repositories
 {
-    public class BudgetGroupRepository : DbResourceRepository<BudgetGroup>, IBudgetGroupRepository
+    public class BudgetGroupRepository : DbResourceRepository<BudgetGroup, BaseQueryOptions>, IBudgetGroupRepository
     {
         private readonly ApplicationDbContext _db;
 
@@ -17,24 +17,26 @@ namespace BudgetPlannerApi.Services.Repositories
         {
             _db = db;
         }
-        public override async Task<IList<BudgetGroup>> Get(bool includeRelated = false)
+        public override async Task<IList<BudgetGroup>> Get(BaseQueryOptions options)
         {
+            bool includeRelated = options != null && options.IncludeRelated;
             if (includeRelated)
             {
                 return await _db.BudgetGroups.Include(g => g.BudgetCategories).ToListAsync();
             }
 
-            return await base.Get(includeRelated);
+            return await base.Get(options);
         }
 
-        public override async Task<BudgetGroup> GetById(int id, bool includeRelated = false)
+        public override async Task<BudgetGroup> GetById(int id, BaseQueryOptions options)
         {
+            bool includeRelated = options != null && options.IncludeRelated;
             if (includeRelated)
             {
                 return await _db.BudgetGroups.Include(g => g.BudgetCategories).FirstOrDefaultAsync(q => q.Id == id);
             }
 
-            return await base.GetById(id, includeRelated);
+            return await base.GetById(id, options);
         }
     }
 }

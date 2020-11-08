@@ -4,11 +4,12 @@
         <name>BudgetPlannerApi</name>
     </assembly>
     <members>
-        <member name="M:BudgetPlannerApi.Controllers.BudgetCategoriesController.Get(System.Boolean)">
+        <member name="M:BudgetPlannerApi.Controllers.BudgetCategoriesController.Get(System.Boolean,System.Int32)">
             <summary>
             Get all Budget Categories
             </summary>
             <param name="includeRelated"></param>
+            <param name="budgetgroupId"></param>
             <returns></returns>
         </member>
         <member name="M:BudgetPlannerApi.Controllers.BudgetCategoriesController.GetById(System.Int32,System.Boolean)">
@@ -41,7 +42,7 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:BudgetPlannerApi.Controllers.BudgetCycleItemsController.Get(System.Boolean)">
+        <member name="M:BudgetPlannerApi.Controllers.BudgetCycleItemsController.Get(System.Boolean,System.Int32)">
             <summary>
             Get all Budget Cycles Items
             </summary>
@@ -335,17 +336,17 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:BudgetPlannerApi.Services.ControllerHelpers.DbResourceControllerHelper`1.GetItems``1(Microsoft.AspNetCore.Mvc.ControllerBase,BudgetPlannerApi.Interfaces.IDbResourceRepository{`0},System.Boolean)">
+        <member name="M:BudgetPlannerApi.Services.ControllerHelpers.DbResourceControllerHelper`2.GetItems``1(Microsoft.AspNetCore.Mvc.ControllerBase,BudgetPlannerApi.Interfaces.IDbResourceRepository{`0,`1},`1)">
             <summary>
             Get Items
             </summary>
             <typeparam name="D">Data Transfer Object class</typeparam>
             <param name="controller"></param>
             <param name="repo"></param>
-            <param name="includeRelated"></param>
+            <param name="options"></param>
             <returns></returns>
         </member>
-        <member name="M:BudgetPlannerApi.Services.ControllerHelpers.DbResourceControllerHelper`1.GetItem``1(Microsoft.AspNetCore.Mvc.ControllerBase,BudgetPlannerApi.Interfaces.IDbResourceRepository{`0},System.Int32,System.Boolean)">
+        <member name="M:BudgetPlannerApi.Services.ControllerHelpers.DbResourceControllerHelper`2.GetItem``1(Microsoft.AspNetCore.Mvc.ControllerBase,BudgetPlannerApi.Interfaces.IDbResourceRepository{`0,`1},System.Int32,`1)">
             <summary>
             Get Item by Id
             </summary>
@@ -353,10 +354,10 @@
             <param name="controller"></param>
             <param name="repo"></param>
             <param name="id"></param>
-            <param name="includeRelated"></param>
+            <param name="options"></param>
             <returns></returns>
         </member>
-        <member name="M:BudgetPlannerApi.Services.ControllerHelpers.DbResourceControllerHelper`1.CreateItem``1(Microsoft.AspNetCore.Mvc.ControllerBase,BudgetPlannerApi.Interfaces.IDbResourceRepository{`0},``0)">
+        <member name="M:BudgetPlannerApi.Services.ControllerHelpers.DbResourceControllerHelper`2.CreateItem``1(Microsoft.AspNetCore.Mvc.ControllerBase,BudgetPlannerApi.Interfaces.IDbResourceRepository{`0,`1},``0)">
             <summary>
             Create Item
             </summary>
