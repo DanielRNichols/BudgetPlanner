@@ -26,7 +26,7 @@ namespace BudgetPlannerApi.Controllers
         }
 
         /// <summary>
-        /// Get all Budget Item Groups
+        /// Get all Budget Categories
         /// </summary>
         /// <param name="includeRelated"></param>
         /// <returns></returns>
@@ -40,7 +40,7 @@ namespace BudgetPlannerApi.Controllers
         }
 
         /// <summary>
-        /// Get a Budget Item Group by Id
+        /// Get a Budget Category by Id
         /// </summary>
         /// <param name="id"></param>
         /// <param name="includeRelated"></param>
@@ -56,7 +56,7 @@ namespace BudgetPlannerApi.Controllers
         }
 
         /// <summary>
-        /// Create a new Budget Item Group
+        /// Create a new Budget Category
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
@@ -71,7 +71,7 @@ namespace BudgetPlannerApi.Controllers
         }
 
         /// <summary>
-        /// Update a Budget Item Group
+        /// Update a Budget Category
         /// </summary>
         /// <param name="id"></param>
         /// <param name="dto"></param>
@@ -88,7 +88,7 @@ namespace BudgetPlannerApi.Controllers
         }
 
         /// <summary>
-        /// Delete a Budget Item Group
+        /// Delete a Budget Category
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
