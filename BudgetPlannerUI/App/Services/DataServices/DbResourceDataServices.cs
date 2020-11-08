@@ -33,6 +33,12 @@ namespace BudgetPlannerUI.Services
         {
         }
     }
+    public class BudgetCycleItemsDataServices : BudgetPlannerDataService<BudgetCycleItem>, IBudgetCycleItemsDataService
+    {
+        public BudgetCycleItemsDataServices(HttpClient httpClient) : base(httpClient, Endpoints.BudgetCycleItems)
+        {
+        }
+    }
     public class MemorizedTransactionsDataServices : BudgetPlannerDataService<MemorizedTransaction>, IMemorizedTransactionsDataService
     {
         public MemorizedTransactionsDataServices(HttpClient httpClient) : base(httpClient, Endpoints.MemorizedTransactions)
