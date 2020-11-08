@@ -6,14 +6,14 @@
     <members>
         <member name="M:BudgetPlannerApi.Controllers.BudgetCategoriesController.Get(System.Boolean)">
             <summary>
-            Get all Budget Item Groups
+            Get all Budget Categories
             </summary>
             <param name="includeRelated"></param>
             <returns></returns>
         </member>
         <member name="M:BudgetPlannerApi.Controllers.BudgetCategoriesController.GetById(System.Int32,System.Boolean)">
             <summary>
-            Get a Budget Item Group by Id
+            Get a Budget Category by Id
             </summary>
             <param name="id"></param>
             <param name="includeRelated"></param>
@@ -21,14 +21,14 @@
         </member>
         <member name="M:BudgetPlannerApi.Controllers.BudgetCategoriesController.Create(BudgetPlannerApi.DataTransfer.BudgetCategoryCreateDTO)">
             <summary>
-            Create a new Budget Item Group
+            Create a new Budget Category
             </summary>
             <param name="dto"></param>
             <returns></returns>
         </member>
         <member name="M:BudgetPlannerApi.Controllers.BudgetCategoriesController.Update(System.Int32,BudgetPlannerApi.DataTransfer.BudgetCategoryCreateDTO)">
             <summary>
-            Update a Budget Item Group
+            Update a Budget Category
             </summary>
             <param name="id"></param>
             <param name="dto"></param>
@@ -36,7 +36,7 @@
         </member>
         <member name="M:BudgetPlannerApi.Controllers.BudgetCategoriesController.Delete(System.Int32)">
             <summary>
-            Delete a Budget Item Group
+            Delete a Budget Category
             </summary>
             <param name="id"></param>
             <returns></returns>
@@ -116,13 +116,13 @@
         </member>
         <member name="M:BudgetPlannerApi.Controllers.BudgetGroupsController.Get(System.Boolean)">
             <summary>
-            Get all Budget Item Types
+            Get all Budget Groups
             </summary>
             <returns></returns>
         </member>
         <member name="M:BudgetPlannerApi.Controllers.BudgetGroupsController.GetById(System.Int32,System.Boolean)">
             <summary>
-            Get a Budget Item Type by Id
+            Get a Budget Group by Id
             </summary>
             <param name="id"></param>
             <param name="includeRelated"></param>
@@ -130,14 +130,14 @@
         </member>
         <member name="M:BudgetPlannerApi.Controllers.BudgetGroupsController.Create(BudgetPlannerApi.DataTransfer.BudgetGroupCreateDTO)">
             <summary>
-            Create a new Budget Item Type
+            Create a new Budget Group
             </summary>
             <param name="dto"></param>
             <returns></returns>
         </member>
         <member name="M:BudgetPlannerApi.Controllers.BudgetGroupsController.Update(System.Int32,BudgetPlannerApi.DataTransfer.BudgetGroupCreateDTO)">
             <summary>
-            Update a Budget Item Type
+            Update a Budget Group
             </summary>
             <param name="id"></param>
             <param name="dto"></param>
@@ -145,7 +145,7 @@
         </member>
         <member name="M:BudgetPlannerApi.Controllers.BudgetGroupsController.Delete(System.Int32)">
             <summary>
-            Delete a Budget Item Type
+            Delete a Budget Group
             </summary>
             <param name="id"></param>
             <returns></returns>

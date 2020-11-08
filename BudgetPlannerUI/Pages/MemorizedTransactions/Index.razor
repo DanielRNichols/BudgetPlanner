@@ -1,0 +1,54 @@
+﻿@page "/memorizedtransactions"
+
+<h3 class="card-title">Memorized Transactions</h3>
+<hr />
+
+@if (Model == null)
+{
+    <LoadingMessage Message="Loading..." />
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Payee</th>
+                <th>Budget Item</th>
+                <th>Amount</th>
+                <th>
+                    <a href="/memorizedtransactions/create" class="btn btn-primary">
+                        <span class="oi oi-plus"></span>
+                    </a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Payee</td>
+                <td>@item.BudgetItem?.Name</td>
+                <td>@item.Amount</td>
+                <td>
+                    <a href="/memorizedtransactions/details/@item.Id" class="btn btn-primary">
+                        <span class="oi oi-info"></span>
+                    </a>
+                    <a href="/memorizedtransactions/edit/@item.Id" class="btn btn-primary">
+                        <span class="oi oi-pencil"></span>
+                    </a>
+                    <a @onclick="@(() => Delete(item.Id))" class="btn btn-danger">
+                        <span class="oi oi-trash"></span>
+                    </a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    @if (ShowDeleteDialog)
+    {
+        <AcceptRejectDialog Title="Delete" Message="Are you sure?" OnClose="OnDeleteClose"></AcceptRejectDialog>
+    }
+}
+

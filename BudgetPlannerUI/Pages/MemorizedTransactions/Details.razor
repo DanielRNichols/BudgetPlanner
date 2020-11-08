@@ -1,0 +1,33 @@
+﻿@page "/memorizedtransactions/details/{id}"
+
+<h3>Budget Item Details</h3>
+
+@if (Model == null)
+{
+    <LoadingMessage Message="Loading..." />
+}
+else
+{
+    <table class="table table-responsive">
+        <tbody>
+            <tr>
+                <td>Id</td>
+                <td>@Model.Id</td>
+            </tr>
+            <tr>
+                <td>Payee</td>
+                <td>@Model.Payee</td>
+            </tr>
+            <tr>
+                <td>Budget Item</td>
+                <td>@Model.BudgetItem?.Name</td>
+            </tr>
+            <tr>
+                <td>Amount</td>
+                <td>@Model.Amount</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="/memorizedtransactions/" class="btn btn-outline-secondary">Back</a>
+}
