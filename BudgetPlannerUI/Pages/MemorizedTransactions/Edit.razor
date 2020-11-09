@@ -18,7 +18,7 @@ else
 <EditForm Model="Model" OnValidSubmit="Save">
     <DataAnnotationsValidator />
     <div class="form-group">
-        <label for="name">Name</label>
+        <label for="name">Payee</label>
         <InputText @bind-Value="Model.Payee" class="form-control" id="name" />
         <ValidationMessage For="@(() => Model.Payee)" />
     </div>
@@ -28,7 +28,7 @@ else
                      class="form-control" id="budgetitem">
             @foreach (var item in BudgetItems)
                 {
-                <option value="@item.Id">@item.Name</option>
+                <option @key="item.Id" value="@item.Id">@item.Name</option>
                 }
         </InputSelect>
         <ValidationMessage For="@(() => Model.SelectedBudgetItemId)" />

@@ -45,4 +45,16 @@ namespace BudgetPlannerUI.Services
         {
         }
     }
+    public class RegistersDataServices : BudgetPlannerDataService<Register>, IRegistersDataService
+    {
+        public RegistersDataServices(HttpClient httpClient) : base(httpClient, Endpoints.Registers)
+        {
+        }
+    }
+    public class RegisterEntriesDataServices : BudgetPlannerDataService<RegisterEntry>, IRegisterEntriesDataService
+    {
+        public RegisterEntriesDataServices(HttpClient httpClient) : base(httpClient, Endpoints.RegisterEntries)
+        {
+        }
+    }
 }

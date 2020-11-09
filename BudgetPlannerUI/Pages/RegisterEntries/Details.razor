@@ -1,0 +1,69 @@
+﻿@page "/registerentries/details/{id}"
+
+<h3>Register Entry Details</h3>
+
+@if (Model == null)
+{
+    <LoadingMessage Message="Loading..." />
+}
+else
+{
+    <table class="table table-responsive">
+        <tbody>
+            <tr>
+                <td>Id</td>
+                <td>@Model.Id</td>
+            </tr>
+            <tr>
+                <td>Register</td>
+                <td>@Model.Register?.Name</td>
+            </tr>
+            <tr>
+                <td>Budget Cycle</td>
+                <td>@Model.BudgetCycle?.Name</td>
+            </tr>
+            <tr>
+                <td>Entry Number</td>
+                <td>@Model.EntryNumber</td>
+            </tr>
+            <tr>
+                <td>Transaction Date</td>
+                <td>@Model.TransactionDate</td>
+            </tr>
+            <tr>
+                <td>Check Number</td>
+                <td>@Model.CheckNumber</td>
+            </tr>
+            <tr>
+                <td>Payee</td>
+                <td>@Model.Payee</td>
+            </tr>
+            <tr>
+                <td>Budget Item</td>
+                <td>@Model.BudgetItem?.Name</td>
+            </tr>
+            <tr>
+                <td>Memo</td>
+                <td>@Model.Memo</td>
+            </tr>
+            <tr>
+                <td>Withdrawal Amount</td>
+                <td>@Model.WithdrawalAmount</td>
+            </tr>
+            <tr>
+                <td>Deposit Amount</td>
+                <td>@Model.DepositAmount</td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td>@Model.Status</td>
+            </tr>
+            <tr>
+                <td>Is Split</td>
+                <td>@Model.IsSplit</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="/registerentries/" class="btn btn-outline-secondary">Back</a>
+}

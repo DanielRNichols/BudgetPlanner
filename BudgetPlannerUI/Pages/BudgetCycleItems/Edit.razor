@@ -23,7 +23,7 @@ else
                      class="form-control" id="type">
             @foreach (var item in BudgetCycles)
                 {
-                <option value="@item.Id">@item.Name</option>
+                <option @key="item.Id" value="@item.Id">@item.Name</option>
                 }
         </InputSelect>
         <ValidationMessage For="@(() => Model.SelectedBudgetCycleId)" />
@@ -34,7 +34,7 @@ else
                      class="form-control" id="type">
             @foreach (var item in BudgetItems)
                 {
-                <option value="@item.Id">@item.Name</option>
+                <option @key="item.Id" value="@item.Id">@item.Name</option>
                 }
         </InputSelect>
         <ValidationMessage For="@(() => Model.SelectedBudgetItemId)" />

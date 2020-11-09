@@ -1,0 +1,109 @@
+﻿@page "/registerentries/edit/{id}"
+@page "/registerentries/create"
+
+<h3 class="card-title">@Title</h3>
+<hr />
+<br />
+@if (!IsSuccess)
+{
+    <ErrorMessage>"Somewthing Went Wrong With the Operation" </ErrorMessage>
+}
+
+@if (Model == null)
+{
+    <LoadingMessage Message="Loading..." />
+}
+else
+{
+<EditForm Model="Model" OnValidSubmit="Save">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label for="type">Register</label>
+        <InputSelect @bind-Value="Model.SelectedRegisterId"
+                     class="form-control" id="type">
+            @foreach (var item in Registers)
+                {
+                <option @key="item.Id" value="@item.Id">@item.Name</option>
+                }
+        </InputSelect>
+        <ValidationMessage For="@(() => Model.SelectedRegisterId)" />
+    </div>
+    <div class="form-group">
+        <label for="type">Budget Cycle</label>
+        <InputSelect @bind-Value="Model.SelectedBudgetCycleId"
+                     class="form-control" id="type">
+            @foreach (var item in BudgetCycles)
+                {
+                <option @key="item.Id" value="@item.Id">@item.Name</option>
+                }
+        </InputSelect>
+        <ValidationMessage For="@(() => Model.SelectedBudgetCycleId)" />
+    </div>
+    <div class="form-group">
+        <label for="transactiondate">Transaction Date</label>
+        <InputDate @bind-Value="Model.TransactionDate" class="form-control" id="transactiondate" />
+        <ValidationMessage For="@(() => Model.TransactionDate)" />
+    </div>
+    <div class="form-group">
+        <label for="checknumber">Check Number</label>
+        <InputNumber @bind-Value="Model.CheckNumber" class="form-control" id="checknumber" />
+        <ValidationMessage For="@(() => Model.CheckNumber)" />
+    </div>
+    <div class="form-group">
+        <label for="payee">Payee</label>
+        <InputText @bind-Value="Model.Payee" class="form-control" id="payee" />
+        <ValidationMessage For="@(() => Model.Payee)" />
+    </div>
+    <div class="form-group">
+        <label for="memo">Memo</label>
+        <InputText @bind-Value="Model.Memo" class="form-control" id="memo" />
+        <ValidationMessage For="@(() => Model.Memo)" />
+    </div>
+    <div class="form-group">
+        <label for="type">Budget Item</label>
+        <InputSelect @bind-Value="Model.SelectedBudgetItemId"
+                     class="form-control" id="type">
+            @foreach (var item in BudgetItems)
+                {
+                <option @key="item.Id" value="@item.Id">@item.Name</option>
+                }
+        </InputSelect>
+        <ValidationMessage For="@(() => Model.SelectedBudgetItemId)" />
+    </div>
+    <div class="form-group">
+        <label for="withdrawalamount">Withdrawal Amount</label>
+        <InputNumber @bind-Value="Model.WithdrawalAmount" class="form-control" id="withdrawalamount" />
+        <ValidationMessage For="@(() => Model.WithdrawalAmount)" />
+    </div>
+    <div class="form-group">
+        <label for="depositamount">Deposit Amount</label>
+        <InputNumber @bind-Value="Model.DepositAmount" class="form-control" id="depositamount" />
+        <ValidationMessage For="@(() => Model.DepositAmount)" />
+    </div>
+    <div class="form-group">
+        <label for="status">Status</label>
+        <InputNumber @bind-Value="Model.Status" class="form-control" id="status" />
+        <ValidationMessage For="@(() => Model.Status)" />
+    </div>
+    <button class="btn btn-primary" type="submit">
+        <span class="oi oi-check"></span>
+        Save
+    </button>
+    @if (ShowDeleteButton)
+    {
+        <a @onclick="Delete" class="btn btn-danger">
+            <span class="oi oi-x"></span>
+            Delete
+        </a>
+    }
+    <a @onclick="Cancel" class="btn btn-outline-secondary">
+        <span class="oi oi-delete"></span>
+        Cancel
+    </a>
+</EditForm>
+
+    @if (ShowDeleteDialog)
+    {
+        <AcceptRejectDialog Title="Delete" Message="Are you sure?" OnClose="OnDeleteClose"></AcceptRejectDialog>
+    }
+}

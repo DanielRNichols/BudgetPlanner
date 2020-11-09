@@ -35,4 +35,10 @@ namespace BudgetPlannerUI.Interfaces
     public interface IMemorizedTransactionsDataService : IBudgetPlannerDataService<MemorizedTransaction>
     {
     }
+    public interface IRegistersDataService : IBudgetPlannerDataService<Register>
+    {
+    }
+    public interface IRegisterEntriesDataService : IBudgetPlannerDataService<RegisterEntry>
+    {
+    }
 }

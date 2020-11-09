@@ -30,7 +30,7 @@ else
         <tbody>
             @foreach (var item in Model)
             {
-            <tr>
+            <tr @key="item.Id">
                 <td>@item.Id</td>
                 <td>@item.Name</td>
                 <td>@item.BudgetCategory?.Name</td>

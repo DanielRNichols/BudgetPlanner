@@ -1,0 +1,25 @@
+﻿@page "/registers/details/{id}"
+
+<h3>Register Details</h3>
+
+@if (Model == null)
+{
+    <LoadingMessage Message="Loading..." />
+}
+else
+{
+    <table class="table table-responsive">
+        <tbody>
+            <tr>
+                <td>Id</td>
+                <td>@Model.Id</td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>@Model.Name</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="/registers/" class="btn btn-outline-secondary">Back</a>
+}
