@@ -14,5 +14,7 @@ namespace BudgetPlannerApi.Data
         public string Name { get; set; }
         [Column(TypeName = "money")]
         public decimal StartingBalance { get; set; }
+
+        public virtual IList<RegisterEntry> RegisterEntries { get; set; }
     }
 }

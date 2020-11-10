@@ -17,5 +17,32 @@ namespace BudgetPlannerApi.Services.Repositories
         {
             _db = db;
         }
+
+        public override async Task<IList<Register>> Get(BaseQueryOptions options)
+        {
+            bool includeRelated = options != null && options.IncludeRelated;
+            if (includeRelated)
+            {
+                return await _db.Registers
+                    .Include(e => e.RegisterEntries)
+                    .ToListAsync();
+            }
+
+            return await base.Get(options);
+        }
+
+        public override async Task<Register> GetById(int id, bool includeRelated = false)
+        {
+            if (includeRelated)
+            {
+                return await _db.Registers
+                    .Include(e => e.RegisterEntries)
+                    .FirstOrDefaultAsync(q => q.Id == id);
+            }
+
+            return await base.GetById(id);
+        }
+
+
     }
 }

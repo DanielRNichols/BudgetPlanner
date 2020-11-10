@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BudgetPlannerApi.Services.Repositories
 {
-    public class RegisterEntryRepository : DbResourceRepository<RegisterEntry, BaseQueryOptions>, IRegisterEntryRepository
+    public class RegisterEntryRepository : DbResourceRepository<RegisterEntry, RegisterEntriesQueryOptions>, IRegisterEntryRepository
     {
         private readonly ApplicationDbContext _db;
 
@@ -18,19 +18,26 @@ namespace BudgetPlannerApi.Services.Repositories
             _db = db;
         }
 
-        public override async Task<IList<RegisterEntry>> Get(BaseQueryOptions options)
+        public override async Task<IList<RegisterEntry>> Get(RegisterEntriesQueryOptions options)
         {
-            bool includeRelated = options != null && options.IncludeRelated;
-            if (includeRelated)
+            if (options != null)
             {
-                return await _db.RegisterEntries
-                .Include(r => r.Register)
-                .Include(c => c.BudgetCycle)
-                .Include(i => i.BudgetItem)
-                .ToListAsync();
+                var query = _db.RegisterEntries.AsQueryable();
+                if (options.RegisterId > 0)
+                {
+                    query = query.Where(r => r.RegisterId == options.RegisterId);
+                }
+                if (options.IncludeRelated)
+                {
+                    query = query
+                        .Include(r => r.Register)
+                        .Include(c => c.BudgetCycle)
+                        .Include(i => i.BudgetItem);
+                }
+                return await base.ExecuteQuery(query, options);
             }
 
-            return await base.Get(options);
+            return await base.Get();
 
         }
 

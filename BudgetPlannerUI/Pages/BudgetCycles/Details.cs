@@ -27,17 +27,6 @@ namespace BudgetPlannerUI.Pages.BudgetCycles
             Model = await _dataService.Get(id: id, includeRelated: false);
         }
 
-        public string FormatDate(DateTime dt)
-        {
-            return String.Format("{0:MM/dd/yyyy}", dt);
-        }
-
-        public string FormatCurrency(decimal amount)
-        {
-            return String.Format("{0:0.00}", amount);
-        }
-
-
         public void BackToList()
         {
             _navManager.NavigateTo("/budgecycles/");

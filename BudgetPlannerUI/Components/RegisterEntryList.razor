@@ -1,0 +1,82 @@
+﻿@if(Entries == null)
+{
+    <LoadingMessage Message="Loading"></LoadingMessage>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                @if (ShowColumn("id"))
+                {
+                    <th>Id</th>
+                }
+                @if (ShowColumn("register"))
+                {
+                    <th>Register</th>
+                }
+                <th>Budget Cycle</th>
+                <th>Date</th>
+                <th>Check #</th>
+                <th>Payee</th>
+                @if (ShowColumn("memo"))
+                {
+                    <th>Memo</th>
+                }
+                <th>Budget Item</th>
+                <th>Withdrawal</th>
+                <th>Deposit</th>
+                <th>Status</th>
+                <th>
+                    <a href="/registerentries/create" class="btn btn-primary">
+                        <span class="oi oi-plus">New</span>
+                    </a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Entries)
+            {
+                <tr @key="item.Id">
+                    @if (ShowColumn("id"))
+                    {
+                        <td>@item.Id</td>
+                    }
+                    @if (ShowColumn("register"))
+                    {
+                        <td>@item.Register?.Name</td>
+                    }
+                    <td>@item.BudgetCycle?.Name</td>
+                    <td align="center">@Formatters.FormatDate(item.TransactionDate)</td>
+                    <td align="right">@Formatters.FormatCheckNumber(item.CheckNumber)</td>
+                    <td>@item.Payee</td>
+                    @if (ShowColumn("memo"))
+                    {
+                        <td>@item.Memo</td>
+                    }
+                    <td>@item.BudgetItem?.Name</td>
+                    <td align="right">@Formatters.FormatCurrency(item.WithdrawalAmount)</td>
+                    <td align="right">@Formatters.FormatCurrency(item.DepositAmount)</td>
+                    <td>@item.GetStatus()</td>
+                    <td>
+                        <a href="/registerentries/details/@item.Id" class="btn btn-primary">
+                            <span class="oi oi-info"></span>
+                        </a>
+                        <a href="/registerentries/edit/@item.Id" class="btn btn-primary">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <a @onclick="@(() => Delete(item.Id))" class="btn btn-danger">
+                            <span class="oi oi-trash"></span>
+                        </a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @if (ShowDeleteDialog)
+    {
+        <AcceptRejectDialog Title="Delete" Message="Are you sure?" OnClose="OnDeleteClose"></AcceptRejectDialog>
+    }
+
+}

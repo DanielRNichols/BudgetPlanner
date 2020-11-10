@@ -8,7 +8,7 @@ namespace BudgetPlannerUI.Interfaces
 {
     public interface IBudgetPlannerDataService<T> where T : class
     {
-        Task<IEnumerable<T>> Get(bool includeRelated = false);
+        Task<IEnumerable<T>> Get(bool includeRelated = false, string supplementalQueryStr = null);
         Task<T> Get(int id, bool includeRelated = false);
 
         Task<bool> Create(T entity);

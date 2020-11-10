@@ -21,4 +21,8 @@ namespace BudgetPlannerApi.Services.Repositories
     {
         public int BudgetCycleId { get; set; } = 0;
     }
+    public class RegisterEntriesQueryOptions : BaseQueryOptions, IRegisterEntriesQueryOptions
+    {
+        public int RegisterId { get; set; } = 0;
+    }
 }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace BudgetPlannerApi.Services.ControllerHelpers
 {
     public class RegisterEntriesControllerHelper : 
-        DbResourceControllerHelper<RegisterEntry, BaseQueryOptions>, IRegisterEntriesControllerHelper
+        DbResourceControllerHelper<RegisterEntry, RegisterEntriesQueryOptions>, IRegisterEntriesControllerHelper
     {
         public RegisterEntriesControllerHelper(ILoggerService logger, IMapper mapper) : base(logger, mapper)
         {

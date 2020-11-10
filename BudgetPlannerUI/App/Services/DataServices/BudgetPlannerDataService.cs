@@ -40,11 +40,11 @@ namespace BudgetPlannerUI.Services
             }
         }
 
-        public async Task<IEnumerable<T>> Get(bool includeRelated = false)
+        public async Task<IEnumerable<T>> Get(bool includeRelated = false, string supplementalQueryStr = null)
         {
             try
             {
-                var queryStr = CreateQueryString(includeRelated);
+                var queryStr = CreateQueryString(includeRelated, supplementalQueryStr);
                 return await _httpClient.GetFromJsonAsync<IList<T>>($"{_resourceUrl}{queryStr}");
             }
             catch
@@ -95,9 +95,19 @@ namespace BudgetPlannerUI.Services
             return false;
         }
 
-        private string CreateQueryString(bool includeRelated)
+        private string CreateQueryString(bool includeRelated, string supplementalQueryStr = null)
         {
-            return includeRelated ? "?includeRelated=true" : "";
+            string queryStr = String.Empty;
+            if (includeRelated)
+            {
+                queryStr = $"?includeRelated=true";
+                if (!String.IsNullOrEmpty(supplementalQueryStr))
+                    queryStr = $"{queryStr}&{supplementalQueryStr}";
+            }
+            else if (!String.IsNullOrEmpty(supplementalQueryStr))
+                queryStr = $"?{supplementalQueryStr}";
+
+            return queryStr;
         }
 
     }

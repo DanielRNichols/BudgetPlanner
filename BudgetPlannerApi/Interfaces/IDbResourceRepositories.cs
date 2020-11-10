@@ -35,7 +35,7 @@ namespace BudgetPlannerApi.Interfaces
     public interface IRegisterRepository : IDbResourceRepository<Register, BaseQueryOptions>
     {
     }
-    public interface IRegisterEntryRepository : IDbResourceRepository<RegisterEntry, BaseQueryOptions>
+    public interface IRegisterEntryRepository : IDbResourceRepository<RegisterEntry, RegisterEntriesQueryOptions>
     {
     }
     public interface IRegisterSplitEntryRepository : IDbResourceRepository<RegisterSplitEntry, BaseQueryOptions>

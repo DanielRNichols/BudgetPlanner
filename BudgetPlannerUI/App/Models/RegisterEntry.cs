@@ -8,6 +8,14 @@ using System.Threading.Tasks;
 
 namespace BudgetPlannerUI.Models
 {
+    public enum RegisterEntryStatus
+    {
+        Outstanding = 0,
+        Pending = 1,
+        Cleared = 2,
+        Reconciled = 3
+    }
+
     public class RegisterEntry : IDbResource
     {
         public int Id { get; set; }
@@ -44,6 +52,47 @@ namespace BudgetPlannerUI.Models
         [RegularExpression(@"^[1-9]\d*$", ErrorMessage = "Must select a Budget Item")]
         public string SelectedBudgetItemId { get; set; }
 
+
+        // Calculated Properties
+
+        public decimal NetTotal
+        {
+            get
+            {
+                return DepositAmount - WithdrawalAmount;
+            }
+        }
+
+
+        // Methods
+
+        public RegisterEntryStatus GetStatus()
+        {
+            RegisterEntryStatus status = RegisterEntryStatus.Outstanding;
+            switch (Status)
+            {
+                case 1:
+                    status = RegisterEntryStatus.Pending;
+                    break;
+                case 2:
+                    status = RegisterEntryStatus.Cleared;
+                    break;
+                case 3:
+                    status = RegisterEntryStatus.Reconciled;
+                    break;
+                default:
+                    break;
+            }
+
+            return status;
+        }
+
+        public override string ToString()
+        {
+            RegisterEntryStatus status = RegisterEntryStatus.Outstanding;
+        
+            return status.ToString();
+        }
 
     }
 }

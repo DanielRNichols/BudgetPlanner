@@ -233,13 +233,14 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:BudgetPlannerApi.Controllers.RegisterEntriesController.Get(System.Boolean,System.Int32,System.Int32)">
+        <member name="M:BudgetPlannerApi.Controllers.RegisterEntriesController.Get(System.Boolean,System.Int32,System.Int32,System.Int32)">
             <summary>
             Get all Register Entries
             </summary>
             <param name="includeRelated"></param>
             <param name="limit"></param>
             <param name="skip"></param>
+            <param name="registerId"></param>
             <returns></returns>
         </member>
         <member name="M:BudgetPlannerApi.Controllers.RegisterEntriesController.GetById(System.Int32,System.Boolean)">

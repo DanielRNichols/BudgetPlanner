@@ -32,6 +32,7 @@ namespace BudgetPlannerApi.Controllers
         /// <param name="includeRelated"></param>
         /// <param name="limit"></param>
         /// <param name="skip"></param>
+        /// <param name="registerId"></param>
         /// <returns></returns>
         // GET: api/<RegisterEntriesController>
         [HttpGet]
@@ -40,15 +41,17 @@ namespace BudgetPlannerApi.Controllers
         public async Task<IActionResult> Get(
             [FromQuery] bool includeRelated = false,
             [FromQuery] int limit = 0,
-            [FromQuery] int skip = 0)
+            [FromQuery] int skip = 0,
+            [FromQuery] int registerId = 0)
 
         {
             return await _controllerHelper.GetItems<RegisterEntryDTO>(this, _repo,
-                new BaseQueryOptions()
+                new RegisterEntriesQueryOptions()
                 {
                     IncludeRelated = includeRelated,
                     Limit = limit,
-                    Skip = skip
+                    Skip = skip,
+                    RegisterId = registerId
                 });
         }
 

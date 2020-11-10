@@ -2,70 +2,11 @@
 
 <h3 class="card-title">Register Entries</h3>
 <hr />
-@if (!IsSuccess)
-{
-    <ErrorMessage>"Somewthing Went Wrong With the Operation" </ErrorMessage>
-}
-
 @if (Model == null)
 {
     <LoadingMessage Message="Loading..." />
 }
 else
 {
-    <table class="table table-responsive">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Register</th>
-                <th>Budget Cycle</th>
-                <th>Transaction Date</th>
-                <th>Check Number</th>
-                <th>Payee</th>
-                <th>Budget Item</th>
-                <th>Withdrawal Amount</th>
-                <th>Deposit Amount</th>
-                <th>Status</th>
-                <th>
-                    <a href="/registerentries/create" class="btn btn-primary">
-                        <span class="oi oi-plus">New</span>
-                    </a>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-            <tr @key="item.Id">
-                <td>@item.Id</td>
-                <td>@item.Register?.Name</td>
-                <td>@item.BudgetCycle?.Name</td>
-                <td>@item.TransactionDate</td>
-                <td>@item.CheckNumber</td>
-                <td>@item.Payee</td>
-                <td>@item.BudgetItem?.Name</td>
-                <td>@item.WithdrawalAmount</td>
-                <td>@item.DepositAmount</td>
-                <td>@item.Status</td>
-                <td>
-                    <a href="/registerentries/details/@item.Id" class="btn btn-primary">
-                        <span class="oi oi-info"></span>
-                    </a>
-                    <a href="/registerentries/edit/@item.Id" class="btn btn-primary">
-                        <span class="oi oi-pencil"></span>
-                    </a>
-                    <a @onclick="@(() => Delete(item.Id))" class="btn btn-danger">
-                        <span class="oi oi-trash"></span>
-                    </a>
-
-                </td>
-            </tr>
-            }
-        </tbody>
-    </table>
-    @if (ShowDeleteDialog)
-    {
-        <AcceptRejectDialog Title="Delete" Message="Are you sure?" OnClose="OnDeleteClose"></AcceptRejectDialog>
-    }
-
+    <RegisterEntryList Entries="Model" HideColumns="HideColumns"></RegisterEntryList>
 }

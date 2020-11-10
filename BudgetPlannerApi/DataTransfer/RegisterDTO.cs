@@ -11,6 +11,9 @@ namespace BudgetPlannerApi.DataTransfer
         public int Id { get; set; }
         public string Name { get; set; }
         public decimal StartingBalance { get; set; }
+
+        public virtual IList<RegisterEntryDTO> RegisterEntries { get; set; }
+
     }
     public class RegisterCreateDTO
     {

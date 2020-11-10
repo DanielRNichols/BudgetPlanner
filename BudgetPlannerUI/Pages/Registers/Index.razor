@@ -3,48 +3,52 @@
 <h3 class="card-title">Registers</h3>
 <hr />
 
-@if (Model == null)
+@if (Registers == null)
 {
     <LoadingMessage Message="Loading..." />
 }
 else
 {
-    <table class="table table-responsive">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>
-                    <a href="/registers/create" class="btn btn-primary">
-                        <span class="oi oi-plus"></span>
-                    </a>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr @key="item.Id">
-                    <td>@item.Id</td>
-                    <td>@item.Name</td>
-                    <td>
-                        <a href="/registers/details/@item.Id" class="btn btn-primary">
-                            <span class="oi oi-info"></span>
-                        </a>
-                        <a href="/registers/edit/@item.Id" class="btn btn-primary">
-                            <span class="oi oi-pencil"></span>
-                        </a>
-                        <a @onclick="@(() => Delete(item.Id))" class="btn btn-danger">
-                            <span class="oi oi-trash"></span>
-                        </a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    @if (ShowDeleteDialog)
+    <div class="form-group">
+        <label for="register">Register</label>
+        <EditForm Model="Registers">
+            <InputSelect ValueExpression="@(() => SelectedId)"
+                         ValueChanged="@((string value) => OnRegisterSelected(value))"
+                         class="form-control" id="register">
+                @foreach (var item in Registers)
+                {
+                    <option @key="item.Id" value="@item.Id">@item.Name</option>
+                }
+            </InputSelect>
+        </EditForm>
+    </div>
+
+    @if (SelectedRegister != null)
     {
-        <AcceptRejectDialog Title="Delete" Message="Are you sure?" OnClose="OnDeleteClose"></AcceptRejectDialog>
-    }
-}
+        <table class="table table-responsive">
+            <thead>
+                <tr>
+                    <th>Starting Balance</th>
+                    <th>Cleared Balance</th>
+                    <th>Available Balance</th>
+                    <th>Ending Balance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@SelectedRegister.StartingBalance</td>
+                    <td>@SelectedRegister.ClearedBalance</td>
+                    <td>@SelectedRegister.AvailableBalance</td>
+                    <td>@SelectedRegister.EndingBalance</td>
+                </tr>
+            </tbody>
+        </table>
+
+        @if (Entries != null)
+        {
+            <RegisterEntryList Entries="Entries" HideColumns="HideColumns"></RegisterEntryList>
+        }
+     }
+
+ }
 
