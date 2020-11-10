@@ -54,7 +54,7 @@ namespace BudgetPlannerUI.Pages.Registers
             SelectedRegister.Balance();
         }
 
-        public Task OnDelete(IEnumerable<RegisterEntry> entries)
+        public Task OnUpdate(IEnumerable<RegisterEntry> entries)
         {
             Entries = entries.ToList();
             SelectedRegister.RegisterEntries = Entries;

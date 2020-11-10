@@ -24,7 +24,7 @@ namespace BudgetPlannerUI.Models
         public int BudgetItemId { get; set; }
         public int EntryNumber { get; set; }
         [Required]
-        public DateTime TransactionDate { get; set; }
+        public DateTime TransactionDate { get; set; } = DateTime.Now;
         public int CheckNumber { get; set; }
         public string Payee { get; set; }
         public string Memo { get; set; }
@@ -79,6 +79,30 @@ namespace BudgetPlannerUI.Models
                     break;
                 case 3:
                     status = RegisterEntryStatus.Reconciled;
+                    break;
+                default:
+                    break;
+            }
+
+            return status;
+        }
+        public RegisterEntryStatus NextStatus()
+        {
+            RegisterEntryStatus currStatus = GetStatus();
+            RegisterEntryStatus status = RegisterEntryStatus.Outstanding;
+            switch (currStatus)
+            {
+                case RegisterEntryStatus.Outstanding:
+                    status = RegisterEntryStatus.Pending;
+                    break;
+                case RegisterEntryStatus.Pending:
+                    status = RegisterEntryStatus.Cleared;
+                    break;
+                case RegisterEntryStatus.Cleared:
+                    status = RegisterEntryStatus.Reconciled;
+                    break;
+                case RegisterEntryStatus.Reconciled:
+                    status = RegisterEntryStatus.Outstanding;
                     break;
                 default:
                     break;

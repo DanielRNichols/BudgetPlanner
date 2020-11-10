@@ -20,7 +20,7 @@ namespace BudgetPlannerUI.Components
         public string[] HideColumns { get; set; }
 
         [Parameter]
-        public EventCallback<IEnumerable<RegisterEntry>> OnDelete { get; set; }
+        public EventCallback<IEnumerable<RegisterEntry>> OnUpdate { get; set; }
 
         [Inject]
         private IRegisterEntriesDataService _dataService { get; set; }
@@ -29,8 +29,46 @@ namespace BudgetPlannerUI.Components
         private IToastService _toastService { get; set; }
 
         public bool ShowDeleteDialog { get; set; } = false;
-        public bool IsSuccess { get; set; } = true;
         private int SelectedId { get; set; }
+
+        private async Task UpdateEntry(int id, RegisterEntry entry)
+        {
+            bool success = await _dataService.Update(id, entry);
+            if (success)
+            {
+                var result = await _dataService.Get(includeRelated: true);
+                Entries = result.ToList();
+                if (OnUpdate.HasDelegate)
+                    await OnUpdate.InvokeAsync(Entries);
+            }
+        }
+
+        public async Task NextStatus(int id)
+        {
+            RegisterEntry entry = await _dataService.Get(id, includeRelated: false);
+            entry.Status = (int)entry.NextStatus();
+
+            await UpdateEntry(id, entry);
+
+        }
+
+        public async Task IncrementDate(int id)
+        {
+            RegisterEntry entry = await _dataService.Get(id, includeRelated: false);
+            entry.TransactionDate = entry.TransactionDate.AddDays(1);
+
+            await UpdateEntry(id, entry);
+
+        }
+
+        public async Task DecrementDate(int id)
+        {
+            RegisterEntry entry = await _dataService.Get(id, includeRelated: false);
+            entry.TransactionDate = entry.TransactionDate.AddDays(-1);
+
+            await UpdateEntry(id, entry);
+
+        }
 
         public void Delete(int id)
         {
@@ -43,14 +81,14 @@ namespace BudgetPlannerUI.Components
             ShowDeleteDialog = false;
             if (accepted)
             {
-                IsSuccess = await _dataService.Delete(SelectedId);
-                if (IsSuccess)
+                bool success = await _dataService.Delete(SelectedId);
+                if (success)
                 {
                     _toastService.ShowSuccess("Delete Successful", "");
                     var result = await _dataService.Get(includeRelated: true);
                     Entries = result.ToList();
-                    if (OnDelete.HasDelegate)
-                        await OnDelete.InvokeAsync(Entries);
+                    if (OnUpdate.HasDelegate)
+                        await OnUpdate.InvokeAsync(Entries);
                 }
                 else
                 {
