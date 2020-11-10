@@ -53,6 +53,9 @@ namespace BudgetPlannerUI.Models
         public string SelectedBudgetItemId { get; set; }
 
 
+        // UI Properties
+        public bool RowExpanded { get; set; } = false;
+
         // Calculated Properties
 
         public decimal NetTotal

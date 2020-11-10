@@ -1,78 +1,70 @@
-﻿@if(Entries == null)
+﻿@if (Entries == null)
 {
     <LoadingMessage Message="Loading"></LoadingMessage>
 }
 else
 {
-    <table class="table table-responsive">
+    <table class="table table-bordered table-striped table-sm ">
         <thead>
             <tr>
-                @if (ShowColumn("id"))
-                {
-                    <th>Id</th>
-                }
-                @if (ShowColumn("register"))
-                {
-                    <th>Register</th>
-                }
+                <th></th>
                 <th>Budget Cycle</th>
-                <th>Date</th>
+                <th style="text-align:center">Date</th>
                 <th>Check #</th>
                 <th>Payee</th>
-                @if (ShowColumn("memo"))
-                {
-                    <th>Memo</th>
-                }
                 <th>Budget Item</th>
-                <th>Withdrawal</th>
-                <th>Deposit</th>
-                <th>Status</th>
-                <th>Actions</th>
+                <th style="text-align:right">Withdrawal</th>
+                <th style="text-align:right">Deposit</th>
+                <th style="text-align:center">Status</th>
+                <th style="text-align:center">Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Entries)
             {
                 <tr @key="item.Id">
-                    @if (ShowColumn("id"))
-                    {
-                        <td>@item.Id</td>
-                    }
-                    @if (ShowColumn("register"))
-                    {
-                        <td>@item.Register?.Name</td>
-                    }
+                    <td>
+                        <a @onclick="@(() => item.RowExpanded = !item.RowExpanded)" class="btn btn-sm btn-light">
+                            <span class="far fa-plus-square"></span>
+                        </a>
+
+                    </td>
                     <td>@item.BudgetCycle?.Name</td>
                     <td align="center">@Formatters.FormatDate(item.TransactionDate)</td>
                     <td align="right">@Formatters.FormatCheckNumber(item.CheckNumber)</td>
                     <td>@item.Payee</td>
-                    @if (ShowColumn("memo"))
-                    {
-                        <td>@item.Memo</td>
-                    }
                     <td>@item.BudgetItem?.Name</td>
-                    <td align="right">@Formatters.FormatCurrency(item.WithdrawalAmount,showZero: false)</td>
+                    <td align="right">@Formatters.FormatCurrency(item.WithdrawalAmount, showZero: false)</td>
                     <td align="right">@Formatters.FormatCurrency(item.DepositAmount, showZero: false)</td>
                     <td align="center">@Formatters.FormatRegisterEntryStatus(item.GetStatus())</td>
-                    <td>
-                        <a @onclick="@(() => NextStatus(item.Id))" class="btn btn-outline-primary">
+                    <td align="center">
+                        <a @onclick="@(() => NextStatus(item.Id))" class="btn btn-sm btn-light">
                             <span class="fa fa-caret-square-right"></span>
                         </a>
-                        <a @onclick="@(() => IncrementDate(item.Id))" class="btn btn-outline-primary">
+                        <a @onclick="@(() => IncrementDate(item.Id))" class="btn btn-sm btn-light">
                             <span class="fa fa-calendar-plus"></span>
                         </a>
-                        <a @onclick="@(() => DecrementDate(item.Id))" class="btn btn-outline-primary">
+                        <a @onclick="@(() => DecrementDate(item.Id))" class="btn btn-sm btn-light">
                             <span class="fa fa-calendar-minus"></span>
                         </a>
-                        <a href="/registerentries/edit/@item.Id" class="btn btn-primary">
+                        <a href="/registerentries/edit/@item.Id" class="btn btn-sm btn-light">
                             <span class="fa fa-edit"></span>
                         </a>
-                        <a @onclick="@(() => Delete(item.Id))" class="btn btn-danger">
+                        <a @onclick="@(() => Delete(item.Id))" class="btn btn-sm btn-light">
                             <span class="fa fa-trash-alt"></span>
                         </a>
 
                     </td>
                 </tr>
+                @if (item.RowExpanded)
+                {
+                    <!-- add even # of rows to avoid messing up stripping-->
+                    <tr></tr>
+                    <tr>
+                        <td colspan="10">Memo: @item.Memo</td>
+                    </tr>
+
+                }
             }
         </tbody>
     </table>

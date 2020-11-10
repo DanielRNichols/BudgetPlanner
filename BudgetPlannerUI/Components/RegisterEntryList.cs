@@ -30,6 +30,9 @@ namespace BudgetPlannerUI.Components
 
         public bool ShowDeleteDialog { get; set; } = false;
         private int SelectedId { get; set; }
+        private int rowIndex = 0;
+        private string rowClass = "";
+
 
         private async Task UpdateEntry(int id, RegisterEntry entry)
         {
@@ -97,6 +100,18 @@ namespace BudgetPlannerUI.Components
             }
 
         }
+
+        public string GetRowClass(bool increment)
+        {
+            if (increment)
+            {
+                rowClass = rowIndex % 2 == 0 ? "table-info" : "table-default";
+                rowIndex++;
+            }
+
+            return rowClass;
+        }
+
 
         public bool ShowColumn(string colName)
         {
