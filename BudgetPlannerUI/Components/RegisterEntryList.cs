@@ -19,6 +19,9 @@ namespace BudgetPlannerUI.Components
         [Parameter]
         public string[] HideColumns { get; set; }
 
+        [Parameter]
+        public EventCallback<IEnumerable<RegisterEntry>> OnDelete { get; set; }
+
         [Inject]
         private IRegisterEntriesDataService _dataService { get; set; }
 
@@ -46,6 +49,8 @@ namespace BudgetPlannerUI.Components
                     _toastService.ShowSuccess("Delete Successful", "");
                     var result = await _dataService.Get(includeRelated: true);
                     Entries = result.ToList();
+                    if (OnDelete.HasDelegate)
+                        await OnDelete.InvokeAsync(Entries);
                 }
                 else
                 {

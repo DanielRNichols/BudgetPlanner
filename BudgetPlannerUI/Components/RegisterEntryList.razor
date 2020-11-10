@@ -55,9 +55,9 @@ else
                         <td>@item.Memo</td>
                     }
                     <td>@item.BudgetItem?.Name</td>
-                    <td align="right">@Formatters.FormatCurrency(item.WithdrawalAmount)</td>
-                    <td align="right">@Formatters.FormatCurrency(item.DepositAmount)</td>
-                    <td>@item.GetStatus()</td>
+                    <td align="right">@Formatters.FormatCurrency(item.WithdrawalAmount,showZero: false)</td>
+                    <td align="right">@Formatters.FormatCurrency(item.DepositAmount, showZero: false)</td>
+                    <td align="center">@Formatters.FormatRegisterEntryStatus(item.GetStatus())</td>
                     <td>
                         <a href="/registerentries/details/@item.Id" class="btn btn-primary">
                             <span class="oi oi-info"></span>

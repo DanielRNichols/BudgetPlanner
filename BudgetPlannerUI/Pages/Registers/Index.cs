@@ -50,7 +50,17 @@ namespace BudgetPlannerUI.Pages.Registers
                                     includeRelated: true,
                                     supplementalQueryStr: suppQueryStr);
             Entries = result.ToList();
+            SelectedRegister.RegisterEntries = Entries;
             SelectedRegister.Balance();
+        }
+
+        public Task OnDelete(IEnumerable<RegisterEntry> entries)
+        {
+            Entries = entries.ToList();
+            SelectedRegister.RegisterEntries = Entries;
+            SelectedRegister.Balance();
+
+            return Task.CompletedTask;
         }
 
     }
