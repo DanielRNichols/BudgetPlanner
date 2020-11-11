@@ -1,0 +1,4 @@
+﻿docker build -t danielrnichols/budgetplannerapi:latest .
+
+
+docker run --rm -d -p 5051:80 --name BudgetPlannerApi-Dev --env BUDGET_PLANNER_API_CONNECTION_STRING="Server=SqlServer2019;Database=BudgetPlanner;Trusted_Connection=False;MultipleActiveResultSets=true;User ID=sa;Password=DanN@123" danielrnichols/budgetplannerapi:latest

@@ -26,11 +26,27 @@ namespace BudgetPlanner
 {
     public class Startup
     {
+        private const string CfgVarConnectionString = "BUDGET_PLANNER_API_CONNECTION_STRING";
         private readonly string CorsPolicyName = "CorsPolicy";
+
+        private readonly ILoggerService _loggerService;
         
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            _loggerService = new ConsoleLoggerService();
+        }
+
+        private string GetConnectionString()
+
+        {
+            string connStr = System.Environment.GetEnvironmentVariable(CfgVarConnectionString);
+            if (string.IsNullOrWhiteSpace(connStr))
+                connStr = Configuration.GetConnectionString("DefaultConnection");
+
+            _loggerService.LogInfo($"ConnectionString={connStr}");
+
+            return connStr;
         }
 
         public IConfiguration Configuration { get; }
@@ -39,8 +55,7 @@ namespace BudgetPlanner
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(GetConnectionString()));
             services.AddDefaultIdentity<IdentityUser>() // (options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -66,8 +81,11 @@ namespace BudgetPlanner
 
                 var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlFullPath = Path.Combine(AppContext.BaseDirectory, xmlFileName);
-
-                cfg.IncludeXmlComments(xmlFullPath);
+                _loggerService.LogInfo($"Swagger xml file = {xmlFullPath}");
+                if (System.IO.File.Exists(xmlFullPath))
+                    cfg.IncludeXmlComments(xmlFullPath);
+                else
+                    _loggerService.LogWarn($"Unable to locate {xmlFullPath}");
             });
 
             // Using ConsoleLoggerService temporarily to until path issues for NLog configuration with Docker 

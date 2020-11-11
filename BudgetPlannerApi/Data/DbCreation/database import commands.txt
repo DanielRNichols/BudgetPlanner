@@ -12,3 +12,6 @@ sudo docker exec -it SqlServer2019 /opt/mssql-tools/bin/sqlcmd \
 
 
 IP Address: 172.17.0.2
+
+
+docker run --name mssql -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=DanN@123' -p 1433:1433 -d  mcr.microsoft.com/mssql/server:2019-latest
