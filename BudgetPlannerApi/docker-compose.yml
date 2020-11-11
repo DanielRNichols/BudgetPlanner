@@ -1,0 +1,13 @@
+﻿version: '3'
+services:
+    bpsqlserver2019:
+        image: 'danielrnichols/bpsqlserver2019:latest'
+    budgetplannerapi:
+        build: .
+        image: danielrnichols/budgetplannerapi:latest
+        ports:
+            - "5080:80"
+        environment:
+            BUDGET_PLANNER_API_CONNECTION_STRING: Server=bpsqlserver2019;Database=BudgetPlanner;Trusted_Connection=False;MultipleActiveResultSets=true;User ID=sa;Password=DanN@123
+
+
