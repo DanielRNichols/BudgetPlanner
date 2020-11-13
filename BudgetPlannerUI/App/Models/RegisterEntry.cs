@@ -8,6 +8,17 @@ using System.Threading.Tasks;
 
 namespace BudgetPlannerUI.Models
 {
+
+    public enum RegisterEntryAction
+    {
+        IncrementDate,
+        DecrementDate,
+        NextStatus,
+        Create,
+        Modify,
+        Delete
+    }
+
     public enum RegisterEntryStatus
     {
         Outstanding = 0,
@@ -55,6 +66,7 @@ namespace BudgetPlannerUI.Models
 
         // UI Properties
         public bool RowExpanded { get; set; } = false;
+        public bool ConfirmDelete { get; set; } = false;
 
         // Calculated Properties
 

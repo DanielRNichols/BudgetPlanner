@@ -49,8 +49,7 @@ namespace BudgetPlannerUI.Pages.Registers
             var result = await _registerEntriesDataService.Get(
                                     includeRelated: true,
                                     supplementalQueryStr: suppQueryStr);
-            Entries = result.ToList();
-            SelectedRegister.RegisterEntries = Entries;
+            SelectedRegister.RegisterEntries = result.ToList();
             SelectedRegister.Balance();
         }
 

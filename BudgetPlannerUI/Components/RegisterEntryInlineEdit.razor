@@ -1,0 +1,84 @@
+﻿@if (Entry != null)
+{
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Add Entry</h5>
+            <EditForm Model="Entry" OnValidSubmit="Save">
+                <DataAnnotationsValidator />
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="type">Cycle</label>
+                        <InputSelect @bind-Value="Entry.SelectedBudgetCycleId"
+                                     class="form-control" id="type">
+                            @foreach (var item in BudgetCycles)
+                                {
+                                <option @key="item.Id" value="@item.Id">@item.Name</option>
+                                }
+                        </InputSelect>
+                        <ValidationMessage For="@(() => Entry.SelectedBudgetCycleId)" />
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="transactiondate">Date</label>
+                        <InputDate @bind-Value="Entry.TransactionDate" class="form-control" id="transactiondate" />
+                        <ValidationMessage For="@(() => Entry.TransactionDate)" />
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="payee">Payee</label>
+                        <InputText @bind-Value="Entry.Payee" class="form-control" id="payee" />
+                        <ValidationMessage For="@(() => Entry.Payee)" />
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="type">Budget Item</label>
+                        <InputSelect @bind-Value="Entry.SelectedBudgetItemId"
+                                     class="form-control" id="type">
+                            @foreach (var item in BudgetItems)
+                                {
+                                <option @key="item.Id" value="@item.Id">@item.Name</option>
+                                }
+                        </InputSelect>
+                        <ValidationMessage For="@(() => Entry.SelectedBudgetItemId)" />
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label for="withdrawalamount">Withdrawal</label>
+                        <InputNumber @bind-Value="Entry.WithdrawalAmount" class="form-control" id="withdrawalamount" />
+                        <ValidationMessage For="@(() => Entry.WithdrawalAmount)" />
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label for="depositamount">Deposit</label>
+                        <InputNumber @bind-Value="Entry.DepositAmount" class="form-control" id="depositamount" 
+                                     step="0.01"/>
+                        <ValidationMessage For="@(() => Entry.DepositAmount)" />
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label for="status">Status</label>
+                        <InputNumber @bind-Value="Entry.Status" class="form-control" id="status" />
+                        <ValidationMessage For="@(() => Entry.Status)" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="checknumber">Check Number</label>
+                        <InputNumber @bind-Value="Entry.CheckNumber" class="form-control" id="checknumber" />
+                        <ValidationMessage For="@(() => Entry.CheckNumber)" />
+                    </div>
+                    <div class="form-group">
+                        <label for="memo">Memo</label>
+                        <InputText @bind-Value="Entry.Memo" class="form-control" id="memo" />
+                        <ValidationMessage For="@(() => Entry.Memo)" />
+                    </div>
+                </div>
+                <div class="form-row">
+                </div>
+                <button class="btn btn-primary" type="submit">
+                    <span class="oi oi-check"></span>
+                    Save
+                </button>
+                <a @onclick="Cancel" class="btn btn-outline-secondary">
+                    <span class="oi oi-delete"></span>
+                    Cancel
+                </a>
+            </EditForm>
+
+        </div>
+    </div>
+}

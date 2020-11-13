@@ -1,0 +1,54 @@
+﻿@if (Item != null && ShowItem())
+{
+<tr @key="Item.Id">
+    <td>
+        @if (Item.RowExpanded)
+        {
+            <a @onclick="@(() => Item.RowExpanded = !Item.RowExpanded)" class="btn btn-sm btn-light">
+                <span class="far fa-minus-square"></span>
+            </a>
+        }
+        else
+        {
+            <a @onclick="@(() => Item.RowExpanded = !Item.RowExpanded)" class="btn btn-sm btn-light">
+                <span class="far fa-plus-square"></span>
+            </a>
+        }
+    </td>
+    <td>@Item.BudgetCycle?.Name</td>
+    <td align="center">@Formatters.FormatDate(Item.TransactionDate)</td>
+    <td align="right">@Formatters.FormatCheckNumber(Item.CheckNumber)</td>
+    <td>@Item.Payee</td>
+    <td>@Item.BudgetItem?.Name</td>
+    <td align="right">@Formatters.FormatCurrency(Item.WithdrawalAmount, showZero: false)</td>
+    <td align="right">@Formatters.FormatCurrency(Item.DepositAmount, showZero: false)</td>
+    <td align="center">@Formatters.FormatRegisterEntryStatus(Item.GetStatus())</td>
+    <td align="center">
+        <a @onclick="@NextStatus" class="btn btn-sm btn-light">
+            <span class="fa fa-caret-square-right"></span>
+        </a>
+        <a @onclick="@IncrementDate" class="btn btn-sm btn-light">
+            <span class="fa fa-calendar-plus"></span>
+        </a>
+        <a @onclick="@DecrementDate" class="btn btn-sm btn-light">
+            <span class="fa fa-calendar-minus"></span>
+        </a>
+        <a href="/registerentries/edit/@Item.Id" class="btn btn-sm btn-light">
+            <span class="fa fa-edit"></span>
+        </a>
+        <a @onclick="@Delete" class="btn btn-sm btn-light">
+            <span class="fa fa-trash-alt"></span>
+        </a>
+
+    </td>
+</tr>
+    @if (Item.RowExpanded)
+    {
+        <!-- add even # of rows to avoid messing up stripping-->
+        <tr></tr>
+        <tr>
+            <td colspan="10">Memo: @Item.Memo</td>
+        </tr>
+
+    }
+}

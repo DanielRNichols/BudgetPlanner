@@ -1,0 +1,52 @@
+﻿@if (Register != null)
+{
+    <div class="row">
+        <div class="col-sm-2">
+            <p>Starting Balance</p>
+        </div>
+        <div class="col-sm-2">
+            <p>@Formatters.FormatCurrency(Register.StartingBalance)</p>
+        </div>
+    </div>
+    @if (Register.RegisterEntries != null)
+    {
+        <RegisterEntryList Entries="Register.RegisterEntries"
+                           OnAction="OnAction"
+                           HideReconciled="HideReconciled">
+
+        </RegisterEntryList>
+    }
+    <div class="row">
+        <div class="col-sm-2">
+            <p>EndingBalance</p>
+        </div>
+        <div class="col-sm-2">
+            <p>@Formatters.FormatCurrency(Register.EndingBalance)</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <p>Cleared Balance</p>
+        </div>
+        <div class="col-sm-2">
+            <p>@Formatters.FormatCurrency(Register.ClearedBalance)</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <p>Available Balance</p>
+        </div>
+        <div class="col-sm-2">
+            <p>@Formatters.FormatCurrency(Register.AvailableBalance)</p>
+        </div>
+    </div>
+    <RegisterEntryInlineEdit Entry="NewEntry" BudgetCycles="BudgetCycles" BudgetItems="BudgetItems" OnSave="AddEntry">
+
+    </RegisterEntryInlineEdit>
+}
+
+@if (ShowDeleteDialog)
+{
+    <AcceptRejectDialog Title="Delete" Message="Are you sure?" OnClose="OnDeleteClose"></AcceptRejectDialog>
+}
+

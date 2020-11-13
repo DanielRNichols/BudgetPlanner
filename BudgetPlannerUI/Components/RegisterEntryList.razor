@@ -22,55 +22,9 @@ else
         <tbody>
             @foreach (var item in Entries)
             {
-                <tr @key="item.Id">
-                    <td>
-                        <a @onclick="@(() => item.RowExpanded = !item.RowExpanded)" class="btn btn-sm btn-light">
-                            <span class="far fa-plus-square"></span>
-                        </a>
-
-                    </td>
-                    <td>@item.BudgetCycle?.Name</td>
-                    <td align="center">@Formatters.FormatDate(item.TransactionDate)</td>
-                    <td align="right">@Formatters.FormatCheckNumber(item.CheckNumber)</td>
-                    <td>@item.Payee</td>
-                    <td>@item.BudgetItem?.Name</td>
-                    <td align="right">@Formatters.FormatCurrency(item.WithdrawalAmount, showZero: false)</td>
-                    <td align="right">@Formatters.FormatCurrency(item.DepositAmount, showZero: false)</td>
-                    <td align="center">@Formatters.FormatRegisterEntryStatus(item.GetStatus())</td>
-                    <td align="center">
-                        <a @onclick="@(() => NextStatus(item.Id))" class="btn btn-sm btn-light">
-                            <span class="fa fa-caret-square-right"></span>
-                        </a>
-                        <a @onclick="@(() => IncrementDate(item.Id))" class="btn btn-sm btn-light">
-                            <span class="fa fa-calendar-plus"></span>
-                        </a>
-                        <a @onclick="@(() => DecrementDate(item.Id))" class="btn btn-sm btn-light">
-                            <span class="fa fa-calendar-minus"></span>
-                        </a>
-                        <a href="/registerentries/edit/@item.Id" class="btn btn-sm btn-light">
-                            <span class="fa fa-edit"></span>
-                        </a>
-                        <a @onclick="@(() => Delete(item.Id))" class="btn btn-sm btn-light">
-                            <span class="fa fa-trash-alt"></span>
-                        </a>
-
-                    </td>
-                </tr>
-                @if (item.RowExpanded)
-                {
-                    <!-- add even # of rows to avoid messing up stripping-->
-                    <tr></tr>
-                    <tr>
-                        <td colspan="10">Memo: @item.Memo</td>
-                    </tr>
-
-                }
+                <RegisterRow Item="item" OnAction="@OnAction" HideReconciled="HideReconciled"></RegisterRow>
             }
         </tbody>
     </table>
-    @if (ShowDeleteDialog)
-    {
-        <AcceptRejectDialog Title="Delete" Message="Are you sure?" OnClose="OnDeleteClose"></AcceptRejectDialog>
-    }
 
 }
