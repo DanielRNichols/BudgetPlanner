@@ -35,6 +35,8 @@ namespace BudgetPlannerApi.Interfaces
 
     public interface IRegistersControllerHelper : IDbResourceControllerHelper<Register, BaseQueryOptions>
     {
+        Task<IActionResult> Reconcile(ControllerBase controller, IRegisterRepository repo, int id);
+        Task<IActionResult> Balance(ControllerBase controller, IRegisterRepository repo, int id);
     }
 
     public interface IRegisterEntriesControllerHelper : IDbResourceControllerHelper<RegisterEntry, RegisterEntriesQueryOptions>

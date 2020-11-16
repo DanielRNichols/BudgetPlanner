@@ -114,6 +114,38 @@ namespace BudgetPlannerApi.Controllers
         {
             return await _controllerHelper.DeleteItem(this, _repo, id);
         }
+
+
+        /// <summary>
+        /// Reconcile register with given id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        // POST api/<RegistersController>
+        [HttpPost("{id}/reconcile")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Reconcile(int id)
+        {
+            return await _controllerHelper.Reconcile(this, _repo, id);
+        }
+
+        /// <summary>
+        /// Balance register with given id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        // POST api/<RegistersController>
+        [HttpPost("{id}/balance")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Balance(int id)
+        {
+            return await _controllerHelper.Balance(this, _repo, id);
+        }
+
     }
 }
 

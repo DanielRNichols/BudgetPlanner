@@ -34,6 +34,8 @@ namespace BudgetPlannerApi.Interfaces
     }
     public interface IRegisterRepository : IDbResourceRepository<Register, BaseQueryOptions>
     {
+        Task<bool> Reconcile(int id);
+        Task<bool> Balance(int id);
     }
     public interface IRegisterEntryRepository : IDbResourceRepository<RegisterEntry, RegisterEntriesQueryOptions>
     {

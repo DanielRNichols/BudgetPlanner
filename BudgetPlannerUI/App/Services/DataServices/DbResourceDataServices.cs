@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Net.Http.Json;
 
 namespace BudgetPlannerUI.Services
 {
@@ -50,6 +51,21 @@ namespace BudgetPlannerUI.Services
         public RegistersDataServices(HttpClient httpClient) : base(httpClient, Endpoints.Registers)
         {
         }
+
+        public async Task<bool> Reconcile(int id)
+        { 
+            //_httpClient.DefaultRequestHeaders.Authorization =
+            //    new AuthenticationHeaderValue("bearer", await GetBearerToken());
+
+            var response = await _httpClient.PostAsync($"{_resourceUrl}{id}/reconcile", null);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                return true;
+
+            return false;
+
+        }
+
     }
     public class RegisterEntriesDataServices : BudgetPlannerDataService<RegisterEntry>, IRegisterEntriesDataService
     {

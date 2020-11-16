@@ -23,5 +23,6 @@ namespace BudgetPlannerApi.Interfaces
     public interface IRegisterEntriesQueryOptions : IBaseQueryOptions
     {
         int RegisterId { get; set; }
+        int Status { get; set; }
     }
 }

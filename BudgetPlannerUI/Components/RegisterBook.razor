@@ -1,13 +1,22 @@
 ﻿@if (Register != null)
 {
-    <div class="row">
-        <div class="col-sm-2">
-            <p>Starting Balance</p>
-        </div>
-        <div class="col-sm-2">
-            <p>@Formatters.FormatCurrency(Register.StartingBalance)</p>
-        </div>
+<div class="row">
+    <div class="col-sm-2">
+        <p>Starting Balance</p>
     </div>
+    <div class="col-sm-2">
+        <p>@Formatters.FormatCurrency(Register.StartingBalance)</p>
+    </div>
+    <button @onclick="Reconcile" class="btn btn-primary">
+        Reconcile
+    </button>
+    <button @onclick="ToggleHideReconciled" class="btn btn-primary">
+        Toggle Reconciled
+    </button>
+    <button @onclick="Undo" class="btn btn-primary" disabled="@(UndoStack.Count == 0)">
+        Undo
+    </button>
+</div>
     @if (Register.RegisterEntries != null)
     {
         <RegisterEntryList Entries="Register.RegisterEntries"
@@ -26,18 +35,18 @@
     </div>
     <div class="row">
         <div class="col-sm-2">
-            <p>Cleared Balance</p>
-        </div>
-        <div class="col-sm-2">
-            <p>@Formatters.FormatCurrency(Register.ClearedBalance)</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-2">
             <p>Available Balance</p>
         </div>
         <div class="col-sm-2">
             <p>@Formatters.FormatCurrency(Register.AvailableBalance)</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <p>Cleared Balance</p>
+        </div>
+        <div class="col-sm-2">
+            <p>@Formatters.FormatCurrency(Register.ClearedBalance)</p>
         </div>
     </div>
     <RegisterEntryInlineEdit Entry="NewEntry" BudgetCycles="BudgetCycles" BudgetItems="BudgetItems" OnSave="AddEntry">

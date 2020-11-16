@@ -37,6 +37,7 @@ namespace BudgetPlannerUI.Interfaces
     }
     public interface IRegistersDataService : IBudgetPlannerDataService<Register>
     {
+        Task<bool> Reconcile(int id);
     }
     public interface IRegisterEntriesDataService : IBudgetPlannerDataService<RegisterEntry>
     {

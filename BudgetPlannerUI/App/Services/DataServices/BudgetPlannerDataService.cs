@@ -15,8 +15,8 @@ namespace BudgetPlannerUI.Services
     public class BudgetPlannerDataService<T> : IBudgetPlannerDataService<T> where T : class
     {
         //private readonly IHttpClientFactory _httpClientFactory;
-        private readonly HttpClient _httpClient;
-        private readonly string _resourceUrl = "";
+        protected readonly HttpClient _httpClient;
+        protected readonly string _resourceUrl = "";
 
         public BudgetPlannerDataService(HttpClient httpClient, string resourceUrl)
         {

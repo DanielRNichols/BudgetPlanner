@@ -12,10 +12,13 @@ namespace BudgetPlannerApi.Services.Repositories
     public class RegisterEntryRepository : DbResourceRepository<RegisterEntry, RegisterEntriesQueryOptions>, IRegisterEntryRepository
     {
         private readonly ApplicationDbContext _db;
+        private readonly IRegisterRepository _registerRepo;
 
-        public RegisterEntryRepository(ApplicationDbContext db) : base(db, db.RegisterEntries)
+        public RegisterEntryRepository(ApplicationDbContext db, IRegisterRepository registerRepo) 
+            : base(db, db.RegisterEntries)
         {
             _db = db;
+            _registerRepo = registerRepo;
         }
 
         public override async Task<IList<RegisterEntry>> Get(RegisterEntriesQueryOptions options)
@@ -26,6 +29,10 @@ namespace BudgetPlannerApi.Services.Repositories
                 if (options.RegisterId > 0)
                 {
                     query = query.Where(r => r.RegisterId == options.RegisterId);
+                }
+                if (options.Status >= 0)
+                {
+                    query = query.Where(r => r.Status == options.Status);
                 }
                 if (options.IncludeRelated)
                 {
@@ -53,6 +60,36 @@ namespace BudgetPlannerApi.Services.Repositories
             }
 
             return await base.GetById(id);
+        }
+
+        // override to balance the register after adding new entry
+        public override async Task<bool> Create(RegisterEntry entry)
+        {
+            bool status = await base.Create(entry);
+            if (!status)
+                return false;
+
+            return await _registerRepo.Balance(entry.RegisterId);
+        }
+
+        // override to balance the register after updating entry
+        public override async Task<bool> Update(RegisterEntry entry)
+        {
+            bool status = await base.Update(entry);
+            if (!status)
+                return false;
+
+            return await _registerRepo.Balance(entry.RegisterId);
+        }
+
+        // override to balance the register after deleting entry
+        public override async Task<bool> Delete(RegisterEntry entry)
+        {
+            bool status = await base.Delete(entry);
+            if (!status)
+                return false;
+
+            return await _registerRepo.Balance(entry.RegisterId);
         }
     }
 }

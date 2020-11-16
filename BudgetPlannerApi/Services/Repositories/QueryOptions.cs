@@ -24,5 +24,6 @@ namespace BudgetPlannerApi.Services.Repositories
     public class RegisterEntriesQueryOptions : BaseQueryOptions, IRegisterEntriesQueryOptions
     {
         public int RegisterId { get; set; } = 0;
+        public int Status { get; set; } = -1;
     }
 }

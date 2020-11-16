@@ -12,8 +12,8 @@ namespace BudgetPlannerApi.Services.ControllerHelpers
     public class DbResourceControllerHelper<T,O> : 
         IDbResourceControllerHelper<T,O> where T : class, IDbResource where O : class, IBaseQueryOptions
     {
-        private readonly ILoggerService _logger;
-        private readonly IMapper _mapper;
+        protected readonly ILoggerService _logger;
+        protected readonly IMapper _mapper;
 
         public DbResourceControllerHelper(ILoggerService logger, IMapper mapper)
         {
@@ -197,13 +197,13 @@ namespace BudgetPlannerApi.Services.ControllerHelpers
             }
         }
 
-        private string GetControllerDescription(ControllerBase controller)
+        protected string GetControllerDescription(ControllerBase controller)
         {
             return $"{controller.ControllerContext.ActionDescriptor.ControllerName} - " +
                 $"{controller.ControllerContext.ActionDescriptor.ActionName}";
         }
 
-        private ObjectResult InternalError(ControllerBase controller, string msg)
+        protected ObjectResult InternalError(ControllerBase controller, string msg)
         {
             _logger.LogServerError(msg);
             ServerError serverError = new ServerError
@@ -213,7 +213,7 @@ namespace BudgetPlannerApi.Services.ControllerHelpers
             };
             return controller.StatusCode(500, new { serverError });
         }
-        private ObjectResult InternalError(ControllerBase controller, Exception e)
+        protected ObjectResult InternalError(ControllerBase controller, Exception e)
         {
             _logger.LogServerError(e);
             ServerError serverError = new ServerError
