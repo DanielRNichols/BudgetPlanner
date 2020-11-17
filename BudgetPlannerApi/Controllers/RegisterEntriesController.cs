@@ -32,6 +32,8 @@ namespace BudgetPlannerApi.Controllers
         /// <param name="includeRelated"></param>
         /// <param name="limit"></param>
         /// <param name="skip"></param>
+        /// <param name=""></param>
+        /// <param name="markedForDeletion"></param>
         /// <param name="registerId"></param>
         /// <param name="status"></param>
         /// <returns></returns>
@@ -43,6 +45,7 @@ namespace BudgetPlannerApi.Controllers
             [FromQuery] bool includeRelated = false,
             [FromQuery] int limit = 0,
             [FromQuery] int skip = 0,
+            [FromQuery] bool? markedForDeletion = null,
             [FromQuery] int registerId = 0,
             [FromQuery] int status = -1)
 
@@ -53,6 +56,7 @@ namespace BudgetPlannerApi.Controllers
                     IncludeRelated = includeRelated,
                     Limit = limit,
                     Skip = skip,
+                    MarkedForDeletion = markedForDeletion,
                     RegisterId = registerId,
                     Status = status
                 });

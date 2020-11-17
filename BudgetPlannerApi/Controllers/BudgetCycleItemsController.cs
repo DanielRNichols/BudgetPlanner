@@ -27,8 +27,13 @@ namespace BudgetPlannerApi.Controllers
         }
 
         /// <summary>
-        /// Get all Budget Cycles Items
+        /// 
         /// </summary>
+        /// <param name="includeRelated"></param>
+        /// <param name="limit"></param>
+        /// <param name="skip"></param>
+        /// <param name="markedForDeletion"></param>
+        /// <param name="budgetCycleId"></param>
         /// <returns></returns>
         // GET: api/<BudgetCyclesController>
         [HttpGet]
@@ -38,6 +43,7 @@ namespace BudgetPlannerApi.Controllers
             [FromQuery] bool includeRelated = false,
             [FromQuery] int limit = 0,
             [FromQuery] int skip = 0,
+            [FromQuery] bool? markedForDeletion = null,
             [FromQuery] int budgetCycleId = 0)
         {
             return await _controllerHelper.GetItems<BudgetCycleItemDTO>(this, _repo, 
@@ -46,6 +52,7 @@ namespace BudgetPlannerApi.Controllers
                     IncludeRelated = includeRelated,
                     Limit = limit,
                     Skip = skip,
+                    MarkedForDeletion = markedForDeletion,
                     BudgetCycleId = budgetCycleId
                 });
         }

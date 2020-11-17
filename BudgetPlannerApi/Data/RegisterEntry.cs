@@ -28,6 +28,7 @@ namespace BudgetPlannerApi.Data
         // Note Status should be an enum
         public int Status { get; set; }
         public bool IsSplit { get; set; }
+        public bool MarkedForDeletion { get; set; }
 
         public virtual Register Register { get; set; }
         public virtual BudgetCycle BudgetCycle { get; set; }

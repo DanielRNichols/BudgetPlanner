@@ -12,6 +12,7 @@ namespace BudgetPlannerApi.Data
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public bool MarkedForDeletion { get; set; }
 
         public virtual IList<BudgetCategory> BudgetCategories { get; set; }
     }

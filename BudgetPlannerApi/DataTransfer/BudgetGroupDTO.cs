@@ -10,7 +10,8 @@ namespace BudgetPlannerApi.DataTransfer
     {
         public int Id { get; set; }
         public string Name { get; set; }
- 
+        public bool MarkedForDeletion { get; set; }
+
         public virtual IList<BudgetCategoryDTO> BudgetCategories { get; set; }
 
     }
@@ -18,5 +19,6 @@ namespace BudgetPlannerApi.DataTransfer
     {
         [Required]
         public string Name { get; set; }
+        public bool MarkedForDeletion { get; set; }
     }
 }

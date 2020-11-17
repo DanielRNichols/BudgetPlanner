@@ -14,6 +14,7 @@ namespace BudgetPlannerApi.Data
         public string Name { get; set; }
         public bool IsIncome { get; set; }
         public int BudgetCategoryId { get; set; }
+        public bool MarkedForDeletion { get; set; }
 
         public virtual BudgetCategory BudgetCategory { get; set; }
 

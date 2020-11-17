@@ -24,6 +24,8 @@ namespace BudgetPlannerApi.DataTransfer
         public int Status { get; set; }
         public bool IsSplit { get; set; }
 
+        public bool MarkedForDeletion { get; set; }
+
         public virtual RegisterDTO Register { get; set; }
         public virtual BudgetCycleDTO BudgetCycle { get; set; }
         public virtual BudgetItemDTO BudgetItem { get; set; }
@@ -47,5 +49,6 @@ namespace BudgetPlannerApi.DataTransfer
         // Note Status should be an enum
         public int Status { get; set; }
         public bool IsSplit { get; set; }
+        public bool MarkedForDeletion { get; set; }
     }
 }

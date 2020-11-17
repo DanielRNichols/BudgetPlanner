@@ -12,6 +12,7 @@ namespace BudgetPlannerApi.DataTransfer
         public string Name { get; set; }
         public bool IsIncome { get; set; }
         public int BudgetCategoryId { get; set; }
+        public bool MarkedForDeletion { get; set; }
 
         public virtual BudgetCategoryDTO BudgetCategory { get; set; }
 
@@ -26,5 +27,6 @@ namespace BudgetPlannerApi.DataTransfer
         public bool IsIncome { get; set; }
         [Required]
         public int BudgetCategoryId { get; set; }
+        public bool MarkedForDeletion { get; set; }
     }
 }

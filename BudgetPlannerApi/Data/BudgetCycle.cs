@@ -22,6 +22,7 @@ namespace BudgetPlannerApi.Data
 
         [Column(TypeName = "money")]
         public decimal StartingBalance { get; set; }
+        public bool MarkedForDeletion { get; set; }
 
         public virtual IList<BudgetCycleItem> BudgetCycleItems { get; set; }
     }

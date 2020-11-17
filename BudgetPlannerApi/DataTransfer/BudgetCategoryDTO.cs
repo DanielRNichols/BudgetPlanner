@@ -13,6 +13,7 @@ namespace BudgetPlannerApi.DataTransfer
         public int BudgetGroupId { get; set; }
         public virtual BudgetGroupDTO BudgetGroup { get; set; }
         public virtual IList<BudgetItemDTO> BudgetItems { get; set; }
+        public bool MarkedForDeletion { get; set; }
     }
 
     public class BudgetCategoryCreateDTO
@@ -21,5 +22,6 @@ namespace BudgetPlannerApi.DataTransfer
         public string Name { get; set; }
         [Required]
         public int BudgetGroupId { get; set; }
+        public bool MarkedForDeletion { get; set; }
     }
 }

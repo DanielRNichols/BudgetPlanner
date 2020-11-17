@@ -13,6 +13,7 @@ namespace BudgetPlannerApi.DataTransfer
 
         public decimal Amount { get; set; }
         public int BudgetItemId { get; set; }
+        public bool MarkedForDeletion { get; set; }
 
         public virtual BudgetItemDTO BudgetItem { get; set; }
     }
@@ -27,6 +28,7 @@ namespace BudgetPlannerApi.DataTransfer
         [Required]
         public int BudgetItemId { get; set; }
 
+        public bool MarkedForDeletion { get; set; }
     }
 
 }

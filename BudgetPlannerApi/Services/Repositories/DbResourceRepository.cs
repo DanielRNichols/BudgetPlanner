@@ -54,6 +54,8 @@ namespace BudgetPlannerApi.Services.Repositories
 
             if (options != null)
             {
+                if (options.MarkedForDeletion != null)
+                    query = query.Where(r => r.MarkedForDeletion == options.MarkedForDeletion);
                 if (options.Skip > 0)
                     query = query.Skip(options.Skip);
                 if (options.Limit > 0)

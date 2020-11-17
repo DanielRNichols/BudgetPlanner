@@ -16,6 +16,7 @@ namespace BudgetPlannerApi.DataTransfer
         public string Memo { get; set; }
         public decimal WithdrawalAmount { get; set; }
         public decimal DepositAmount { get; set; }
+        public bool MarkedForDeletion { get; set; }
 
         public virtual RegisterEntryDTO RegisterEntry { get; set; }
         public virtual BudgetItemDTO BudgetItem { get; set; }
@@ -31,6 +32,7 @@ namespace BudgetPlannerApi.DataTransfer
         public string Memo { get; set; }
         public decimal WithdrawalAmount { get; set; }
         public decimal DepositAmount { get; set; }
+        public bool MarkedForDeletion { get; set; }
 
     }
 }

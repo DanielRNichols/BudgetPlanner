@@ -16,6 +16,7 @@ namespace BudgetPlannerApi.Data
 
         [Column(TypeName = "money")]
         public decimal Amount { get; set; }
+        public bool MarkedForDeletion { get; set; }
 
         public virtual BudgetCycle BudgetCycle {get; set; }
         public virtual BudgetItem BudgetItem { get; set; }

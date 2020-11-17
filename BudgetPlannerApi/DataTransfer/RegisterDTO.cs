@@ -14,6 +14,7 @@ namespace BudgetPlannerApi.DataTransfer
         public decimal EndingBalance { get; set; }
         public decimal ClearedBalance { get; set; }
         public decimal AvailableBalance { get; set; }
+        public bool MarkedForDeletion { get; set; }
 
         public virtual IList<RegisterEntryDTO> RegisterEntries { get; set; }
 
@@ -23,5 +24,6 @@ namespace BudgetPlannerApi.DataTransfer
         [Required]
         public string Name { get; set; }
         public decimal StartingBalance { get; set; }
+        public bool MarkedForDeletion { get; set; }
     }
 }

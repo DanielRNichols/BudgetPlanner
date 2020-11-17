@@ -52,7 +52,7 @@ namespace BudgetPlannerApi.Services.Repositories
             var options = new RegisterEntriesQueryOptions() { RegisterId = id, Status = 2 };
 
             var entries = await _db.RegisterEntries
-                .Where(r => r.RegisterId == id && r.Status == 2)
+                .Where(r => r.RegisterId == id && r.MarkedForDeletion == false && r.Status == 2)
                 .ToListAsync();
 
             if ((entries == null) || (entries.Count() == 0))
@@ -85,7 +85,7 @@ namespace BudgetPlannerApi.Services.Repositories
         private async Task<bool> Balance(Register register)
         {
             var netTotals = _db.RegisterEntries
-                .Where(r => r.RegisterId ==register.Id)
+                .Where(r => r.RegisterId ==register.Id && r.MarkedForDeletion == false)
                 .GroupBy(r => r.Status)
                 .Select(g => new
                 {

@@ -18,6 +18,7 @@ namespace BudgetPlannerApi.DataTransfer
         public decimal StartingBalance { get; set; }
 
         public virtual IList<BudgetCycleItemDTO> BudgetCycleItems { get; set; }
+        public bool MarkedForDeletion { get; set; }
     }
 
     public class BudgetCycleCreateDTO
@@ -32,6 +33,7 @@ namespace BudgetPlannerApi.DataTransfer
         public DateTime EndDate { get; set; }
 
         public decimal StartingBalance { get; set; }
+        public bool MarkedForDeletion { get; set; }
     }
 
 }

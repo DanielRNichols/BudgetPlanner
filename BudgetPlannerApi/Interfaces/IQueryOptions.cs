@@ -8,6 +8,7 @@ namespace BudgetPlannerApi.Interfaces
     public interface IBaseQueryOptions
     {
         bool IncludeRelated { get; set; }
+        bool? MarkedForDeletion { get; set; }
         int Limit { get; set; }
         int Skip {get; set; }
     }

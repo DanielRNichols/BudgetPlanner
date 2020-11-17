@@ -31,8 +31,12 @@ namespace BudgetPlannerApi.Controllers
         }
 
         /// <summary>
-        /// Get all Budget Groups
+        /// 
         /// </summary>
+        /// <param name="includeRelated"></param>
+        /// <param name="limit"></param>
+        /// <param name="skip"></param>
+        /// <param name="markedForDeletion"></param>
         /// <returns></returns>
         // GET: api/<BudgetGroupsController>
         [HttpGet]
@@ -41,14 +45,16 @@ namespace BudgetPlannerApi.Controllers
         public async Task<IActionResult> Get(
             [FromQuery] bool includeRelated = false,
             [FromQuery] int limit = 0,
-            [FromQuery] int skip = 0)
+            [FromQuery] int skip = 0,
+            [FromQuery] bool? markedForDeletion = null)
         {
             return await _controllerHelper.GetItems<BudgetGroupDTO>(this, _repo,
                 new BaseQueryOptions()
                 {
                     IncludeRelated = includeRelated,
                     Limit = limit,
-                    Skip = skip
+                    Skip = skip,
+                    MarkedForDeletion = markedForDeletion
                 });
         }
 

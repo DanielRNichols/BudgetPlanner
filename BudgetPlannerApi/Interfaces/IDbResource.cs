@@ -8,5 +8,6 @@ namespace BudgetPlannerApi.Interfaces
     public interface IDbResource
     {
         public int Id { get; set; }
+        public bool MarkedForDeletion { get; set; }
     }
 }

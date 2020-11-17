@@ -20,6 +20,7 @@ namespace BudgetPlannerApi.Data
         public decimal ClearedBalance { get; set; }
         [Column(TypeName = "money")]
         public decimal AvailableBalance { get; set; }
+        public bool MarkedForDeletion { get; set; }
 
         public virtual IList<RegisterEntry> RegisterEntries { get; set; }
     }
