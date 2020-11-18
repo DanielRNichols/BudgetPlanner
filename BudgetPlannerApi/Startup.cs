@@ -64,6 +64,9 @@ namespace BudgetPlanner
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            // Http Context Accessor to get user in controller
+            services.AddHttpContextAccessor();
+
             // AutoMapper
             services.AddAutoMapper(typeof(DataMaps));
 

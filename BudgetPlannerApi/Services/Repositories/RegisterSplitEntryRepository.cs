@@ -20,30 +20,31 @@ namespace BudgetPlannerApi.Services.Repositories
 
         public override async Task<IList<RegisterSplitEntry>> Get(BaseQueryOptions options)
         {
-            bool includeRelated = options != null && options.IncludeRelated;
-            if (includeRelated)
+            if (options != null && options.IncludeRelated)
             {
-                return await _db.RegisterSplitEntries
-                .Include(r => r.RegisterEntry)
-                .Include(i => i.BudgetItem)
-                .ToListAsync();
+                var query = _db.RegisterSplitEntries.AsQueryable()
+                    .Include(r => r.RegisterEntry)
+                    .Include(i => i.BudgetItem);
+
+                return await base.ExecuteQuery(query, options);
             }
 
             return await base.Get(options);
 
         }
 
-        public override async Task<RegisterSplitEntry> GetById(int id, bool includeRelated = false)
+        public override async Task<RegisterSplitEntry> GetById(int id, IBaseQueryOptions options = null)
         {
-            if (includeRelated)
+            if (options != null && options.IncludeRelated)
             {
-                return await _db.RegisterSplitEntries
-                .Include(r => r.RegisterEntry)
-                .Include(i => i.BudgetItem)
-                .FirstOrDefaultAsync(q => q.Id == id);
+                var query = _db.RegisterSplitEntries.AsQueryable()
+                        .Include(r => r.RegisterEntry)
+                        .Include(i => i.BudgetItem);
+
+                return await base.ExecuteQueryById(id, query, options);
             }
 
-            return await base.GetById(id);
+            return await base.GetById(id, options);
         }
     }
 }

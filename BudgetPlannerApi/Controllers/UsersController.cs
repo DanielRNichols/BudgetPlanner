@@ -144,7 +144,7 @@ namespace BudgetPlannerApi.Controllers
                 audience: _config["Jwt:issuer"],
                 claims: claims,
                 notBefore: null,
-                expires: DateTime.Now.AddMinutes(2),
+                expires: DateTime.Now.AddMinutes(60),
                 signingCredentials: credentials
             );
 

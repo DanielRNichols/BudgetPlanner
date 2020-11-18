@@ -12,6 +12,7 @@ namespace BudgetPlannerApi.Data
     public class MemorizedTransaction : IDbResource
     {
         public int Id { get; set; }
+        public string UserId { get; set; }
         public string Payee { get; set; }
 
         [Column(TypeName ="money")]

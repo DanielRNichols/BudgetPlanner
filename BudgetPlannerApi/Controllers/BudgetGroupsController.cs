@@ -7,6 +7,7 @@ using BudgetPlannerApi.Data;
 using BudgetPlannerApi.DataTransfer;
 using BudgetPlannerApi.Interfaces;
 using BudgetPlannerApi.Services.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing.Template;
@@ -17,6 +18,7 @@ namespace BudgetPlannerApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class BudgetGroupsController : ControllerBase
     {
         private readonly IBudgetGroupsControllerHelper _controllerHelper;
@@ -71,7 +73,8 @@ namespace BudgetPlannerApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetById(int id, [FromQuery] bool includeRelated = false)
         {
-            return await _controllerHelper.GetItem<BudgetGroupDTO>(this, _repo, id, includeRelated);
+            var options = new BaseQueryOptions() { IncludeRelated = includeRelated };
+            return await _controllerHelper.GetItem<BudgetGroupDTO>(this, _repo, id, options);
         }
 
         /// <summary>

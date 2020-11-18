@@ -19,25 +19,27 @@ namespace BudgetPlannerApi.Services.Repositories
         }
         public override async Task<IList<BudgetGroup>> Get(BaseQueryOptions options)
         {
-            bool includeRelated = options != null && options.IncludeRelated;
-            if (includeRelated)
+            if (options != null && options.IncludeRelated)
             {
-                return await _db.BudgetGroups.Include(g => g.BudgetCategories).ToListAsync();
+                var query = _db.BudgetGroups.AsQueryable()
+                    .Include(g => g.BudgetCategories);
+                return await base.ExecuteQuery(query, options);
             }
 
             return await base.Get(options);
         }
 
-        public override async Task<BudgetGroup> GetById(int id, bool includeRelated = false)
+        public override async Task<BudgetGroup> GetById(int id, IBaseQueryOptions options = null)
         {
-            if (includeRelated)
+            if (options != null && options.IncludeRelated)
             {
-                return await _db.BudgetGroups
-                    .Include(g => g.BudgetCategories)
-                    .FirstOrDefaultAsync(q => q.Id == id);
+                var query = _db.BudgetGroups.AsQueryable()
+                    .Include(g => g.BudgetCategories);
+
+                return await base.ExecuteQueryById(id, query, options);
             }
 
-            return await base.GetById(id);
+            return await base.GetById(id, options);
         }
     }
 }

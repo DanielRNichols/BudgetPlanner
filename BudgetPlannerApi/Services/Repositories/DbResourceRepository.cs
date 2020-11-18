@@ -47,30 +47,12 @@ namespace BudgetPlannerApi.Services.Repositories
             return await ExecuteQuery(query, options);
         }
 
-        public virtual async Task<IList<T>> ExecuteQuery(IQueryable<T> query, IBaseQueryOptions options = null)
-        {
-            if (query == null)
-                return null;
-
-            if (options != null)
-            {
-                if (options.MarkedForDeletion != null)
-                    query = query.Where(r => r.MarkedForDeletion == options.MarkedForDeletion);
-                if (options.Skip > 0)
-                    query = query.Skip(options.Skip);
-                if (options.Limit > 0)
-                    query = query.Take(options.Limit);
-            }
-
-            return await query.ToListAsync();
-        }
-
-        public virtual async Task<T> GetById(int id, bool includeRelated = false)
+        public virtual async Task<T> GetById(int id, IBaseQueryOptions options)
         {
             // Override if you need to include related objects
-            var item = await _dbContext.FindAsync(id);
+            var query = _dbContext.AsQueryable();
 
-            return item;
+            return await ExecuteQueryById(id, query, options);
         }
 
         public virtual async Task<bool> Save()
@@ -86,5 +68,37 @@ namespace BudgetPlannerApi.Services.Repositories
 
             return await Save();
         }
+
+
+        public virtual async Task<IList<T>> ExecuteQuery(IQueryable<T> query, IBaseQueryOptions options)
+        {
+            if (query == null || options == null)
+                return null;
+
+            // options.UserId is added in the controller for current user
+            query = query.Where(r => r.UserId == options.UserId);
+
+            if (options.MarkedForDeletion != null)
+                query = query.Where(r => r.MarkedForDeletion == options.MarkedForDeletion);
+            if (options.Skip > 0)
+                query = query.Skip(options.Skip);
+            if (options.Limit > 0)
+                query = query.Take(options.Limit);
+
+            return await query.ToListAsync();
+        }
+
+        public virtual async Task<T> ExecuteQueryById(int id, IQueryable<T> query, IBaseQueryOptions options)
+        {
+            if (query == null || options == null)
+                return null;
+
+            // options.UserId is added in the controller for current user
+            query = query.Where(r => r.UserId == options.UserId);
+
+            return await query.FirstOrDefaultAsync(q => q.Id == id);
+        }
+
+
     }
 }

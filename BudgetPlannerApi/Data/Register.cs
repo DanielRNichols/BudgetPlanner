@@ -11,6 +11,7 @@ namespace BudgetPlannerApi.Data
     public class Register : IDbResource
     {
         public int Id { get; set; }
+        public string UserId { get; set; }
         public string Name { get; set; }
         [Column(TypeName = "money")]
         public decimal StartingBalance { get; set; }

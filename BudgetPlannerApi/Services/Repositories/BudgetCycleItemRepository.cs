@@ -18,7 +18,7 @@ namespace BudgetPlannerApi.Services.Repositories
         {
             _db = db;
         }
-        public override async Task<IList<BudgetCycleItem>> Get(BudgetCycleItemsQueryOptions options = null)
+        public override async Task<IList<BudgetCycleItem>> Get(BudgetCycleItemsQueryOptions options)
         {
             if(options != null)
             {
@@ -40,17 +40,17 @@ namespace BudgetPlannerApi.Services.Repositories
 
         }
 
-        public override async Task<BudgetCycleItem> GetById(int id, bool includeRelated = false)
+        public override async Task<BudgetCycleItem> GetById(int id, IBaseQueryOptions options = null)
         {
-            if (includeRelated)
+            if (options != null && options.IncludeRelated)
             {
-                return await _db.BudgetCyclesItems
-                .Include(c => c.BudgetCycle)
-                .Include(i => i.BudgetItem)
-                .FirstOrDefaultAsync(q => q.Id == id);
+                var query = _db.BudgetCyclesItems.AsQueryable()
+                        .Include(c => c.BudgetCycle)
+                        .Include(i => i.BudgetItem);
+                return await base.ExecuteQueryById(id, query, options);
             }
 
-            return await base.GetById(id);
+            return await base.GetById(id, options);
         }
     }
 }

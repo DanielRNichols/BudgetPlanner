@@ -3,6 +3,8 @@ using BudgetPlannerApi.Data;
 using BudgetPlannerApi.Interfaces;
 using BudgetPlannerApi.Services.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +15,11 @@ namespace BudgetPlannerApi.Services.ControllerHelpers
     public class RegistersControllerHelper : 
         DbResourceControllerHelper<Register, BaseQueryOptions>, IRegistersControllerHelper
     {
-        public RegistersControllerHelper(ILoggerService logger, IMapper mapper) : base(logger, mapper)
+        public RegistersControllerHelper(ILoggerService logger,
+            IMapper mapper,
+            UserManager<IdentityUser> userManager,
+            IHttpContextAccessor httpContextAccessor)
+            : base(logger, mapper, userManager, httpContextAccessor)
         {
         }
 

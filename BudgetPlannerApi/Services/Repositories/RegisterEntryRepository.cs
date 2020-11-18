@@ -48,18 +48,19 @@ namespace BudgetPlannerApi.Services.Repositories
 
         }
 
-        public override async Task<RegisterEntry> GetById(int id, bool includeRelated = false)
+        public override async Task<RegisterEntry> GetById(int id, IBaseQueryOptions options)
         {
-            if (includeRelated)
+            if (options != null && options.IncludeRelated)
             {
-                return await _db.RegisterEntries
-                .Include(r => r.Register)
-                .Include(c => c.BudgetCycle)
-                .Include(i => i.BudgetItem)
-                .FirstOrDefaultAsync(q => q.Id == id);
+                var query = _db.RegisterEntries.AsQueryable()
+                        .Include(r => r.Register)
+                        .Include(c => c.BudgetCycle)
+                        .Include(i => i.BudgetItem);
+
+                return await base.ExecuteQueryById(id, query, options);
             }
 
-            return await base.GetById(id);
+            return await base.GetById(id, options);
         }
 
         // override to balance the register after adding new entry

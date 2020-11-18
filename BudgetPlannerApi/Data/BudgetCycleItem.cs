@@ -11,6 +11,7 @@ namespace BudgetPlannerApi.Data
     public class BudgetCycleItem : IDbResource
     {
         public int Id { get; set; }
+        public string UserId { get; set; }
         public int BudgetCycleId { get; set; }
         public int BudgetItemId { get; set; }
 

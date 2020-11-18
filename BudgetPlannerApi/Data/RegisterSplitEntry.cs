@@ -11,6 +11,7 @@ namespace BudgetPlannerApi.Data
     public class RegisterSplitEntry : IDbResource
     {
         public int Id { get; set; }
+        public string UserId { get; set; }
         public int RegisterEntryId { get; set; }
         public int BudgetItemId { get; set; }
         public string Payee { get; set; }

@@ -8,6 +8,7 @@ namespace BudgetPlannerApi.Services.Repositories
 {
     public class BaseQueryOptions : IBaseQueryOptions
     {
+        public string UserId { get; set; } = "";
         public bool? MarkedForDeletion { get; set; } = null;
         public bool IncludeRelated { get; set; } = false;
         public int Limit { get; set; } = 0;
