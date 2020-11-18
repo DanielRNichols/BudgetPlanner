@@ -32,7 +32,6 @@ namespace BudgetPlannerApi.Controllers
         /// <param name="includeRelated"></param>
         /// <param name="limit"></param>
         /// <param name="skip"></param>
-        /// <param name=""></param>
         /// <param name="markedForDeletion"></param>
         /// <param name="registerId"></param>
         /// <param name="status"></param>

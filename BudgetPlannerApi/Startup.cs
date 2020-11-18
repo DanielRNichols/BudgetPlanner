@@ -21,6 +21,10 @@ using BudgetPlannerApi.Interfaces;
 using BudgetPlannerApi.Services;
 using BudgetPlannerApi.Services.ControllerHelpers;
 using BudgetPlannerApi.Services.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using BudgetPlannerApi.Data;
 
 namespace BudgetPlanner
 {
@@ -57,10 +61,30 @@ namespace BudgetPlanner
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(GetConnectionString()));
             services.AddDefaultIdentity<IdentityUser>() // (options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             // AutoMapper
             services.AddAutoMapper(typeof(DataMaps));
+
+            // JWT Authentication
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["Jwt:issuer"],
+                        ValidAudience = Configuration["Jwt:issuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:key"]))
+
+                    };
+
+                });
+
 
             // Cors Policy
             services.AddCors(options =>
@@ -118,7 +142,10 @@ namespace BudgetPlanner
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, 
+            IWebHostEnvironment env,
+            UserManager<IdentityUser> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -147,6 +174,9 @@ namespace BudgetPlanner
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            SeedData.Seed(userManager, roleManager).Wait();
+
 
             app.UseAuthentication();
             app.UseAuthorization();
