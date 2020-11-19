@@ -70,7 +70,7 @@ namespace BudgetPlannerApi.Services.Repositories
             if (!status)
                 return false;
 
-            return await _registerRepo.Balance(entry.RegisterId);
+            return await _registerRepo.Balance(entry.RegisterId, entry.UserId);
         }
 
         // override to balance the register after updating entry
@@ -80,7 +80,7 @@ namespace BudgetPlannerApi.Services.Repositories
             if (!status)
                 return false;
 
-            return await _registerRepo.Balance(entry.RegisterId);
+            return await _registerRepo.Balance(entry.RegisterId, entry.UserId);
         }
 
         // override to balance the register after deleting entry
@@ -90,7 +90,7 @@ namespace BudgetPlannerApi.Services.Repositories
             if (!status)
                 return false;
 
-            return await _registerRepo.Balance(entry.RegisterId);
+            return await _registerRepo.Balance(entry.RegisterId, entry.UserId);
         }
     }
 }

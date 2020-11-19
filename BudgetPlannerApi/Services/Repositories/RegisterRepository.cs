@@ -44,12 +44,12 @@ namespace BudgetPlannerApi.Services.Repositories
             return await base.GetById(id, options);
         }
 
-        public async Task<bool> Reconcile(int id)
+        public async Task<bool> Reconcile(int id, string userId)
         {
             // status = 2 is "cleared", stats = 3 is "reconciled" (need better way to specify this)
             // change all cleard to reconciled
 
-            var options = new RegisterEntriesQueryOptions() { RegisterId = id, Status = 2 };
+            var options = new RegisterEntriesQueryOptions() { RegisterId = id, Status = 2, UserId = userId };
 
             var entries = await _db.RegisterEntries
                 .Where(r => r.RegisterId == id && r.MarkedForDeletion == false && r.Status == 2)
@@ -68,14 +68,15 @@ namespace BudgetPlannerApi.Services.Repositories
             if (!status)
                 return false;
 
-            return await Balance(id);
+            return await Balance(id, userId);
 
 
         }
 
-        public async Task<bool> Balance(int id)
+        public async Task<bool> Balance(int id, string userId)
         {
-            var register = await GetById(id);
+            BaseQueryOptions options = new BaseQueryOptions() { UserId = userId };
+            var register = await GetById(id, options);
             if (register == null)
                 return false;
 

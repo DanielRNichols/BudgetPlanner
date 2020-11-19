@@ -12,7 +12,7 @@ namespace BudgetPlannerApi.Interfaces
     {
         Task<IList<T>> Get(O options);
         Task<T> GetById(int id, IBaseQueryOptions options);
-        Task<bool> Exists(int id);
+        Task<bool> Exists(int id, string userId);
         Task<bool> Create(T entity);
         Task<bool> Update(T entity);
         Task<bool> Delete(T entity);
@@ -34,8 +34,8 @@ namespace BudgetPlannerApi.Interfaces
     }
     public interface IRegisterRepository : IDbResourceRepository<Register, BaseQueryOptions>
     {
-        Task<bool> Reconcile(int id);
-        Task<bool> Balance(int id);
+        Task<bool> Reconcile(int id, string userId);
+        Task<bool> Balance(int id, string userId);
     }
     public interface IRegisterEntryRepository : IDbResourceRepository<RegisterEntry, RegisterEntriesQueryOptions>
     {

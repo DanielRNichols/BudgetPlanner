@@ -18,18 +18,17 @@ namespace BudgetPlannerApi.Services.ControllerHelpers
     {
         protected readonly ILoggerService _logger;
         protected readonly IMapper _mapper;
+        protected readonly IUserService _userService;
         protected readonly UserManager<IdentityUser> _userManager;
         protected readonly IHttpContextAccessor _httpContextAccessor;
 
         public DbResourceControllerHelper(ILoggerService logger, 
             IMapper mapper,
-            UserManager<IdentityUser> userManager,
-            IHttpContextAccessor httpContextAccessor)
+            IUserService userService)
         {
             _logger = logger;
             _mapper = mapper;
-            _userManager = userManager;
-            _httpContextAccessor = httpContextAccessor;
+            _userService = userService;
         }
 
         /// <summary>
@@ -45,7 +44,7 @@ namespace BudgetPlannerApi.Services.ControllerHelpers
             try
             {
                 // set options.UserId for the current authenticated user
-                var userId = await GetCurrentUserId();
+                var userId = await _userService.GetCurrentUserId();
                 options.UserId = userId;
                 string desc = GetControllerDescription(controller);
                 _logger.LogInfo(desc);
@@ -79,7 +78,7 @@ namespace BudgetPlannerApi.Services.ControllerHelpers
                 _logger.LogInfo($"{desc}: {id}");
 
                 // set options.UserId for the current authenticated user
-                var user = await GetCurrentUser();
+                var user = await _userService.GetCurrentUser();
                 if (user == null)
                 {
                     _logger.LogWarn($"{desc}: Invalid request submitted - Not a valid user");
@@ -131,7 +130,7 @@ namespace BudgetPlannerApi.Services.ControllerHelpers
                 var item = _mapper.Map<T>(itemDTO);
 
                 // set the userId to the currently authenticated user
-                item.UserId = await GetCurrentUserId();
+                item.UserId = await _userService.GetCurrentUserId();
 
                 var isSuccess = await repo.Create(item);
                 if (!isSuccess)
@@ -162,10 +161,16 @@ namespace BudgetPlannerApi.Services.ControllerHelpers
                     _logger.LogWarn($"{desc}: Empty request submitted");
                     return controller.BadRequest();
                 }
-                var exists = await repo.Exists(id);
+                var user = await _userService.GetCurrentUser();
+                if (user == null)
+                {
+                    _logger.LogWarn($"{desc}: Invalid request submitted - Not a valid user");
+                    return controller.BadRequest();
+                }
+                var exists = await repo.Exists(id, user?.Id);
                 if (!exists)
                 {
-                    _logger.LogWarn($"{desc}: Item with id {id} was not found");
+                    _logger.LogWarn($"{desc}: Item with id {id} was not found or does not belong to {user?.Email}");
                     return controller.NotFound();
                 }
                 if (!controller.ModelState.IsValid)
@@ -174,30 +179,14 @@ namespace BudgetPlannerApi.Services.ControllerHelpers
                     return controller.BadRequest(controller.ModelState);
                 }
 
-                // verify that the record exists and belongs to the currently authenticated user
-                var user = await GetCurrentUser();
-                if(user == null)
-                {
-                    _logger.LogWarn($"{desc}: Invalid request submitted - Not a valid user");
-                    return controller.BadRequest();
-                }
-
-                var result = await repo.GetById(id,
-                        new BaseQueryOptions() { UserId = user != null ? user.Id : "" });
-                if (result == null)
-                {
-                    _logger.LogWarn($"{desc}: Item with id {id} was not found or does not belong to {user?.Email}");
-                    return controller.NotFound();
-                }
 
                 // map data to DTO
                 var item = _mapper.Map<T>(itemDTO);
                 // force item.Id to be id passed in and userId to currently authenticated user
                 item.Id = id;
-                item.UserId = user != null ? user.Id : "";
 
                 // set the userId to the currently authenticated user
-                item.UserId = await GetCurrentUserId();
+                item.UserId = user?.Id; 
 
                 var isSuccess = await repo.Update(item);
                 if (!isSuccess)
@@ -229,12 +218,22 @@ namespace BudgetPlannerApi.Services.ControllerHelpers
                     _logger.LogWarn($"{desc}: Empty request submitted");
                     return controller.BadRequest();
                 }
-                // verify that the record exists and belongs to the currently authenticated user
-                var user = await GetCurrentUser();
+                var user = await _userService.GetCurrentUser();
                 if (user == null)
                 {
                     _logger.LogWarn($"{desc}: Invalid request submitted - Not a valid user");
                     return controller.BadRequest();
+                }
+                var exists = await repo.Exists(id, user?.Id);
+                if (!exists)
+                {
+                    _logger.LogWarn($"{desc}: Item with id {id} was not found or does not belong to {user?.Email}");
+                    return controller.NotFound();
+                }
+                if (!controller.ModelState.IsValid)
+                {
+                    _logger.LogWarn($"{desc}: Invalid request submitted");
+                    return controller.BadRequest(controller.ModelState);
                 }
 
 
@@ -287,25 +286,6 @@ namespace BudgetPlannerApi.Services.ControllerHelpers
                 Details = e.InnerException?.ToString()
             };
             return controller.StatusCode(500, new { serverError});
-        }
-
-        private async Task<IdentityUser> GetCurrentUser()
-        {
-            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
-            if (userId == null)
-                return null;
-
-            return await _userManager.FindByEmailAsync(userId.Value);
-         }
-
-
-        private async Task<string> GetCurrentUserId()
-        {
-            var user = await GetCurrentUser();
-            if (user == null)
-                return null;
-
-            return user.Id;
         }
 
     }

@@ -25,18 +25,36 @@ namespace BudgetPlannerApi.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILoggerService _logger;
         private readonly IConfiguration _config;
+        private readonly IUserService _userService;
 
 
         public UsersController(SignInManager<IdentityUser> signInManager,
             UserManager<IdentityUser> userManager,
             ILoggerService logger,
-            IConfiguration config)
+            IConfiguration config,
+            IUserService userService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _logger = logger;
             _config = config;
+            _userService = userService;
         }
+
+        [HttpGet]
+        [Route("currentuser")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Get(string id)
+        {
+            var description = GetControllerDescription();
+            _logger.LogInfo($"{description}: Getting info for current user");
+            var user = await _userService.GetCurrentUser();
+            return Ok(new { userName = user?.UserName, email = user?.Email });
+
+        }
+
 
         [HttpPost]
         [Route("register")]
@@ -78,7 +96,7 @@ namespace BudgetPlannerApi.Controllers
                     await _userManager.AddToRolesAsync(user, roles);
 
                 _logger.LogInfo($"{description}: {emailAddress} successfully registered");
-                return Ok(new { user = user });
+                return Ok(new { user });
             }
             catch (Exception e)
             {

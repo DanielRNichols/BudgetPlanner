@@ -17,9 +17,8 @@ namespace BudgetPlannerApi.Services.ControllerHelpers
     {
         public RegistersControllerHelper(ILoggerService logger,
             IMapper mapper,
-            UserManager<IdentityUser> userManager,
-            IHttpContextAccessor httpContextAccessor)
-            : base(logger, mapper, userManager, httpContextAccessor)
+            IUserService userService)
+            : base(logger, mapper, userService)
         {
         }
 
@@ -35,14 +34,20 @@ namespace BudgetPlannerApi.Services.ControllerHelpers
                     _logger.LogWarn($"{desc}: Empty request submitted");
                     return controller.BadRequest();
                 }
-                var exists = await repo.Exists(id);
+                var user = await _userService.GetCurrentUser();
+                if (user == null)
+                {
+                    _logger.LogWarn($"{desc}: Invalid request submitted - Not a valid user");
+                    return controller.BadRequest();
+                }
+                var exists = await repo.Exists(id, user?.Id);
                 if (!exists)
                 {
-                    _logger.LogWarn($"{desc}: Repository with id {id} was not found");
+                    _logger.LogWarn($"{desc}: Item with id {id} was not found or does not belong to {user?.Email}");
                     return controller.NotFound();
                 }
 
-                var isSuccess = await repo.Reconcile(id);
+                var isSuccess = await repo.Reconcile(id, user?.Id);
                 if (!isSuccess)
                 {
                     return InternalError(controller, $"{desc}: Reconcile failed");
@@ -69,14 +74,20 @@ namespace BudgetPlannerApi.Services.ControllerHelpers
                     _logger.LogWarn($"{desc}: Empty request submitted");
                     return controller.BadRequest();
                 }
-                var exists = await repo.Exists(id);
+                var user = await _userService.GetCurrentUser();
+                if (user == null)
+                {
+                    _logger.LogWarn($"{desc}: Invalid request submitted - Not a valid user");
+                    return controller.BadRequest();
+                }
+                var exists = await repo.Exists(id, user?.Id);
                 if (!exists)
                 {
-                    _logger.LogWarn($"{desc}: Repository with id {id} was not found");
+                    _logger.LogWarn($"{desc}: Item with id {id} was not found or does not belong to {user?.Email}");
                     return controller.NotFound();
                 }
 
-                var isSuccess = await repo.Balance(id);
+                var isSuccess = await repo.Balance(id, user?.Id);
                 if (!isSuccess)
                 {
                     return InternalError(controller, $"{desc}: Balance failed");

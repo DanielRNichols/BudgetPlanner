@@ -34,9 +34,9 @@ namespace BudgetPlannerApi.Services.Repositories
             return await Save();
         }
 
-        public virtual async Task<bool> Exists(int id)
+        public virtual async Task<bool> Exists(int id, string userId)
         {
-            return await _dbContext.AnyAsync(row => row.Id == id);
+            return await _dbContext.AnyAsync(row => row.Id == id && row.UserId == userId);
         }
 
         public virtual async Task<IList<T>> Get(O options = null)
@@ -49,6 +49,8 @@ namespace BudgetPlannerApi.Services.Repositories
 
         public virtual async Task<T> GetById(int id, IBaseQueryOptions options)
         {
+            //var item = await _dbContext.FindAsync(id);
+
             // Override if you need to include related objects
             var query = _dbContext.AsQueryable();
 

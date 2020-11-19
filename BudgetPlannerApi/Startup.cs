@@ -118,6 +118,8 @@ namespace BudgetPlanner
             // Using ConsoleLoggerService temporarily to until path issues for NLog configuration with Docker 
             services.AddSingleton<ILoggerService, ConsoleLoggerService>(); //LoggerService>();
 
+            services.AddScoped<IUserService, UserService>();
+
             // Repositories Dependency Injection
             services.AddScoped<IBudgetGroupRepository, BudgetGroupRepository>();
             services.AddScoped<IBudgetCategoryRepository, BudgetCategoryRepository>();

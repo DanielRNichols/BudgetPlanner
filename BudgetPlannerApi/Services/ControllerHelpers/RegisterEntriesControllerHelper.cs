@@ -16,9 +16,8 @@ namespace BudgetPlannerApi.Services.ControllerHelpers
     {
         public RegisterEntriesControllerHelper(ILoggerService logger,
             IMapper mapper,
-            UserManager<IdentityUser> userManager,
-            IHttpContextAccessor httpContextAccessor)
-            : base(logger, mapper, userManager, httpContextAccessor)
+            IUserService userService)
+            : base(logger, mapper, userService)
         {
 
         }
