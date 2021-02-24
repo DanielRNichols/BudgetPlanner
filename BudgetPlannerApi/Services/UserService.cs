@@ -22,7 +22,11 @@ namespace BudgetPlannerApi.Services
         }
         public async Task<IdentityUser> GetCurrentUser()
         {
-            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+            var httpContext = _httpContextAccessor.HttpContext;
+            if (httpContext == null)
+                return null;
+
+            var userId = httpContext.User.FindFirst(ClaimTypes.NameIdentifier);
             if (userId == null)
                 return null;
 
