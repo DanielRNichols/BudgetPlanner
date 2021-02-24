@@ -12,43 +12,50 @@ namespace BudgetPlannerUI.Services
 {
     public class BudgetGroupsDataServices : BudgetPlannerDataService<BudgetGroup>, IBudgetGroupsDataService
     {
-        public BudgetGroupsDataServices(HttpClient httpClient) : base(httpClient, Endpoints.BudgetGroups)
+        public BudgetGroupsDataServices(HttpClient httpClient, ILocalStorageService localStorageService) 
+            : base(httpClient, localStorageService, Endpoints.BudgetGroups)
         {
         }
     }
     public class BudgetCategoriesDataServices : BudgetPlannerDataService<BudgetCategory>, IBudgetCategoriesDataService
     {
-        public BudgetCategoriesDataServices(HttpClient httpClient) : base(httpClient, Endpoints.BudgetCategories)
+        public BudgetCategoriesDataServices(HttpClient httpClient, ILocalStorageService localStorageService)
+            : base(httpClient, localStorageService, Endpoints.BudgetCategories)
         {
         }
     }
     public class BudgetItemsDataServices : BudgetPlannerDataService<BudgetItem>, IBudgetItemsDataService
     {
-        public BudgetItemsDataServices(HttpClient httpClient) : base(httpClient, Endpoints.BudgetItems)
+        public BudgetItemsDataServices(HttpClient httpClient, ILocalStorageService localStorageService)
+            : base(httpClient, localStorageService, Endpoints.BudgetItems)
         {
         }
     }
     public class BudgetCyclesDataServices : BudgetPlannerDataService<BudgetCycle>, IBudgetCyclesDataService
     {
-        public BudgetCyclesDataServices(HttpClient httpClient) : base(httpClient, Endpoints.BudgetCycles)
+        public BudgetCyclesDataServices(HttpClient httpClient, ILocalStorageService localStorageService)
+            : base(httpClient, localStorageService, Endpoints.BudgetCycles)
         {
         }
     }
     public class BudgetCycleItemsDataServices : BudgetPlannerDataService<BudgetCycleItem>, IBudgetCycleItemsDataService
     {
-        public BudgetCycleItemsDataServices(HttpClient httpClient) : base(httpClient, Endpoints.BudgetCycleItems)
+        public BudgetCycleItemsDataServices(HttpClient httpClient, ILocalStorageService localStorageService)
+            : base(httpClient, localStorageService, Endpoints.BudgetCycleItems)
         {
         }
     }
     public class MemorizedTransactionsDataServices : BudgetPlannerDataService<MemorizedTransaction>, IMemorizedTransactionsDataService
     {
-        public MemorizedTransactionsDataServices(HttpClient httpClient) : base(httpClient, Endpoints.MemorizedTransactions)
+        public MemorizedTransactionsDataServices(HttpClient httpClient, ILocalStorageService localStorageService)
+            : base(httpClient, localStorageService, Endpoints.MemorizedTransactions)
         {
         }
     }
     public class RegistersDataServices : BudgetPlannerDataService<Register>, IRegistersDataService
     {
-        public RegistersDataServices(HttpClient httpClient) : base(httpClient, Endpoints.Registers)
+        public RegistersDataServices(HttpClient httpClient, ILocalStorageService localStorageService)
+            : base(httpClient, localStorageService, Endpoints.Registers)
         {
         }
 
@@ -69,7 +76,8 @@ namespace BudgetPlannerUI.Services
     }
     public class RegisterEntriesDataServices : BudgetPlannerDataService<RegisterEntry>, IRegisterEntriesDataService
     {
-        public RegisterEntriesDataServices(HttpClient httpClient) : base(httpClient, Endpoints.RegisterEntries)
+        public RegisterEntriesDataServices(HttpClient httpClient, ILocalStorageService localStorageService)
+            : base(httpClient, localStorageService, Endpoints.RegisterEntries)
         {
         }
     }

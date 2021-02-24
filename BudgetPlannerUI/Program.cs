@@ -39,7 +39,7 @@ namespace BudgetPlannerUI
             builder.Services.AddTransient<IMemorizedTransactionsDataService, MemorizedTransactionsDataServices>();
             builder.Services.AddTransient<IRegistersDataService, RegistersDataServices>();
             builder.Services.AddTransient<IRegisterEntriesDataService, RegisterEntriesDataServices>();
-
+            builder.Services.AddTransient<BudgetPlannerUI.Interfaces.ILocalStorageService, BudgetPlannerUI.Services.LocalStorageService>();
 
             await builder.Build().RunAsync();
         }

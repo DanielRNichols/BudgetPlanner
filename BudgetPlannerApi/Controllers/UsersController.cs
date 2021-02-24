@@ -26,19 +26,22 @@ namespace BudgetPlannerApi.Controllers
         private readonly ILoggerService _logger;
         private readonly IConfiguration _config;
         private readonly IUserService _userService;
+        private readonly IAuthService _authService;
 
 
         public UsersController(SignInManager<IdentityUser> signInManager,
             UserManager<IdentityUser> userManager,
             ILoggerService logger,
             IConfiguration config,
-            IUserService userService)
+            IUserService userService,
+            IAuthService authService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _logger = logger;
             _config = config;
             _userService = userService;
+            _authService = authService;
         }
 
         [HttpGet]
@@ -131,7 +134,7 @@ namespace BudgetPlannerApi.Controllers
                 {
                     _logger.LogInfo($"{description}: {emailAddress} successfully authenticated");
                     var user = await _userManager.FindByNameAsync(emailAddress);
-                    var token = await GenerateJWT(user);
+                    var token = await _authService.GenerateJWT(user);
                     return Ok(new { token = token });
                 }
 
@@ -142,31 +145,6 @@ namespace BudgetPlannerApi.Controllers
             {
                 return InternalError(e);
             }
-        }
-
-        private async Task<string> GenerateJWT(IdentityUser user)
-        {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:key"]));
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-            var claims = new List<Claim>
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.NameIdentifier, user.Id)
-            };
-            var roles = await _userManager.GetRolesAsync(user);
-            claims.AddRange(roles.Select(r => new Claim(ClaimsIdentity.DefaultRoleClaimType, r)));
-
-            var token = new JwtSecurityToken(
-                issuer: _config["Jwt:issuer"],
-                audience: _config["Jwt:issuer"],
-                claims: claims,
-                notBefore: null,
-                expires: DateTime.Now.AddMinutes(60),
-                signingCredentials: credentials
-            );
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         private string GetControllerDescription()

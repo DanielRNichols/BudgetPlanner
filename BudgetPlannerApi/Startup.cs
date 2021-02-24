@@ -121,6 +121,7 @@ namespace BudgetPlanner
             services.AddSingleton<ILoggerService, ConsoleLoggerService>(); //LoggerService>();
 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAuthService, AuthService>();
 
             // Repositories Dependency Injection
             services.AddScoped<IBudgetGroupRepository, BudgetGroupRepository>();

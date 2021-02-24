@@ -1,10 +1,12 @@
-﻿using BudgetPlannerUI.Interfaces;
+﻿using BudgetPlanerUI.Static;
+using BudgetPlannerUI.Interfaces;
 using BudgetPlannerUI.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -16,11 +18,14 @@ namespace BudgetPlannerUI.Services
     {
         //private readonly IHttpClientFactory _httpClientFactory;
         protected readonly HttpClient _httpClient;
+        protected readonly ILocalStorageService _localStorageService;
         protected readonly string _resourceUrl = "";
 
-        public BudgetPlannerDataService(HttpClient httpClient, string resourceUrl)
+
+        public BudgetPlannerDataService(HttpClient httpClient, ILocalStorageService localStorageService, string resourceUrl)
         {
             _httpClient = httpClient;
+            _localStorageService = localStorageService;
             _resourceUrl = resourceUrl;
         }
 
@@ -32,6 +37,7 @@ namespace BudgetPlannerUI.Services
             try
             {
                 var queryStr = CreateQueryString(includeRelated);
+                var token = await GetAuthToken();
                 return await _httpClient.GetFromJsonAsync<T>($"{_resourceUrl}{id}{queryStr}");
             }
             catch
@@ -45,6 +51,8 @@ namespace BudgetPlannerUI.Services
             try
             {
                 var queryStr = CreateQueryString(includeRelated, supplementalQueryStr);
+                var token = await GetAuthToken();
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 return await _httpClient.GetFromJsonAsync<IList<T>>($"{_resourceUrl}{queryStr}");
             }
             catch
@@ -108,6 +116,11 @@ namespace BudgetPlannerUI.Services
                 queryStr = $"?{supplementalQueryStr}";
 
             return queryStr;
+        }
+
+        private async Task<string> GetAuthToken()
+        {
+            return await _localStorageService.GetStringAsync(LocalStorageKeys.AuthToken);
         }
 
     }
