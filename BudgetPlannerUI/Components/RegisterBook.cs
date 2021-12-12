@@ -37,7 +37,8 @@ namespace BudgetPlannerUI.Components
         public bool ShowDeleteDialog { get; set; } = false;
         private int SelectedId { get; set; }
 
-        private bool HideReconciled = false;
+        private bool HideReconciled { get; set; }  = false;
+        private bool HideRegisterName { get; set; } = true;
 
         private RegisterEntry NewEntry { get; set; }
 

@@ -13,10 +13,10 @@ namespace BudgetPlannerUI.Pages.RegisterEntries
     {
         public IEnumerable<RegisterEntry> Model { get; set; }
 
-        public string[] HideColumns = new string[] { "id", "register", "memo" };
-
         [Inject]
         private IRegisterEntriesDataService _dataService { get; set; }
+        private bool HideRegisterName { get; set; } = false;
+
 
 
         protected override async Task OnInitializedAsync()

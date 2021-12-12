@@ -28,8 +28,6 @@ namespace BudgetPlannerUI.Pages.Registers
         public bool ShowDeleteDialog { get; set; } = false;
         private string SelectedId { get; set; }
 
-        private string[] HideColumns = new string[] { "id", "register" };
-
         protected override async Task OnInitializedAsync()
         {
             var result = await _dataService.Get(includeRelated: false);

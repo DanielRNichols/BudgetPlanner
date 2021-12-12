@@ -8,6 +8,10 @@ else
         <thead>
             <tr>
                 <th></th>
+                @if (!HideRegisterName)
+                {
+                    <th>Register</th>
+                }
                 <th>Budget Cycle</th>
                 <th style="text-align:center">Date</th>
                 <th>Check #</th>
@@ -22,7 +26,7 @@ else
         <tbody>
             @foreach (var item in Entries)
             {
-                <RegisterRow Item="item" OnAction="@OnAction" HideReconciled="HideReconciled"></RegisterRow>
+                <RegisterRow Item="item" OnAction="@OnAction" HideReconciled="HideReconciled" HideRegisterName="HideRegisterName"></RegisterRow>
             }
         </tbody>
     </table>

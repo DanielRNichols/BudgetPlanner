@@ -21,5 +21,7 @@ namespace BudgetPlannerUI.Components
         [Parameter]
         public bool HideReconciled { get; set; }
 
+        [Parameter]
+        public bool HideRegisterName { get; set; } = false;
     }
 }

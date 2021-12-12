@@ -4,11 +4,12 @@
     <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>aspnet-BudgetPlanner-E11001DD-4AA6-46BB-BDA9-D91C2D083028</UserSecretsId>
     <Nullable>warnings</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;1591</NoWarn>
-    <DocumentationFile>bin\Debug\netcoreapp3.1\BudgetPlannerApi.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\BudgetPlannerApi.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'BudgetPlanner' " />

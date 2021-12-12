@@ -1,4 +1,4 @@
-﻿using BudgetPlanerUI.Static;
+﻿using BudgetPlannerUI.Static;
 using BudgetPlannerUI.Interfaces;
 using BudgetPlannerUI.Models;
 using Newtonsoft.Json;
@@ -36,8 +36,9 @@ namespace BudgetPlannerUI.Services
 
             try
             {
+                await AddTokenToHeader();
+
                 var queryStr = CreateQueryString(includeRelated);
-                var token = await GetAuthToken();
                 return await _httpClient.GetFromJsonAsync<T>($"{_resourceUrl}{id}{queryStr}");
             }
             catch
@@ -51,8 +52,7 @@ namespace BudgetPlannerUI.Services
             try
             {
                 var queryStr = CreateQueryString(includeRelated, supplementalQueryStr);
-                var token = await GetAuthToken();
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                await AddTokenToHeader();
                 return await _httpClient.GetFromJsonAsync<IList<T>>($"{_resourceUrl}{queryStr}");
             }
             catch
@@ -66,8 +66,7 @@ namespace BudgetPlannerUI.Services
             if (entity == null)
                 return false;
 
-            //_httpClient.DefaultRequestHeaders.Authorization =
-            //    new AuthenticationHeaderValue("bearer", await GetBearerToken());
+            await AddTokenToHeader();
 
             var response = await _httpClient.PostAsJsonAsync<T>(_resourceUrl, entity);
 
@@ -83,8 +82,7 @@ namespace BudgetPlannerUI.Services
             if (entity == null)
                 return false;
 
-            //_httpClient.DefaultRequestHeaders.Authorization =
-            //    new AuthenticationHeaderValue("bearer", await GetBearerToken());
+            await AddTokenToHeader();
 
             var response = await _httpClient.PutAsJsonAsync<T>(_resourceUrl + id, entity);
 
@@ -96,6 +94,8 @@ namespace BudgetPlannerUI.Services
 
         public async Task<bool> Delete(int id)
         {
+            await AddTokenToHeader();
+
             var response = await _httpClient.DeleteAsync(_resourceUrl + id);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return true;
@@ -121,6 +121,13 @@ namespace BudgetPlannerUI.Services
         private async Task<string> GetAuthToken()
         {
             return await _localStorageService.GetStringAsync(LocalStorageKeys.AuthToken);
+        }
+
+        private async Task AddTokenToHeader()
+        {
+            var token = await GetAuthToken();
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
         }
 
     }

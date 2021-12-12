@@ -17,6 +17,9 @@ namespace BudgetPlannerUI.Components
         public bool HideReconciled { get; set; }
 
         [Parameter]
+        public bool HideRegisterName { get; set; }
+
+        [Parameter]
         public EventCallback<RegisterEntryActionEventArgs> OnAction { get; set; }
 
         public bool ShowItem()
